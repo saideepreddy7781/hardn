@@ -29,7 +29,7 @@ runs:
     - id: week
       shell: bash
       run: echo "w=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
-    - uses: actions/cache@v4
+    - uses: actions/cache@v6
       with:
         path: ~/.hardn
         key: hardn-db-${{ steps.week.outputs.w }}
