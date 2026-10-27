@@ -73,7 +73,7 @@ and `gitleaks:allow` are honored too). Skip paths with a `.hardnignore` file.
 `hardn init` writes a ready workflow, or use the action directly:
 
 ```yaml
-- uses: actions/checkout@v4
+- uses: actions/checkout@v7
   with: { fetch-depth: 0 }
 - uses: saideepreddy7781/hardn@v0
   with:

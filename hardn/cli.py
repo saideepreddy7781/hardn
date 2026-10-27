@@ -206,16 +206,16 @@ jobs:
   hardn:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0     # needed for --diff on pull requests
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: pip install hardn
       - id: week
         run: echo "w=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@v4      # advisory DB, refreshed weekly
+      - uses: actions/cache@v6      # advisory DB, refreshed weekly
         with:
           path: ~/.hardn
           key: hardn-db-${{ steps.week.outputs.w }}
@@ -230,12 +230,12 @@ jobs:
           else
             hardn scan . --sarif --fail-on __FAIL_ON__
           fi
-      - uses: github/codeql-action/upload-sarif@v3
+      - uses: github/codeql-action/upload-sarif@v4
         if: always()
         continue-on-error: true   # code scanning must be enabled for the repo
         with:
           sarif_file: .hardn/results.sarif
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: hardn-report
