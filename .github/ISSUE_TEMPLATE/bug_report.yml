@@ -1,0 +1,19 @@
+name: Bug report
+description: Something crashed or behaved unexpectedly
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command and output
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: "`hardn doctor` first line (version, Python, OS)"

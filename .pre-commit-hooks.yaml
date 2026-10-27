@@ -1,0 +1,5 @@
+- id: hardn
+  name: hardn security scan
+  entry: hardn scan --quiet --no-external --fail-on high
+  language: python
+  pass_filenames: false
