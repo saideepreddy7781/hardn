@@ -31,6 +31,9 @@ Friends can already install it now:
    - Owner: `saideepreddy7781` · Repository: `hardn`
    - Workflow name: `release.yml` · Environment name: `pypi`
 
+3. On GitHub → **Settings → Secrets and variables → Actions → Variables** → add `PUBLISH_PYPI` = `true`.
+   Until this variable exists, releases skip PyPI (so a release never fails just because PyPI isn't set up).
+
 (Optional rehearsal: do the same on <https://test.pypi.org> and temporarily add
 `with: { repository-url: https://test.pypi.org/legacy/ }` to the publish step.)
 
@@ -57,8 +60,10 @@ The workflow fails fast if the tag doesn't match `hardn.__version__`.
 
 ## 4. Optional: GitHub Marketplace (for the Action)
 
-Edit the GitHub Release → tick **Publish this Action to the GitHub Marketplace** → accept the terms.
-`action.yml` is already at the repo root.
+Requires 2FA on your GitHub account. Open `action.yml` on GitHub → **Draft a release** (or edit an existing
+release) → tick **Publish this Action to the GitHub Marketplace** → accept the Marketplace Developer
+Agreement → category *Security* (secondary: *Code quality*) → publish. If you create the tag from this
+form, the release workflow attaches the binaries to that same release automatically.
 
 ## 5. Optional: Homebrew
 

@@ -59,6 +59,8 @@ jobs:
 
   publish-pypi:
     needs: build
+    # Opt-in: set repository variable PUBLISH_PYPI=true once PyPI Trusted Publishing is configured.
+    if: vars.PUBLISH_PYPI == 'true'
     runs-on: ubuntu-latest
     environment: pypi            # configure as a Trusted Publisher on pypi.org (no API token needed)
     permissions:
@@ -84,4 +86,10 @@ jobs:
       - run: cd assets && sha256sum * > SHA256SUMS && cat SHA256SUMS
       - env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" assets/* --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes
+        run: |
+          # The release may already exist (e.g. drafted in the UI to publish on GitHub Marketplace).
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" assets/* --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" assets/* --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes
+          fi
