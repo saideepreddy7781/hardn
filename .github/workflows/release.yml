@@ -2,7 +2,8 @@ name: release
 
 on:
   push:
-    tags: ["v*"]
+    # Version tags only (v0.1.0, v0.2.0rc1). Moving major tags for Action users (v0, v1) must not release.
+    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
 
 permissions:
   contents: read
@@ -54,7 +55,7 @@ jobs:
           mkdir -p out && mv "$bin" "out/${{ matrix.asset }}"
       - uses: actions/upload-artifact@v7
         with:
-          name: ${{ matrix.asset }}
+          name: bin-${{ matrix.asset }}
           path: out/
 
   publish-pypi:
@@ -79,8 +80,14 @@ jobs:
     permissions:
       contents: write
     steps:
+      # Only release artifacts; other jobs (e.g. CI's self-scan report) upload artifacts too.
       - uses: actions/download-artifact@v8
         with:
+          name: dist
+          path: assets
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: bin-*
           path: assets
           merge-multiple: true
       - run: cd assets && sha256sum * > SHA256SUMS && cat SHA256SUMS
