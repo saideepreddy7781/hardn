@@ -54,7 +54,7 @@ jobs:
           mkdir -p out && mv "$bin" "out/${{ matrix.asset }}"
       - uses: actions/upload-artifact@v7
         with:
-          name: ${{ matrix.asset }}
+          name: bin-${{ matrix.asset }}
           path: out/
 
   publish-pypi:
@@ -79,8 +79,14 @@ jobs:
     permissions:
       contents: write
     steps:
+      # Only release artifacts; other jobs (e.g. CI's self-scan report) upload artifacts too.
       - uses: actions/download-artifact@v8
         with:
+          name: dist
+          path: assets
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: bin-*
           path: assets
           merge-multiple: true
       - run: cd assets && sha256sum * > SHA256SUMS && cat SHA256SUMS
