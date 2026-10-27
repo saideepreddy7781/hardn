@@ -2,7 +2,8 @@ name: release
 
 on:
   push:
-    tags: ["v*"]
+    # Version tags only (v0.1.0, v0.2.0rc1). Moving major tags for Action users (v0, v1) must not release.
+    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
 
 permissions:
   contents: read
