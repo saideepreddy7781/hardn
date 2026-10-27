@@ -34,7 +34,7 @@ def available() -> dict:
 
 def _run(cmd: list, cwd: str | None = None) -> subprocess.CompletedProcess:
     env = {**os.environ, "SEMGREP_SEND_METRICS": "off", "SEMGREP_ENABLE_VERSION_CHECK": "0"}
-    return subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=TIMEOUT, cwd=cwd, env=env)
+    return subprocess.run(cmd, capture_output=True, check=False, text=True, encoding="utf-8", errors="replace", timeout=TIMEOUT, cwd=cwd, env=env)
 
 
 def _rel(root: str, path: str) -> str:

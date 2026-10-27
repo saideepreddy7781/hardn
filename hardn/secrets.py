@@ -79,13 +79,13 @@ def _looks_real(value: str) -> bool:
 
 def _is_env_file(name: str) -> bool:
     return (name == ".env" or name.startswith(".env.") or name.endswith(".env")) and not re.search(
-        r"(example|sample|template|dist|defaults)", name, re.I
+        r"(example|sample|template|dist|defaults)", name, re.IGNORECASE
     )
 
 
 def _git(root: str, *args) -> int | None:
     try:
-        return subprocess.run(["git", "-C", root, *args], capture_output=True, timeout=10).returncode
+        return subprocess.run(["git", "-C", root, *args], capture_output=True, timeout=10, check=False).returncode
     except (OSError, subprocess.TimeoutExpired):
         return None
 

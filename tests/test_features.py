@@ -75,6 +75,14 @@ class PythonTaintTest(unittest.TestCase):
         self.assertEqual(found[0].rule_id, "PYT005")
         self.assertIn("p (L4)", found[0].extra["flow"])
 
+    def test_tuple_unpacking_taints_every_target(self):
+        found = py('''
+            def view(request):
+                host, port = request.args["addr"].split(":")
+                os.system("nc " + port)
+        ''')
+        self.assertEqual([f.rule_id for f in found], ["PYT002"])
+
     def test_safe_yaml_loader(self):
         self.assertEqual(py('''
             def view(request):
@@ -171,7 +179,8 @@ class FixLoopTest(unittest.TestCase):
             rc = fix.run(str(root), agent=[sys.executable, str(agent), "{prompt_file}"], yes=True, external=False)
         self.assertEqual(rc, 0, out.getvalue())
         self.assertIn("int(request.args", (root / "app.py").read_text())
-        branch = subprocess.run(["git", "-C", str(root), "branch", "--show-current"], capture_output=True, text=True)
+        branch = subprocess.run(["git", "-C", str(root), "branch", "--show-current"], check=False,
+                                capture_output=True, text=True)
         self.assertTrue(branch.stdout.startswith("hardn/fix-"))
 
     def test_no_progress_stops(self):

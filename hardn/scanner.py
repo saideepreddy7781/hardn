@@ -3,7 +3,8 @@ from __future__ import annotations
 import os
 import time
 
-from . import code_rules, deps, engines, posture, secrets, stack as stack_mod, taint_js, taint_py, walker
+from . import code_rules, deps, engines, posture, secrets, taint_js, taint_py, walker
+from . import stack as stack_mod
 from .models import SEV_RANK, ScanResult
 
 

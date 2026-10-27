@@ -112,7 +112,8 @@ class _Function:
                 self.env[target.id] = chain + [(target.id, line)]
                 return True
         elif isinstance(target, (ast.Tuple, ast.List)):
-            return any([self.bind(t, chain, line) for t in target.elts])
+            bound = [self.bind(t, chain, line) for t in target.elts]  # bind all elements, no short-circuit
+            return any(bound)
         elif isinstance(target, ast.Starred):
             return self.bind(target.value, chain, line)
         return False
@@ -126,7 +127,8 @@ class _Function:
                     chain = self.taint(n.value)
                     targets = n.targets if isinstance(n, ast.Assign) else [n.target]
                     if chain:
-                        changed |= any([self.bind(t, chain, n.lineno) for t in targets])
+                        bound = [self.bind(t, chain, n.lineno) for t in targets]  # bind all targets
+                        changed |= any(bound)
                 elif isinstance(n, (ast.For, ast.AsyncFor, ast.comprehension)):
                     chain = self.taint(n.iter)
                     if chain:

@@ -48,7 +48,8 @@ def resolve_agent(spec) -> list:
 
 
 def _git(root, *args, check=True) -> str:
-    proc = subprocess.run(["git", "-C", root, *args], capture_output=True, text=True, encoding="utf-8", errors="replace")
+    proc = subprocess.run(["git", "-C", root, *args], capture_output=True, check=False, text=True, encoding="utf-8",
+                          errors="replace")
     if check and proc.returncode != 0:
         raise FixError(proc.stderr.strip() or f"git {' '.join(args)} failed")
     return proc.stdout
@@ -116,7 +117,7 @@ def run(root: str, agent=None, target: int | None = None, max_rounds: int = 3, t
         tests_ok, note = True, ""
         if test_cmd:
             say(f"  Running tests: {test_cmd}")
-            proc = subprocess.run(test_cmd, shell=True, cwd=root, capture_output=True, text=True,  # hardn:ignore — the user's own --test command; shell syntax (&&, |) is intended
+            proc = subprocess.run(test_cmd, shell=True, cwd=root, capture_output=True, check=False, text=True,  # hardn:ignore — the user's own --test command; shell syntax (&&, |) is intended
                                   encoding="utf-8", errors="replace")
             tests_ok = proc.returncode == 0
             if not tests_ok:
@@ -153,7 +154,7 @@ def _run_agent(cmd: list, text: str, prompt_file: str, root: str, timeout: int) 
     uses_file = any("{prompt_file}" in part for part in cmd)
     argv = [part.replace("{prompt_file}", prompt_file) for part in cmd]
     try:
-        proc = subprocess.run(argv, cwd=root, input=None if uses_file else text, text=True,
+        proc = subprocess.run(argv, cwd=root, check=False, input=None if uses_file else text, text=True,
                               encoding="utf-8", timeout=timeout)
     except subprocess.TimeoutExpired:
         print(output.c(f"  Agent timed out after {timeout}s.", "31"))
