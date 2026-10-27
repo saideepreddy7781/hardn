@@ -1,0 +1,55 @@
+name: hardn security scan
+description: Offline security scan (secrets, injection, taint flows, dependencies) with an AI-ready fix prompt
+branding:
+  icon: shield
+  color: green
+
+inputs:
+  path:
+    description: Directory to scan
+    default: "."
+  fail-on:
+    description: Fail on findings at or above this severity (low, medium, high, critical)
+    default: high
+  diff:
+    description: "'auto' = only changed lines on pull requests; a git ref; or '' for a full scan"
+    default: auto
+  sarif:
+    description: Write .hardn/results.sarif for GitHub code scanning
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - shell: bash
+      run: pip install --quiet "$GITHUB_ACTION_PATH"
+    - id: week
+      shell: bash
+      run: echo "w=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
+    - uses: actions/cache@v4
+      with:
+        path: ~/.hardn
+        key: hardn-db-${{ steps.week.outputs.w }}
+        restore-keys: hardn-db-
+    - shell: bash
+      env:
+        INPUT_PATH: ${{ inputs.path }}
+      run: hardn update --for "$INPUT_PATH" || echo "advisory update failed; scanning with cached data"
+    - shell: bash
+      env:
+        INPUT_PATH: ${{ inputs.path }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+        INPUT_DIFF: ${{ inputs.diff }}
+        INPUT_SARIF: ${{ inputs.sarif }}
+      run: |
+        args=(scan "$INPUT_PATH" --fail-on "$INPUT_FAIL_ON")
+        [ "$INPUT_SARIF" = "true" ] && args+=(--sarif)
+        if [ "$INPUT_DIFF" = "auto" ]; then
+          [ -n "$GITHUB_BASE_REF" ] && args+=(--diff "origin/$GITHUB_BASE_REF")
+        elif [ -n "$INPUT_DIFF" ]; then
+          args+=(--diff "$INPUT_DIFF")
+        fi
+        hardn "${args[@]}"

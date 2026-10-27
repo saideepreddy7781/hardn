@@ -1,0 +1,8 @@
+# Intentionally vulnerable demo app and test fixtures
+examples/
+tests/
+# Rule definitions contain the very patterns they detect
+hardn/code_rules.py
+hardn/secrets.py
+hardn/taint_py.py
+hardn/taint_js.py

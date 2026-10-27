@@ -1,0 +1,23 @@
+name: False positive / missed issue
+description: hardn flagged safe code, or missed a real vulnerability
+labels: [rules]
+body:
+  - type: input
+    id: rule
+    attributes:
+      label: Rule ID
+      placeholder: e.g. PY004, JST001, SEC100 (or "none" for a missed issue)
+    validations:
+      required: true
+  - type: textarea
+    id: code
+    attributes:
+      label: Minimal code sample
+      description: Smallest snippet that reproduces it. Remove real secrets and proprietary code.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Why is this wrong?
