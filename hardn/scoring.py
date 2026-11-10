@@ -13,8 +13,17 @@ TARGETS = {name.lower(): i for i, name in enumerate(LEVELS) if i > 0}
 WEIGHTS = {"critical": 25, "high": 10, "medium": 4, "low": 1, "info": 0}
 
 
-def level(findings: list) -> int:
-    return 4 - max((f.rank for f in findings), default=0)
+INCOMPLETE_MAX_LEVEL = 2  # a scan with blind spots can never claim Hardened or Fortified
+
+
+def counted(findings: list) -> list:
+    """Findings that set the grade: application code, plus secrets wherever they are."""
+    return [f for f in findings if f.counts]
+
+
+def level(findings: list, gaps=()) -> int:
+    lvl = 4 - max((f.rank for f in counted(findings)), default=0)
+    return min(lvl, INCOMPLETE_MAX_LEVEL) if gaps else lvl
 
 
 def min_rank_for(target: int) -> int:
@@ -24,7 +33,7 @@ def min_rank_for(target: int) -> int:
 
 def score(findings: list) -> int:
     penalty, per_rule = 0.0, {}
-    for f in findings:
+    for f in counted(findings):
         n = per_rule[f.rule_id] = per_rule.get(f.rule_id, 0) + 1
         penalty += WEIGHTS[f.severity] * (1 if n <= 3 else 0.25)  # repeated instances of one rule count less
     return round(100 * 0.5 ** (penalty / 40))

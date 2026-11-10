@@ -12,7 +12,7 @@ import shutil
 import subprocess
 import sys
 
-from . import output, prompt, scanner
+from . import gitsafe, output, prompt, scanner
 from .scoring import LEVELS, level, min_rank_for
 
 AGENTS = {
@@ -48,8 +48,7 @@ def resolve_agent(spec) -> list:
 
 
 def _git(root, *args, check=True) -> str:
-    proc = subprocess.run(["git", "-C", root, *args], capture_output=True, check=False, text=True, encoding="utf-8",
-                          errors="replace")
+    proc = gitsafe.run(root, *args)
     if check and proc.returncode != 0:
         raise FixError(proc.stderr.strip() or f"git {' '.join(args)} failed")
     return proc.stdout

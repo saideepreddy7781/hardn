@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 import time
 
-from . import code_rules, deps, engines, posture, secrets, taint_js, taint_py, walker
+from . import code_rules, context, deps, engines, posture, secrets, taint_js, taint_py, walker
 from . import stack as stack_mod
 from .models import SEV_RANK, ScanResult
 
@@ -17,8 +17,9 @@ def run(root: str, external: bool = True, log=lambda *_: None) -> ScanResult:
     findings = secrets.scan(files, root) + code_rules.scan(files)
     findings += taint_py.scan(files) + taint_js.scan(files)
     findings += posture.check(root, files, all_paths, stack)
-    dep_findings, dep_note = deps.scan(root, all_paths)
+    dep_findings, dep_note, *dep_gaps = deps.scan(root, all_paths)
     findings += dep_findings
+    gaps = list(dep_gaps[0]) if dep_gaps else []
     statuses = {"built-in": f"ok ({len(code_rules.RULES)} rules + taint)", "osv": dep_note}
     if external:
         ext, ext_status = engines.run_all(root, stack, log)
@@ -29,9 +30,11 @@ def run(root: str, external: bool = True, log=lambda *_: None) -> ScanResult:
     for f in findings:
         if f.category != "dependency":
             f.snippet = secrets.redact_text(f.snippet)
-    findings.sort(key=lambda f: (-f.rank, f.category != "secret", f.file, f.line, f.rule_id))
+        if f.context == "app":  # the dependency engine may already have set dev-dependency
+            f.context = context.classify(f.file)
+    findings.sort(key=lambda f: (not f.counts, -f.rank, f.category != "secret", f.file, f.line, f.rule_id))
     return ScanResult(root=root, stack=stack, findings=findings, engines=statuses,
-                      files_scanned=len(files), duration=time.time() - t0)
+                      files_scanned=len(files), duration=time.time() - t0, gaps=gaps)
 
 
 def _key(f) -> tuple:

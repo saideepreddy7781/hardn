@@ -4,6 +4,8 @@ from __future__ import annotations
 import re
 import subprocess
 
+from . import gitsafe
+
 
 class DiffError(Exception):
     pass
@@ -11,7 +13,7 @@ class DiffError(Exception):
 
 def _git(root: str, *args) -> str:
     try:
-        proc = subprocess.run(["git", "-C", root, *args], capture_output=True, check=False, text=True, encoding="utf-8", errors="replace", timeout=60)
+        proc = gitsafe.run(root, *args)
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise DiffError(f"git failed: {exc}") from exc
     if proc.returncode != 0:

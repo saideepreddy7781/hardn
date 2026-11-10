@@ -8,6 +8,7 @@ import subprocess
 from collections import Counter
 from fnmatch import fnmatch
 
+from . import gitsafe
 from .models import Finding, cap_severity
 from .walker import is_test_path
 
@@ -85,7 +86,7 @@ def _is_env_file(name: str) -> bool:
 
 def _git(root: str, *args) -> int | None:
     try:
-        return subprocess.run(["git", "-C", root, *args], capture_output=True, timeout=10, check=False).returncode
+        return gitsafe.run(root, *args, timeout=10, text=False).returncode
     except (OSError, subprocess.TimeoutExpired):
         return None
 

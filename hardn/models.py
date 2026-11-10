@@ -19,10 +19,16 @@ class Finding:
     fix: str = ""
     sources: list = field(default_factory=lambda: ["hardn"])
     extra: dict = field(default_factory=dict)
+    context: str = "app"  # app | test | docs | example | vendor | generated | dev-dependency
 
     @property
     def rank(self) -> int:
         return SEV_RANK[self.severity]
+
+    @property
+    def counts(self) -> bool:
+        """Does this finding affect the level, score, --fail-on and the fix prompt?"""
+        return self.context == "app" or self.category == "secret"
 
     def location(self) -> str:
         if not self.file:
@@ -41,6 +47,8 @@ class ScanResult:
     engines: dict  # engine name -> status text
     files_scanned: int
     duration: float
+    gaps: list = field(default_factory=list)  # checks that could not run; each one could change the grade
+    hidden: dict = field(default_factory=dict)  # what the repo's own config suppressed, e.g. {"inline": 3}
 
 
 def cap_severity(sev: str, cap: str) -> str:
