@@ -1,6 +1,7 @@
-# Intentionally vulnerable demo app and test fixtures
+# Intentionally vulnerable demo app, test fixtures and benchmark corpora
 examples/
 tests/
+benchmarks/
 # Rule definitions contain the very patterns they detect
 agentharden/code_rules.py
 agentharden/secrets.py

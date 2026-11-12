@@ -112,6 +112,7 @@ class HonestOutputTest(_NoDb):
         self.assertEqual(rc, 2)
         self.assertIn("--untrusted", err)
 
+    @unittest.skipIf(os.name == "nt", "Windows does not allow control characters in file names")
     def test_terminal_escapes_are_stripped(self):
         root = repo({"a.py": "x = 1\n"}, commit=False)
         (root / "e\x1b]0;pwned\x07.py").write_text("subprocess.run(c, shell=True)  # \x1b[2J\x9b\n")
@@ -436,7 +437,7 @@ class CleanTest(unittest.TestCase):
     def test_clean(self):
         self.assertEqual(output.clean("a\x1b[31mb\x9bc‮d"), "a?[31mb?c?d")
         self.assertEqual(output.clean("x\ny\tz", multiline=True), "x\ny\tz")
-        self.assertEqual(output.clean(os.fsdecode(b"bad\xff")), "bad�")
+        self.assertEqual(output.clean("bad\udcff"), "bad�")  # how POSIX decodes a non-UTF-8 file name
 
 
 if __name__ == "__main__":

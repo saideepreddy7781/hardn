@@ -13,6 +13,7 @@ def _git(root, *args):
                    capture_output=True)
 
 
+@unittest.skipIf(os.name == "nt", "the planted programs are POSIX shell scripts")
 class GitSafeTests(unittest.TestCase):
     """A repo's own .git/config must never make agentharden run a program."""
 

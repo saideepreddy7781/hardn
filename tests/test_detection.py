@@ -203,9 +203,14 @@ class PythonTaintTest(unittest.TestCase):
         self.assertEqual([(f.rule_id, f.line) for f in found], [("PYT001", 4)])
 
     def test_deep_concatenation_does_not_crash(self):
-        text = "from flask import request\ndef v():\n    x = " + " + ".join(['"a"'] * 4000) + \
-               ' + request.args["q"]\n    eval(x)\n'
-        self.assertEqual(ids(taint_py.scan([SourceFile("deep.py", text)])), ["PYT003"])
+        def deep(n):
+            return ("from flask import request\ndef v():\n    x = " + " + ".join(['"a"'] * n) +
+                    ' + request.args["q"]\n    eval(x)\n')
+        # 2000 terms parse on every supported Python, so the flow must be found.
+        self.assertEqual(ids(taint_py.scan([SourceFile("deep.py", deep(2000))])), ["PYT003"])
+        # Python 3.11's parser, and Windows builds with a small stack, refuse 4000 terms before agentharden sees
+        # them. The engine must then skip the file quietly, never crash the scan.
+        self.assertIsInstance(taint_py.scan([SourceFile("deep.py", deep(4000))]), list)
 
     def test_inline_suppression(self):
         self.assertEqual(py('''\

@@ -117,7 +117,7 @@ def _connect(path: Path | None = None, create: bool = True) -> sqlite3.Connectio
         state = _schema_state(con)
         if state == "empty" and create:
             con.executescript(_SCHEMA)
-            con.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
+            con.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")  # agentharden:ignore PRAGMA takes no bound parameters; an int constant
             con.commit()
         elif state == "newer":
             raise AdvisoryDbError(f"The advisory database at {path} was written by a newer agentharden. "
@@ -262,7 +262,7 @@ def update(ecosystems=DEFAULT_ECOSYSTEMS, log=print, db: Path | None = None) -> 
                 with con:
                     con.execute("INSERT OR REPLACE INTO meta VALUES ('updated_at', ?)", (str(int(time.time())),))
                 if legacy and stored <= done:
-                    con.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
+                    con.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")  # agentharden:ignore PRAGMA takes no bound parameters; an int constant
                     con.commit()
             except sqlite3.Error as exc:
                 log(f"    ! could not record the update time: {exc}")

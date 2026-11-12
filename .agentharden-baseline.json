@@ -1,0 +1,19 @@
+{
+  "tool": "agentharden",
+  "version": "0.2.0",
+  "format": 2,
+  "created": "2026-11-12T20:15:15Z",
+  "salt": "3b7e0fd9464d9abf260dea5035027cd8",
+  "count": 1,
+  "findings": {
+    "c8d0010636242327fcd7": {
+      "rule": "POS032",
+      "severity": "low",
+      "location": "(project-wide)",
+      "title": "No automated dependency updates",
+      "id": "bf29e7a15ec9845e14be",
+      "file": "",
+      "line": 0
+    }
+  }
+}
