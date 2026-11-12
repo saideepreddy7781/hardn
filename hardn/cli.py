@@ -59,7 +59,7 @@ def main(argv=None) -> int:
         sp.add_argument("path", nargs="?", default=".")
         sp.add_argument("-t", "--target", choices=list(TARGETS), help="security level to reach (default: next level up)")
         sp.add_argument("--no-external", action="store_true", help="only use built-in engines")
-        sp.add_argument("--max-tasks", type=int, default=30, help="cap tasks per prompt (default 30)")
+        sp.add_argument("--max-tasks", type=int, default=30, help="cap tasks per prompt (default: 30 for scan, 15 for fix)")
 
     s = sub.add_parser("scan", help="scan a codebase and write the fix prompt (default command)",
                        epilog=EPILOG, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -95,6 +95,10 @@ def main(argv=None) -> int:
     fx.add_argument("--no-branch", action="store_true", help="work on the current branch")
     fx.add_argument("--allow-dirty", action="store_true", help="allow uncommitted changes")
     fx.add_argument("--timeout", type=int, default=1800, help="seconds per agent round (default 1800)")
+    fx.add_argument("--test-timeout", type=int, default=fix.TEST_TIMEOUT,
+                    help=f"seconds allowed for the --test command (default {fix.TEST_TIMEOUT})")
+    fx.add_argument("--baseline", metavar="FILE", help=f"baseline file (default: <path>/{baseline.FILENAME} if present)")
+    fx.add_argument("--no-baseline", action="store_true", help="ignore the baseline file")
 
     b = sub.add_parser("baseline", help=f"record current findings in {baseline.FILENAME} (commit it)")
     b.add_argument("path", nargs="?", default=".")
@@ -256,7 +260,8 @@ def cmd_fix(a) -> int:
     _require_dir(a.path)
     return fix.run(a.path, agent=a.agent, target=TARGETS[a.target] if a.target else None, max_rounds=a.rounds,
                    test_cmd=a.test, external=not a.no_external, yes=a.yes, branch=not a.no_branch,
-                   allow_dirty=a.allow_dirty, max_tasks=a.max_tasks, timeout=a.timeout)
+                   allow_dirty=a.allow_dirty, max_tasks=a.max_tasks, timeout=a.timeout,
+                   test_timeout=a.test_timeout, baseline_file=a.baseline, use_baseline=not a.no_baseline)
 
 
 def cmd_baseline(a) -> int:
