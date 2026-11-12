@@ -1,4 +1,4 @@
-"""Score hardn's detection engines on the labelled corpus.
+"""Score agentharden's detection engines on the labelled corpus.
 
     python benchmarks/detection/run.py                 # tuning and holdout tables
     python benchmarks/detection/run.py --json          # the same numbers as JSON
@@ -32,8 +32,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent.parent))  # always score this checkout, whatever is installed
 os.environ["GIT_CEILING_DIRECTORIES"] = str(HERE)  # corpus .env files must not see the surrounding repository
 
-from hardn import code_rules, posture, secrets, taint_js, taint_py, walker  # noqa: E402
-from hardn import stack as stack_mod  # noqa: E402
+from agentharden import code_rules, posture, secrets, taint_js, taint_py, walker  # noqa: E402
+from agentharden import stack as stack_mod  # noqa: E402
 
 STORED = HERE / "corpus"
 CORPUS = STORED  # replaced by the decoded copy in main()
@@ -198,7 +198,7 @@ def main() -> int:
         return 0
 
     global CORPUS
-    tmp = tempfile.mkdtemp(prefix="hardn-corpus-")
+    tmp = tempfile.mkdtemp(prefix="agentharden-corpus-")
     try:
         CORPUS = materialize(Path(tmp))
         os.environ["GIT_CEILING_DIRECTORIES"] = tmp

@@ -16,4 +16,4 @@ body:
   - type: input
     id: version
     attributes:
-      label: "`hardn doctor` first line (version, Python, OS)"
+      label: "`agentharden doctor` first line (version, Python, OS)"

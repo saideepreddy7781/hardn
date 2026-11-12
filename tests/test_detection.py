@@ -8,9 +8,9 @@ import time
 import unittest
 from pathlib import Path
 
-from hardn import code_rules, posture, secrets, taint_js, taint_py, walker
-from hardn import stack as stack_mod
-from hardn.walker import SourceFile
+from agentharden import code_rules, posture, secrets, taint_js, taint_py, walker
+from agentharden import stack as stack_mod
+from agentharden.walker import SourceFile
 
 GIT_ENV = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@example.com",
            "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@example.com"}
@@ -210,7 +210,7 @@ class PythonTaintTest(unittest.TestCase):
     def test_inline_suppression(self):
         self.assertEqual(py('''\
             def view(request):
-                eval(request.args["x"])  # hardn:ignore reviewed
+                eval(request.args["x"])  # agentharden:ignore reviewed
                 os.system(request.args["c"])  # nosec
         '''), [])
 
@@ -247,7 +247,7 @@ class JsTaintTest(unittest.TestCase):
         self.assertEqual(sorted((f.rule_id, f.line) for f in found), [("JST001", 2), ("JST010", 9)])
 
     def test_inline_suppression(self):
-        self.assertEqual(js("const n = req.query.n;\neval(n); // hardn:ignore\n"), [])
+        self.assertEqual(js("const n = req.query.n;\neval(n); // agentharden:ignore\n"), [])
 
 
 class PostureTest(unittest.TestCase):

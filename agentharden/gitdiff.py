@@ -160,7 +160,7 @@ def changed_lines(root: str, ref: str) -> Changes:
     changes.update(_parse_patch(patch))
     missing = [p for p, added in stats.items() if added and not changes.get(p)]
     if missing:
-        raise DiffError(f"git reports changes in {len(missing)} file(s) that hardn could not parse "
+        raise DiffError(f"git reports changes in {len(missing)} file(s) that agentharden could not parse "
                         f"(first: {missing[0]!r}); refusing to report a clean result")
     for path, added in stats.items():
         if added is None:  # binary to git (or marked -diff in .gitattributes): treat the whole file as changed

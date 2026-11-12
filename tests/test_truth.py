@@ -13,8 +13,8 @@ from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from unittest import mock
 
-from hardn import __version__, baseline, cli, deps, gitdiff, output, scanner, taint_py, walker
-from hardn.models import Finding
+from agentharden import __version__, baseline, cli, deps, gitdiff, output, scanner, taint_py, walker
+from agentharden.models import Finding
 
 ROOT = Path(__file__).resolve().parent.parent
 GIT_ENV = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@example.com",
@@ -47,8 +47,8 @@ def run_cli(*args):
 
 
 def run_proc(*args, timeout=60):
-    env = {**os.environ, "PYTHONPATH": str(ROOT), "HARDN_HOME": tempfile.mkdtemp()}
-    return subprocess.run([sys.executable, "-m", "hardn", *args], check=False, capture_output=True, text=True,
+    env = {**os.environ, "PYTHONPATH": str(ROOT), "AGENTHARDEN_HOME": tempfile.mkdtemp()}
+    return subprocess.run([sys.executable, "-m", "agentharden", *args], check=False, capture_output=True, text=True,
                           timeout=timeout, env=env, stdin=subprocess.DEVNULL, cwd=tempfile.gettempdir())
 
 
@@ -64,7 +64,7 @@ class HonestOutputTest(_NoDb):
         raise RecursionError("too deep")
 
     def test_gap_marks_scan_incomplete_everywhere(self):
-        root = repo({"a.py": "x = 1\n", ".gitignore": ".hardn/\n"})
+        root = repo({"a.py": "x = 1\n", ".gitignore": ".agentharden/\n"})
         with mock.patch.object(taint_py, "scan", self._crash):
             rc, out, _ = run_cli("scan", str(root), "--no-external")
             self.assertEqual(rc, 0)
@@ -72,7 +72,7 @@ class HonestOutputTest(_NoDb):
             self.assertIn("incomplete", out)
             self.assertNotIn("No issues found", out)
             self.assertNotIn("Top level reached", out)
-            report = json.loads((root / ".hardn" / "report.json").read_text())
+            report = json.loads((root / ".agentharden" / "report.json").read_text())
             self.assertFalse(report["complete"])
             self.assertLessEqual(report["level"], 2)
             self.assertTrue(any("Python taint" in g for g in report["gaps"]))
@@ -89,19 +89,19 @@ class HonestOutputTest(_NoDb):
         self.assertEqual(rc, 1)  # --untrusted counts every context
 
     def test_hidden_counts_are_reported(self):
-        root = repo({"a.py": SHELL_LINE + "subprocess.run(d, shell=True)  # hardn:ignore\n" + "y = 2\n",
-                     "gen/x.py": SHELL_LINE, "gen/y.py": "z = 1\n", ".hardnignore": "gen\n"})
+        root = repo({"a.py": SHELL_LINE + "subprocess.run(d, shell=True)  # agentharden:ignore\n" + "y = 2\n",
+                     "gen/x.py": SHELL_LINE, "gen/y.py": "z = 1\n", ".agentharden-ignore": "gen\n"})
         run_cli("baseline", str(root), "--no-external")
         rc, out, _ = run_cli("scan", str(root), "--no-external", "--fail-on", "high")
         self.assertEqual(rc, 0, out)
-        self.assertIn("1 suppressed inline · 2 files excluded by .hardnignore · ", out)
-        report = json.loads((root / ".hardn" / "report.json").read_text())
+        self.assertIn("1 suppressed inline · 2 files excluded by .agentharden-ignore · ", out)
+        report = json.loads((root / ".agentharden" / "report.json").read_text())
         self.assertEqual(report["hidden"]["inline"], 1)
-        self.assertEqual(report["hidden"]["hardnignore"], 2)
+        self.assertEqual(report["hidden"]["ignorefile"], 2)
         self.assertGreaterEqual(report["hidden"]["baselined"], 1)
 
     def test_untrusted_ignores_repo_config(self):
-        root = repo({"a.py": "subprocess.run(d, shell=True)  # hardn:ignore\n", ".hardnignore": "*\n"})
+        root = repo({"a.py": "subprocess.run(d, shell=True)  # agentharden:ignore\n", ".agentharden-ignore": "*\n"})
         run_cli("baseline", str(root), "--no-external")
         rc, _, _ = run_cli("scan", str(root), "--no-external", "--fail-on", "high")
         self.assertEqual(rc, 0)
@@ -130,7 +130,7 @@ class HostileTreeTest(unittest.TestCase):
         os.mkfifo(root / "pipe.py")
         os.symlink("/dev/zero", root / "zero.py")
         outside = Path(tempfile.mkdtemp()) / "secret.py"
-        outside.write_text('k = "AKIAZ7Q3LMPX4RTY8WQD"\n')  # hardn:ignore test fixture
+        outside.write_text('k = "AKIAZ7Q3LMPX4RTY8WQD"\n')  # agentharden:ignore test fixture
         os.symlink(outside, root / "escape.py")
         os.symlink("a.py", root / "alias.py")
         (root / "big.js").write_text("x" * (walker.MAX_BYTES + 10))
@@ -140,7 +140,7 @@ class HostileTreeTest(unittest.TestCase):
         self.addCleanup(locked.chmod, 0o600)
         proc = run_proc("scan", str(root), "--no-external", "-q", timeout=60)  # a hang fails here
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        report = json.loads((root / ".hardn" / "report.json").read_text())
+        report = json.loads((root / ".agentharden" / "report.json").read_text())
         sk = report["skipped"]
         self.assertIn("pipe.py", sk["special"]["paths"])
         self.assertIn("zero.py", sk["symlinks"]["paths"])
@@ -171,7 +171,7 @@ class HostileTreeTest(unittest.TestCase):
     def test_symlinked_output_dir_is_refused(self):
         root = repo({"a.py": SHELL_LINE})
         victim = self._victim()
-        os.symlink(victim, root / ".hardn")
+        os.symlink(victim, root / ".agentharden")
         rc, _, err = run_cli("scan", str(root), "--no-external", "-q")
         self.assertEqual(rc, 2)
         self.assertIn("symlink", err)
@@ -181,20 +181,20 @@ class HostileTreeTest(unittest.TestCase):
     def test_symlinked_output_file_is_refused(self):
         root = repo({"a.py": SHELL_LINE})
         victim = self._victim()
-        (root / ".hardn").mkdir()
-        os.symlink(victim / "report.json", root / ".hardn" / "report.json")
+        (root / ".agentharden").mkdir()
+        os.symlink(victim / "report.json", root / ".agentharden" / "report.json")
         rc, _, err = run_cli("scan", str(root), "--no-external", "-q")
         self.assertEqual(rc, 2, err)
         self.assertEqual((victim / "report.json").read_text(), "victim\n")
 
     def test_gitignore_overwritten_and_reports_private(self):
         root = repo({"a.py": SHELL_LINE})
-        (root / ".hardn").mkdir()
-        (root / ".hardn" / ".gitignore").write_text("!*\n")
+        (root / ".agentharden").mkdir()
+        (root / ".agentharden" / ".gitignore").write_text("!*\n")
         run_cli("scan", str(root), "--no-external", "-q")
-        self.assertIn("\n*\n", (root / ".hardn" / ".gitignore").read_text())
+        self.assertIn("\n*\n", (root / ".agentharden" / ".gitignore").read_text())
         for name in ("report.json", "FIX_PROMPT.md"):
-            self.assertEqual(stat.S_IMODE((root / ".hardn" / name).stat().st_mode), 0o600)
+            self.assertEqual(stat.S_IMODE((root / ".agentharden" / name).stat().st_mode), 0o600)
 
     @unittest.skipIf(hasattr(os, "geteuid") and os.geteuid() == 0, "root can write anywhere")
     def test_read_only_repo_is_a_clean_error(self):
@@ -284,7 +284,7 @@ class DiffTest(_NoDb):
         self.assertTrue(gitdiff.touches(dep("flask", "0.12"), changes))
 
     def test_baseline_cannot_hide_a_new_identical_line(self):
-        root = repo({".gitignore": ".hardn/\n", "app.py": SHELL_LINE + "x = 1\n" + SHELL_LINE})
+        root = repo({".gitignore": ".agentharden/\n", "app.py": SHELL_LINE + "x = 1\n" + SHELL_LINE})
         run_cli("baseline", str(root), "--no-external")
         git(root, "add", "-A")
         git(root, "commit", "-qm", "baseline")
@@ -331,7 +331,7 @@ class BaselineTest(_NoDb):
         self.assertEqual([(f.file, f.rule_id) for f in new if f.rule_id == "PY002"], [("b.py", "PY002")])
 
     def test_different_secret_on_same_line_is_new_and_value_never_stored(self):
-        key1, key2 = "AKIAZ7Q3LMPX4RTY8WQD", "AKIAB2C4D6F8G1H3J5K7"  # hardn:ignore test fixture
+        key1, key2 = "AKIAZ7Q3LMPX4RTY8WQD", "AKIAB2C4D6F8G1H3J5K7"  # agentharden:ignore test fixture
         root = repo({"k.js": f'const k = "{key1}";\n'})
         baseline.save(str(root), scanner.run(str(root), external=False).findings)
         text = Path(baseline.path_for(str(root))).read_text()
@@ -365,7 +365,7 @@ class BaselineTest(_NoDb):
         Path(baseline.path_for(str(root))).write_text("{not json")
         rc, _, err = run_cli("scan", str(root), "--no-external", "-q")
         self.assertEqual(rc, 2)
-        self.assertIn("hardn baseline", err)
+        self.assertIn("agentharden baseline", err)
 
 
 class SarifTest(_NoDb):
@@ -373,7 +373,7 @@ class SarifTest(_NoDb):
         root = repo({"services/api/app.py": SHELL_LINE, "services/api/requirements.txt": "flask\n",
                      "services/api/caf é.py": SHELL_LINE})
         rc, _, _ = run_cli("scan", str(root / "services" / "api"), "--no-external", "-q", "--sarif")
-        doc = json.loads((root / "services" / "api" / ".hardn" / "results.sarif").read_text())
+        doc = json.loads((root / "services" / "api" / ".agentharden" / "results.sarif").read_text())
         run = doc["runs"][0]
         uris = {r["locations"][0]["physicalLocation"]["artifactLocation"]["uri"] for r in run["results"]}
         self.assertIn("services/api/app.py", uris)
@@ -405,8 +405,8 @@ class RulesTest(unittest.TestCase):
 class ShippedFilesTest(unittest.TestCase):
     def test_workflow_installs_pinned_github_release(self):
         text = cli.workflow_text("high")
-        self.assertIn(f'pip install "git+https://github.com/saideepreddy7781/hardn@v{__version__}"', text)
-        self.assertNotRegex(text, r"pip install hardn\b")
+        self.assertIn(f'pip install "git+https://github.com/saideepreddy7781/agentharden@v{__version__}"', text)
+        self.assertNotRegex(text, r"pip install agentharden\b")
 
     def test_actions_pinned_by_sha(self):
         texts = {"init": cli.workflow_text("high")}

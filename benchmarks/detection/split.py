@@ -3,7 +3,7 @@
 Kept for the record. Re-running it needs the audit's case files, and it must not be re-run to get a
 different holdout: the seed below is the one the published numbers were measured with.
 
-    python benchmarks/detection/split.py /tmp/hardn-audit/detection
+    python benchmarks/detection/split.py /tmp/agentharden-audit/detection
 """
 from __future__ import annotations
 

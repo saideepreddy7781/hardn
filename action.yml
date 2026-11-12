@@ -1,4 +1,4 @@
-name: hardn security scan
+name: agentharden security scan
 description: Offline security scan (secrets, injection, taint flows, dependencies) with an AI-ready fix prompt
 branding:
   icon: shield
@@ -40,13 +40,13 @@ runs:
       run: echo "w=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
     - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
       with:
-        path: ~/.hardn
-        key: hardn-db-${{ steps.week.outputs.w }}
-        restore-keys: hardn-db-
+        path: ~/.agentharden
+        key: agentharden-db-${{ steps.week.outputs.w }}
+        restore-keys: agentharden-db-
     - shell: bash
       env:
         INPUT_PATH: ${{ inputs.path }}
-      run: hardn update --for "$INPUT_PATH" || echo "advisory update failed; scanning with cached data"
+      run: agentharden update --for "$INPUT_PATH" || echo "advisory update failed; scanning with cached data"
     - id: scan
       shell: bash
       env:
@@ -59,7 +59,7 @@ runs:
         args=(scan "$INPUT_PATH" --fail-on "$INPUT_FAIL_ON")
         if [ "$INPUT_SARIF" = "true" ]; then
           args+=(--sarif)
-          echo "sarif-file=$INPUT_PATH/.hardn/results.sarif" >> "$GITHUB_OUTPUT"
+          echo "sarif-file=$INPUT_PATH/.agentharden/results.sarif" >> "$GITHUB_OUTPUT"
         fi
         if [ "$INPUT_STRICT" = "true" ]; then
           args+=(--strict)
@@ -69,7 +69,7 @@ runs:
         elif [ -n "$INPUT_DIFF" ]; then
           args+=(--diff "$INPUT_DIFF")
         fi
-        hardn "${args[@]}"
+        agentharden "${args[@]}"
     # Runs even when the scan failed the job, so the findings still reach the Security tab.
     - id: upload
       if: always() && steps.scan.outputs.sarif-file != ''
@@ -77,10 +77,10 @@ runs:
       continue-on-error: true
       with:
         sarif_file: ${{ steps.scan.outputs.sarif-file }}
-        category: hardn
+        category: agentharden
     - if: always() && steps.upload.outcome == 'failure'
       shell: bash
       env:
         SARIF_FILE: ${{ steps.scan.outputs.sarif-file }}
       run: |
-        echo "::notice title=hardn::SARIF upload skipped. Code scanning may be off for this repository, or the job lacks 'security-events: write' (pull requests from forks never have it). The scan result still applies; the SARIF file is $SARIF_FILE."
+        echo "::notice title=agentharden::SARIF upload skipped. Code scanning may be off for this repository, or the job lacks 'security-events: write' (pull requests from forks never have it). The scan result still applies; the SARIF file is $SARIF_FILE."

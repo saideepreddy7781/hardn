@@ -20,9 +20,9 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
         with:
           python-version: "3.12"
-      - name: Tag must match hardn.__version__
+      - name: Tag must match agentharden.__version__
         run: |
-          v=$(python -c "import hardn; print(hardn.__version__)")
+          v=$(python -c "import agentharden; print(agentharden.__version__)")
           [ "v$v" = "$GITHUB_REF_NAME" ] || { echo "::error::tag $GITHUB_REF_NAME != version v$v"; exit 1; }
       - run: pip install build && python -m build
       - run: python scripts/build_pyz.py
@@ -36,9 +36,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - { os: ubuntu-latest, asset: hardn-linux-x86_64 }
-          - { os: macos-latest, asset: hardn-macos-arm64 }
-          - { os: windows-latest, asset: hardn-windows-x86_64.exe }
+          - { os: ubuntu-latest, asset: agentharden-linux-x86_64 }
+          - { os: macos-latest, asset: agentharden-macos-arm64 }
+          - { os: windows-latest, asset: agentharden-windows-x86_64.exe }
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -46,11 +46,11 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install pyinstaller
-      - run: pyinstaller --onefile --name hardn --paths . packaging/entry.py
+      - run: pyinstaller --onefile --name agentharden --paths . packaging/entry.py
       - name: Smoke test and rename
         shell: bash
         run: |
-          bin=dist/hardn; [ -f dist/hardn.exe ] && bin=dist/hardn.exe
+          bin=dist/agentharden; [ -f dist/agentharden.exe ] && bin=dist/agentharden.exe
           "$bin" --version
           mkdir -p out && mv "$bin" "out/${{ matrix.asset }}"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
@@ -71,7 +71,7 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: rm -f dist/hardn.pyz   # PyPI accepts only wheels and sdists
+      - run: rm -f dist/agentharden.pyz   # PyPI accepts only wheels and sdists
       - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086  # v1.14.3
 
   github-release:

@@ -1,4 +1,4 @@
-# Intentionally vulnerable demo app for hardn. DO NOT DEPLOY.
+# Intentionally vulnerable demo app for agentharden. DO NOT DEPLOY.
 import os
 import pickle
 import random

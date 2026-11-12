@@ -17,7 +17,7 @@ from fnmatch import translate
 SKIP_DIRS = {
     ".git", ".hg", ".svn", "node_modules", "bower_components", "venv", ".venv",
     "__pycache__", "dist", ".next", ".nuxt", ".svelte-kit", "vendor",
-    ".hardn", ".tox", ".mypy_cache", ".pytest_cache", ".ruff_cache", "coverage",
+    ".agentharden", ".tox", ".mypy_cache", ".pytest_cache", ".ruff_cache", "coverage",
     ".terraform", ".idea", ".vscode", "site-packages", ".gradle", "Pods",
 }
 # Often a virtualenv or build output, but also a common name for real source: NodeGoat keeps its config in
@@ -69,7 +69,7 @@ class WalkReport:
     symlinks: list = field(default_factory=list)        # links leaving the root or pointing at a non-file
     generated_dirs: list = field(default_factory=list)  # env/build/out/target folders that look generated
     binary: int = 0
-    ignored: int = 0                                    # files excluded by .hardnignore
+    ignored: int = 0                                    # files excluded by .agentharden-ignore
     counts: dict = field(default_factory=dict)
 
     def add(self, kind: str, rel: str) -> None:
@@ -82,7 +82,7 @@ class WalkReport:
         return self.counts.get(kind, 0)
 
     def to_dict(self) -> dict:
-        out = {"max_bytes": MAX_BYTES, "binary": self.binary, "hardnignore": self.ignored}
+        out = {"max_bytes": MAX_BYTES, "binary": self.binary, "ignorefile": self.ignored}
         for kind in ("oversize", "unreadable", "special", "symlinks", "generated_dirs"):
             out[kind] = {"count": self.count(kind), "paths": list(getattr(self, kind))}
         return out
@@ -112,7 +112,7 @@ def read_regular(path: str, limit: int = MAX_BYTES) -> bytes:
 
 
 def load_ignore(root: str) -> list:
-    path = os.path.join(root, ".hardnignore")
+    path = os.path.join(root, ".agentharden-ignore")
     try:
         if not stat.S_ISREG(os.lstat(path).st_mode):
             return []
@@ -124,7 +124,7 @@ def load_ignore(root: str) -> list:
 
 
 def _matcher(patterns: list):
-    """Compile .hardnignore patterns once. Same meaning as is_ignored(), without a fnmatch call per pattern."""
+    """Compile .agentharden-ignore patterns once. Same meaning as is_ignored(), without a fnmatch call per pattern."""
     if not patterns:
         return lambda rel, name: False
     full, base = [], []
@@ -160,7 +160,7 @@ def _inside(path: str, real_root: str) -> bool:
 
 
 def _count_files(path: str) -> int:
-    """Files under an excluded folder, so the report can say how much .hardnignore hid."""
+    """Files under an excluded folder, so the report can say how much .agentharden-ignore hid."""
     total, stack = 0, [path]
     while stack:
         try:
@@ -189,7 +189,7 @@ def _read(job):
 def walk(root: str, ignore: bool = True, report: WalkReport | None = None):
     """Return (text files to scan, every relative path seen). Pass a WalkReport to learn what was skipped.
 
-    ignore=False skips .hardnignore, for scans of a repository you do not trust.
+    ignore=False skips .agentharden-ignore, for scans of a repository you do not trust.
     """
     report = report if report is not None else WalkReport()
     root = os.path.abspath(root)

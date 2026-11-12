@@ -1,13 +1,13 @@
-"""`hardn fix`: scan → hand the prompt to a coding agent → re-scan, until the target level is reached.
+"""`agentharden fix`: scan → hand the prompt to a coding agent → re-scan, until the target level is reached.
 
 Safety model:
 - Runs only inside a git repo, on a clean tree (unless --allow-dirty), on a new branch (by default), and asks
-  for confirmation before letting an agent edit files. hardn never commits; you review `git diff`.
+  for confirmation before letting an agent edit files. agentharden never commits; you review `git diff`.
 - The prompt fences every repo-derived string as untrusted data (see prompt.py).
 - guard.py snapshots the tree first and checks each round's diff for gaming: added suppression comments,
   edited ignore/baseline/scanner files, deleted or emptied files that had findings, deleted or gutted tests,
   and edits to the test command's definition. A round with a violation earns no level credit.
-- The baseline is honoured the same way `hardn scan` honours it, and it is read once, before the agent runs.
+- The baseline is honoured the same way `agentharden scan` honours it, and it is read once, before the agent runs.
 - The agent and the test command run in their own process group, with a timeout. The whole group is killed
   on timeout, on Ctrl-C, and when the agent exits, so no child process keeps editing the tree.
 - They get an allowlisted environment, so cloud keys, tokens and other credentials in your shell are not
@@ -16,8 +16,8 @@ Safety model:
       TLS certificate and proxy settings, and toolchain locations (JAVA_HOME, GOPATH, VIRTUAL_ENV, ...).
     * The agent's own authentication, matched by command name (AGENT_ENV): ANTHROPIC_* and CLAUDE_* for
       Claude Code, OPENAI_* and CODEX_* for Codex, AIDER_* plus the model-provider keys aider reads.
-    * Any names you list in HARDN_PASS_ENV (comma-separated), for example AWS_PROFILE for Bedrock or a
-      DATABASE_URL your tests need. The test command gets BASE_ENV plus HARDN_PASS_ENV.
+    * Any names you list in AGENTHARDEN_PASS_ENV (comma-separated), for example AWS_PROFILE for Bedrock or a
+      DATABASE_URL your tests need. The test command gets BASE_ENV plus AGENTHARDEN_PASS_ENV.
   SSH_AUTH_SOCK, AWS_*, GOOGLE_*, most AZURE_*, GITHUB_TOKEN, NPM_TOKEN and everything else are dropped.
 
 Agent flags (checked against each tool's documentation and --help, November 2026):
@@ -27,7 +27,7 @@ Agent flags (checked against each tool's documentation and --help, November 2026
 - Codex CLI 0.144: `codex exec --sandbox workspace-write -`. `codex exec` no longer accepts `--full-auto`; the
   docs name `--sandbox workspace-write` as the replacement. `-` reads the prompt from stdin.
 - aider: `--yes-always --no-auto-commits --no-check-update --no-gitignore --message-file FILE`. aider reads
-  .aider.conf.yml and .env from the git root and has no switch to stop that, so hardn warns when they exist.
+  .aider.conf.yml and .env from the git root and has no switch to stop that, so agentharden warns when they exist.
 """
 from __future__ import annotations
 
@@ -69,7 +69,7 @@ AGENT_ENV = {  # command name -> name prefixes (ending in _) or exact names
               "GROQ_API_KEY", "MISTRAL_API_KEY", "COHERE_API_KEY", "XAI_API_KEY", "OLLAMA_API_BASE",
               "AZURE_API_KEY", "AZURE_API_BASE", "AZURE_API_VERSION"),
 }
-PASS_ENV = "HARDN_PASS_ENV"
+PASS_ENV = "AGENTHARDEN_PASS_ENV"
 AGENT_CONFIG = (
     ".claude", "CLAUDE.md", "CLAUDE.local.md", ".mcp.json", "AGENTS.md", "AGENTS.override.md", ".codex",
     ".aider.conf.yml", ".aider.model.settings.yml", ".aider.model.metadata.json", ".cursor", ".cursorrules",
@@ -77,12 +77,12 @@ AGENT_CONFIG = (
 )
 TEST_TIMEOUT = 900
 FIX_PREAMBLE = (
-    "> You are running non-interactively inside `hardn fix`. Edit the files directly; do not ask questions. "
-    "Do not commit, push, or rewrite git history. You don't need to run `hardn` or the test suite yourself: "
-    "hardn re-scans after you finish and runs the project's tests if configured. When finished, print the "
+    "> You are running non-interactively inside `agentharden fix`. Edit the files directly; do not ask questions. "
+    "Do not commit, push, or rewrite git history. You don't need to run `agentharden` or the test suite yourself: "
+    "agentharden re-scans after you finish and runs the project's tests if configured. When finished, print the "
     "report table described at the end.\n>\n"
-    "> After each round hardn compares the working tree with a snapshot taken before you started. A round that "
-    "adds a suppression comment, edits `.hardnignore`, `.hardn-baseline.json` or a scanner's ignore or config "
+    "> After each round agentharden compares the working tree with a snapshot taken before you started. A round that "
+    "adds a suppression comment, edits `.agentharden-ignore`, `.agentharden-baseline.json` or a scanner's ignore or config "
     "file, deletes, empties or moves a file that had findings, deletes or empties a test, or changes how the "
     "test command is defined gets no credit, and you will be asked to revert it. A false positive is not a "
     "reason to do any of these: leave it and list it in your report.\n\n"
@@ -118,7 +118,7 @@ def resolve_agent(spec) -> list:
 
 
 def _launchable(cmd: list) -> list:
-    """Resolve the executable now, from where hardn was started, so the repo's directory cannot redirect it."""
+    """Resolve the executable now, from where agentharden was started, so the repo's directory cannot redirect it."""
     exe = cmd[0]
     if os.sep in exe or (os.altsep and os.altsep in exe):
         path = os.path.abspath(exe)
@@ -198,17 +198,17 @@ def _agent_config(root: str, name: str) -> list:
 
 
 def _prepare_out_dir(root: str) -> str:
-    out_dir = os.path.join(root, ".hardn")
+    out_dir = os.path.join(root, ".agentharden")
     if os.path.islink(out_dir):
-        raise FixError(".hardn is a symlink; refusing to write the prompt through it.")
+        raise FixError(".agentharden is a symlink; refusing to write the prompt through it.")
     output.ensure_out_dir(out_dir)
     if os.path.dirname(os.path.realpath(out_dir)) != os.path.realpath(root):
-        raise FixError(".hardn resolves outside the repository; refusing to write there.")
+        raise FixError(".agentharden resolves outside the repository; refusing to write there.")
     return out_dir
 
 
 def _write_prompt_file(path: str, text: str) -> None:
-    """The only place hardn fix writes the prompt file: atomic, no symlink follow, mode 0600."""
+    """The only place agentharden fix writes the prompt file: atomic, no symlink follow, mode 0600."""
     try:
         output.write_file(os.path.dirname(path), os.path.basename(path), text)
     except (OSError, output.OutputError) as exc:
@@ -250,7 +250,7 @@ def run(root: str, agent=None, target: int | None = None, max_rounds: int = 3, t
     if max_rounds < 1:
         raise FixError("--rounds must be 1 or more.")
     if _git(root, "rev-parse", "--is-inside-work-tree", check=False).strip() != "true":
-        raise FixError("`hardn fix` needs a git repository so every change is reviewable and revertible "
+        raise FixError("`agentharden fix` needs a git repository so every change is reviewable and revertible "
                        "(run `git init && git add -A && git commit -m init` first).")
     if not allow_dirty and _git(root, "status", "--porcelain").strip():
         raise FixError("working tree has uncommitted changes. Commit or stash them first so the agent's "
@@ -265,7 +265,7 @@ def run(root: str, agent=None, target: int | None = None, max_rounds: int = 3, t
     start_level = level(start_findings, result.gaps)
     _, target, _ = prompt.build(result, target=target, max_tasks=max_tasks)
     start_count = _in_scope(start_findings, target)
-    say(f"\n  {output.c('hardn fix', '1')} · L{start_level} {LEVELS[start_level]} → goal "
+    say(f"\n  {output.c('agentharden fix', '1')} · L{start_level} {LEVELS[start_level]} → goal "
         f"{output.c(f'L{target} {LEVELS[target]}', '1')} · {start_count} in-scope finding(s) · agent: "
         f"{_clean(shown_cmd[0])}")
     baselined = (result.hidden or {}).get("baselined")
@@ -313,7 +313,7 @@ def run(root: str, agent=None, target: int | None = None, max_rounds: int = 3, t
     created = None
     try:
         if branch:
-            created = "hardn/fix-" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+            created = "agentharden/fix-" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
             _git(root, "switch", "-c", created)
             say(f"  Working on new branch {output.c(created, '36')}")
         state = {"root": root, "snap": snap, "cmd": cmd, "name": name, "target": target, "max_tasks": max_tasks,
@@ -356,7 +356,7 @@ def _loop(st: dict, result, max_rounds: int, start_findings: list, start_level: 
         violations = guard.check(snap)
         if guard.head_moved(snap) and not committed:
             committed = True
-            say(output.c("  The agent made git commits. hardn compares files, so they are still checked; review "
+            say(output.c("  The agent made git commits. agentharden compares files, so they are still checked; review "
                          f"them with `git log {snap.head[:12]}..HEAD`.", "33"))
         notes = []
         tests_ok = True
@@ -414,20 +414,20 @@ def _loop(st: dict, result, max_rounds: int, start_findings: list, start_level: 
     if stat:
         say("\n" + "\n".join("    " + _clean(ln) for ln in stat))
     say("\n  Next: review with `git diff`, run your app/tests, then commit.")
-    say("  If the agent reported false positives, check each one yourself. To accept one, add a `hardn:ignore` "
-        "comment with the reason on that line, or record it with `hardn baseline`. hardn fix never does that for you.")
+    say("  If the agent reported false positives, check each one yourself. To accept one, add a `agentharden:ignore` "
+        "comment with the reason on that line, or record it with `agentharden baseline`. agentharden fix never does that for you.")
     undo = _undo(snap, created, switch_back, st["allow_dirty"])
     if undo:
         say(f"  Undo everything: `{undo}`")
         if st["allow_dirty"]:
-            say("  (This restores the files as they were when hardn fix started, your uncommitted work included. "
+            say("  (This restores the files as they were when agentharden fix started, your uncommitted work included. "
                 "It reads a snapshot in your temp directory, so run it before that is cleared.)")
-    say("  Open items and human-only steps (credential rotation) are in .hardn/FIX_PROMPT.md\n")
+    say("  Open items and human-only steps (credential rotation) are in .agentharden/FIX_PROMPT.md\n")
     return 0 if reached else 1
 
 
 def _undo(snap, created: str | None, switch_back: str, allow_dirty: bool) -> str:
-    """A command that returns the repo to its state before `hardn fix`, without touching earlier work."""
+    """A command that returns the repo to its state before `agentharden fix`, without touching earlier work."""
     tail = f" && {switch_back} && git branch -D {shlex.quote(created)}" if created and switch_back else ""
     if allow_dirty:
         return guard.restore_command(snap) + tail
@@ -467,7 +467,7 @@ def _spawn(argv, cwd: str, env: dict, stdin_text, timeout: int, capture: bool = 
     """Run in a new process group and return (exit code, captured text, timed out). The group is killed on
     timeout, on KeyboardInterrupt, and after the leader exits."""
     kw = {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == "nt" else {"start_new_session": True}
-    proc = subprocess.Popen(  # hardn:ignore — the user's own --test command; shell syntax (&&, |) is intended
+    proc = subprocess.Popen(  # agentharden:ignore — the user's own --test command; shell syntax (&&, |) is intended
         argv, cwd=cwd, env=env, shell=shell,
         stdin=subprocess.PIPE if stdin_text is not None else subprocess.DEVNULL,
         stdout=subprocess.PIPE if capture else None, stderr=subprocess.STDOUT if capture else None, **kw)

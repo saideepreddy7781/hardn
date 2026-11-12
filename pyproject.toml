@@ -4,9 +4,9 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "hardn"
+name = "agentharden"
 dynamic = ["version"]
-description = "Offline security scanner that turns findings into an AI-ready fix prompt — and can drive an agent to fix them."
+description = "Offline security scanner that writes an AI-ready fix prompt and runs coding agents in a fix loop that a hostile repo cannot steer or game."
 readme = "README.md"
 requires-python = ">=3.9"
 license = "Apache-2.0"
@@ -25,18 +25,18 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/saideepreddy7781/hardn"
-Issues = "https://github.com/saideepreddy7781/hardn/issues"
-Changelog = "https://github.com/saideepreddy7781/hardn/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/saideepreddy7781/agentharden"
+Issues = "https://github.com/saideepreddy7781/agentharden/issues"
+Changelog = "https://github.com/saideepreddy7781/agentharden/blob/main/CHANGELOG.md"
 
 [project.scripts]
-hardn = "hardn.cli:main"
+agentharden = "agentharden.cli:main"
 
 [tool.setuptools]
-packages = ["hardn"]
+packages = ["agentharden"]
 
 [tool.setuptools.dynamic]
-version = { attr = "hardn.__version__" }
+version = { attr = "agentharden.__version__" }
 
 [tool.ruff]
 target-version = "py39"

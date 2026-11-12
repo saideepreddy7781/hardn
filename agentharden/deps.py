@@ -1,6 +1,6 @@
 """Offline dependency vulnerability matching against a local OSV.dev mirror (SQLite).
 
-`hardn update` is the only networked command: it downloads OSV's free per-ecosystem
+`agentharden update` is the only networked command: it downloads OSV's free per-ecosystem
 dumps (which aggregate GitHub Security Advisories, PyPA, RustSec, Go vulndb, ...) plus
 CISA's Known Exploited Vulnerabilities catalog. Every scan afterwards is fully offline.
 
@@ -31,7 +31,7 @@ from xml.etree import ElementTree
 from . import walker
 from .models import SEV_RANK, Finding
 
-HOME = Path(os.environ.get("HARDN_HOME", Path.home() / ".hardn"))
+HOME = Path(os.environ.get("AGENTHARDEN_HOME", Path.home() / ".agentharden"))
 OSV_URL = "https://osv-vulnerabilities.storage.googleapis.com/{eco}/all.zip"
 KEV_URL = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
 DEFAULT_ECOSYSTEMS = ("npm", "PyPI", "Go", "Maven", "RubyGems", "crates.io", "Packagist")
@@ -100,8 +100,8 @@ def _schema_state(con: sqlite3.Connection) -> str:
 def _db_problem(path: Path, exc: Exception) -> str:
     if "locked" in str(exc) or "busy" in str(exc):
         return (f"The advisory database at {path} stayed locked by another process for 30 seconds "
-                "(probably a running `hardn update`). Scan again when it finishes.")
-    return f"The advisory database at {path} is damaged ({exc}). Run `hardn update`."
+                "(probably a running `agentharden update`). Scan again when it finishes.")
+    return f"The advisory database at {path} is damaged ({exc}). Run `agentharden update`."
 
 
 def _connect(path: Path | None = None, create: bool = True) -> sqlite3.Connection:
@@ -120,10 +120,10 @@ def _connect(path: Path | None = None, create: bool = True) -> sqlite3.Connectio
             con.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
             con.commit()
         elif state == "newer":
-            raise AdvisoryDbError(f"The advisory database at {path} was written by a newer hardn. "
-                                  "Upgrade hardn or run `hardn update`.")
+            raise AdvisoryDbError(f"The advisory database at {path} was written by a newer agentharden. "
+                                  "Upgrade agentharden or run `agentharden update`.")
         elif state == "old":
-            raise AdvisoryDbError(f"The advisory database at {path} uses an old format. Run `hardn update`.")
+            raise AdvisoryDbError(f"The advisory database at {path} uses an old format. Run `agentharden update`.")
         return con
     except sqlite3.Error as exc:
         con.close()
@@ -138,7 +138,7 @@ def _open_for_update(path: Path) -> sqlite3.Connection:
     try:
         return _connect(path)
     except (AdvisoryDbError, sqlite3.Error) as exc:
-        if "newer hardn" in str(exc):
+        if "newer agentharden" in str(exc):
             raise
         for suffix in ("", "-journal", "-wal", "-shm"):
             try:
@@ -186,7 +186,7 @@ _NET_ERRORS = (OSError, http.client.HTTPException, ValueError)
 
 def _download(url: str, ctx, dest, limit: int) -> int:
     total = 0
-    req = urllib.request.Request(url, headers={"User-Agent": "hardn"})
+    req = urllib.request.Request(url, headers={"User-Agent": "agentharden"})
     with urllib.request.urlopen(req, timeout=120, context=ctx) as resp:
         while True:
             chunk = resp.read(1 << 20)
@@ -1667,7 +1667,7 @@ def _xml_text(el, name) -> str:
 def _load_pom(full: str):
     text = _read(full)
     if "<!ENTITY" in text:
-        raise LockfileError("declares XML entities, which hardn does not expand")
+        raise LockfileError("declares XML entities, which agentharden does not expand")
     try:
         return ElementTree.fromstring(text.encode("utf-8"))
     except ElementTree.ParseError as exc:
@@ -1746,7 +1746,7 @@ def _pom(root: str, rel: str, problems: list):
             continue
         yield name, ver, scope == "test", True, "registry"
     if unresolved and imports:
-        problems.append(f"{rel} imports a BOM, which hardn cannot read offline, so {len(unresolved)} Maven "
+        problems.append(f"{rel} imports a BOM, which agentharden cannot read offline, so {len(unresolved)} Maven "
                         f"dependencies have no known version ({', '.join(unresolved[:3])}).")
 
 
@@ -1837,7 +1837,7 @@ def collect_packages(root: str, all_paths: list) -> list:
     """Every dependency entry: Package(eco, name, version, path, dev, direct, source).
 
     Entries with an empty version are unpinned or unreadable. They still name the ecosystem, so
-    `hardn update --for` downloads data for every ecosystem the project uses.
+    `agentharden update --for` downloads data for every ecosystem the project uses.
     """
     return _collect(root, all_paths)[0]
 
@@ -1901,7 +1901,7 @@ def scan(root: str, all_paths: list, db: Path | None = None):
             files = sorted({p.path for p in items})
             gaps.append(f"{len(names)} {eco} requirement{'s' if len(names) != 1 else ''} in {', '.join(files[:3])} "
                         f"{'have' if len(names) != 1 else 'has'} no pinned version ({', '.join(names[:5])}"
-                        f"{', ...' if len(names) > 5 else ''}), so hardn cannot tell which release is installed. "
+                        f"{', ...' if len(names) > 5 else ''}), so agentharden cannot tell which release is installed. "
                         "Pin exact versions or commit a lockfile.")
     extras = []
     if unpinned:
@@ -1920,18 +1920,18 @@ def scan(root: str, all_paths: list, db: Path | None = None):
     st = status(db)
     if st.get("error"):
         gaps.append(f"{len(merged)} {_eco_list(used)} packages were not checked. {st['error']}")
-        return [], f"{len(merged)} packages found, advisory DB unusable — run `hardn update`" + tail, gaps
+        return [], f"{len(merged)} packages found, advisory DB unusable — run `agentharden update`" + tail, gaps
     if not st["present"]:
         gaps.append(f"There is no advisory data, so {len(merged)} {_eco_list(used)} packages were not checked "
-                    "for known vulnerabilities. Run `hardn update`.")
-        return [], f"{len(merged)} packages found, no advisory DB — run `hardn update`" + tail, gaps
+                    "for known vulnerabilities. Run `agentharden update`.")
+        return [], f"{len(merged)} packages found, no advisory DB — run `agentharden update`" + tail, gaps
     covered = set(st["ecosystems"])
     missing = [e for e in used if e not in covered]
     for eco in missing:
         n = sum(1 for p, _ in merged if p.eco == eco)
         gaps.append(f"The advisory database has no {eco} data, so {n} {eco} package{'s' if n != 1 else ''} "
-                    f"{'were' if n != 1 else 'was'} not checked. Run `hardn update` "
-                    f"(or `hardn update --ecosystems {eco}`).")
+                    f"{'were' if n != 1 else 'was'} not checked. Run `agentharden update` "
+                    f"(or `agentharden update --ecosystems {eco}`).")
     ages = st.get("eco_age_days") or {}
     checked_ecos = [e for e in used if e in covered]
     stale = [e for e in checked_ecos if ages.get(e) is None or ages[e] > STALE_DAYS]
@@ -1939,10 +1939,10 @@ def scan(root: str, all_paths: list, db: Path | None = None):
         known = [ages[e] for e in stale if ages.get(e) is not None]
         age = f"{max(known):.0f} days old" if known else "of unknown age"
         gaps.append(f"The {_eco_list(stale)} advisory data is {age}, past the {STALE_DAYS}-day limit, so newer "
-                    "advisories were not checked. Run `hardn update`.")
+                    "advisories were not checked. Run `agentharden update`.")
     if st.get("legacy"):
-        gaps.append("The advisory database was written by an older hardn, so severities may be understated. "
-                    "Run `hardn update`.")
+        gaps.append("The advisory database was written by an older agentharden, so severities may be understated. "
+                    "Run `agentharden update`.")
     try:
         con = _connect(db, create=False)
     except AdvisoryDbError as exc:
@@ -1953,7 +1953,7 @@ def scan(root: str, all_paths: list, db: Path | None = None):
         kev = {r[0] for r in con.execute("SELECT cve FROM kev")}
         if not kev:
             gaps.append("The CISA known-exploited list is missing, so actively exploited packages are not raised "
-                        "to critical. Run `hardn update`.")
+                        "to critical. Run `agentharden update`.")
         for p, also in merged:
             if p.eco not in covered:
                 continue
@@ -1967,7 +1967,7 @@ def scan(root: str, all_paths: list, db: Path | None = None):
                 findings.append(f)
     except (sqlite3.Error, ValueError, TypeError) as exc:
         gaps.append(f"Reading the advisory database failed ({exc}), so the dependency results are incomplete. "
-                    "Run `hardn update`.")
+                    "Run `agentharden update`.")
     finally:
         con.close()
     n_checked = sum(1 for p, _ in merged if p.eco in covered)
@@ -1977,7 +1977,7 @@ def scan(root: str, all_paths: list, db: Path | None = None):
         note = f"{n_checked} packages checked"
     age = st.get("age_days")
     if age is not None and age > WARN_DAYS:
-        note += f" · advisories {age:.0f}d old — run `hardn update`"
+        note += f" · advisories {age:.0f}d old — run `agentharden update`"
     return findings, note + tail, gaps
 
 

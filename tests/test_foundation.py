@@ -4,8 +4,8 @@ import subprocess
 import tempfile
 import unittest
 
-from hardn import context, gitsafe, scoring
-from hardn.models import Finding
+from agentharden import context, gitsafe, scoring
+from agentharden.models import Finding
 
 
 def _git(root, *args):
@@ -14,7 +14,7 @@ def _git(root, *args):
 
 
 class GitSafeTests(unittest.TestCase):
-    """A repo's own .git/config must never make hardn run a program."""
+    """A repo's own .git/config must never make agentharden run a program."""
 
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

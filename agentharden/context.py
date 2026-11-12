@@ -1,7 +1,7 @@
 """Where does a file sit in the project? A SQL string in docs/ is not an exposed production endpoint.
 
 Findings outside application code are still reported, but they do not set the security level. Secrets are the
-exception: a live key is just as leaked from tests/ as from src/. `hardn scan --untrusted` turns this off.
+exception: a live key is just as leaked from tests/ as from src/. `agentharden scan --untrusted` turns this off.
 """
 from __future__ import annotations
 

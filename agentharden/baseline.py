@@ -7,7 +7,7 @@ the source line, so replacing a baselined key with a different key on the same l
 value is never written. The redacted code already pins everything on the line except the value, so a hash of
 the line changes exactly when the value does.
 
-Format 2 keeps format 1's keys (path-bound fingerprints), so an older hardn can still read the file.
+Format 2 keeps format 1's keys (path-bound fingerprints), so an older agentharden can still read the file.
 """
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ import stat
 
 from . import __version__, output
 
-FILENAME = ".hardn-baseline.json"
+FILENAME = ".agentharden-baseline.json"
 FORMAT = 2
 MAX_BASELINE_BYTES = 50_000_000
 _MAX_PAIRS = 40_000  # beyond this, pair findings and entries in order instead of by distance
@@ -89,7 +89,7 @@ def save(root: str, findings: list, path: str | None = None) -> str:
             entry["value_hmac"] = value
         entries[fp] = entry
     doc = {
-        "tool": "hardn", "version": __version__, "format": FORMAT,
+        "tool": "agentharden", "version": __version__, "format": FORMAT,
         "created": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "salt": salt.hex(), "count": len(entries), "findings": dict(sorted(entries.items())),
     }
@@ -128,12 +128,12 @@ def load(path: str) -> Known:
         raw = read_regular(path, MAX_BASELINE_BYTES)
         doc = json.loads(raw.decode("utf-8", errors="replace"))
     except (OSError, ValueError) as exc:
-        raise BaselineError(f"cannot read baseline {path}: {exc}. Re-create it with `hardn baseline`") from exc
+        raise BaselineError(f"cannot read baseline {path}: {exc}. Re-create it with `agentharden baseline`") from exc
     found = doc.get("findings") if isinstance(doc, dict) else None
     if isinstance(found, list):
         found = {str(k): {} for k in found}
     if not isinstance(found, dict):
-        raise BaselineError(f"baseline {path} has no findings table. Re-create it with `hardn baseline`")
+        raise BaselineError(f"baseline {path} has no findings table. Re-create it with `agentharden baseline`")
     try:
         salt = bytes.fromhex(str(doc.get("salt", "")))
     except ValueError:

@@ -14,13 +14,13 @@ from .scoring import LEVELS, TARGETS
 
 COMMANDS = {"scan", "fix", "baseline", "init", "update", "doctor", "rules"}
 EPILOG = """examples:
-  hardn                               scan the current directory
-  hardn ./app --target hardened       prompt for a specific security level
-  hardn fix --agent claude            let a coding agent fix it, re-scan, repeat
-  hardn scan --diff origin/main       only findings on lines changed since main
-  hardn baseline                      accept current findings; fail only on new ones
-  hardn init                          add a GitHub Actions workflow to this repo
-  hardn scan ./theirs --untrusted     ignore the repo's own .hardnignore, baseline and suppressions
+  agentharden                               scan the current directory
+  agentharden ./app --target hardened       prompt for a specific security level
+  agentharden fix --agent claude            let a coding agent fix it, re-scan, repeat
+  agentharden scan --diff origin/main       only findings on lines changed since main
+  agentharden baseline                      accept current findings; fail only on new ones
+  agentharden init                          add a GitHub Actions workflow to this repo
+  agentharden scan ./theirs --untrusted     ignore the repo's own .agentharden-ignore, baseline and suppressions
 
 exit codes:
   0  no app-code finding at or above --fail-on
@@ -48,11 +48,11 @@ def main(argv=None) -> int:
     _utf8_streams()
     argv = list(sys.argv[1:] if argv is None else argv)
     if not argv or (argv[0] not in COMMANDS and argv[0] not in ("-h", "--help", "--version")):
-        argv.insert(0, "scan")  # `hardn` / `hardn ./app` == `hardn scan ./app`
+        argv.insert(0, "scan")  # `agentharden` / `agentharden ./app` == `agentharden scan ./app`
 
-    p = argparse.ArgumentParser(prog="hardn", description="Offline security scanner → AI-ready remediation prompt.",
+    p = argparse.ArgumentParser(prog="agentharden", description="Offline security scanner → AI-ready remediation prompt.",
                                 epilog=EPILOG, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--version", action="version", version=f"hardn {__version__}")
+    p.add_argument("--version", action="version", version=f"agentharden {__version__}")
     sub = p.add_subparsers(dest="cmd", metavar="command")
 
     def common(sp):
@@ -64,7 +64,7 @@ def main(argv=None) -> int:
     s = sub.add_parser("scan", help="scan a codebase and write the fix prompt (default command)",
                        epilog=EPILOG, formatter_class=argparse.RawDescriptionHelpFormatter)
     common(s)
-    s.add_argument("-o", "--out", help="output directory (default: <path>/.hardn)")
+    s.add_argument("-o", "--out", help="output directory (default: <path>/.agentharden)")
     s.add_argument("--fail-on", choices=SEVERITIES[1:],
                    help="exit 1 if an app-code finding is at or above this severity")
     s.add_argument("--diff", nargs="?", const="HEAD", metavar="REF",
@@ -81,7 +81,7 @@ def main(argv=None) -> int:
     s.add_argument("--strict", action="store_true",
                    help="exit 3 when the scan has blind spots (checks that could not run)")
     s.add_argument("--untrusted", action="store_true",
-                   help="for repos you do not trust: ignore their .hardnignore, baseline and inline suppressions, "
+                   help="for repos you do not trust: ignore their .agentharden-ignore, baseline and inline suppressions, "
                         "and count findings in tests, docs and examples too")
 
     fx = sub.add_parser("fix", help="run a coding agent on the prompt, re-scan, and repeat until the target level")
@@ -116,7 +116,7 @@ def main(argv=None) -> int:
     u.add_argument("--semgrep-rules", action="store_true", help="also clone/refresh the Semgrep community rules")
 
     sub.add_parser("doctor", help="show engines, databases, and how to install missing tools")
-    r = sub.add_parser("rules", help="list every rule, or explain one: hardn rules PY004")
+    r = sub.add_parser("rules", help="list every rule, or explain one: agentharden rules PY004")
     r.add_argument("rule", nargs="?")
 
     a = p.parse_args(argv)
@@ -135,10 +135,10 @@ def main(argv=None) -> int:
             return cmd_rules(a)
         return cmd_scan(a)
     except (fix.FixError, gitdiff.DiffError, baseline.BaselineError, output.OutputError, UsageError) as exc:
-        print(f"hardn: {output.clean(exc)}", file=sys.stderr)
+        print(f"agentharden: {output.clean(exc)}", file=sys.stderr)
         return 2
     except KeyboardInterrupt:
-        print("\nhardn: interrupted", file=sys.stderr)
+        print("\nagentharden: interrupted", file=sys.stderr)
         return 130
     except BrokenPipeError:
         try:  # the reader went away (e.g. `| head`): stop quietly
@@ -148,7 +148,7 @@ def main(argv=None) -> int:
         return 0
     except Exception:  # noqa: BLE001 - exit 2, never 1, so CI can tell a crash from findings
         traceback.print_exc()
-        print("hardn: unexpected error (exit 2). Please report it with the traceback above.", file=sys.stderr)
+        print("agentharden: unexpected error (exit 2). Please report it with the traceback above.", file=sys.stderr)
         return 2
 
 
@@ -187,7 +187,7 @@ def cmd_scan(a) -> int:
     changes = gitdiff.changed_lines(root, a.diff) if a.diff else None  # a bad ref fails before the scan
     bl_path = _baseline_path(a, root)
     known = baseline.load(bl_path) if bl_path else None
-    out_dir = os.path.abspath(a.out) if a.out else os.path.join(root, ".hardn")
+    out_dir = os.path.abspath(a.out) if a.out else os.path.join(root, ".agentharden")
     stdout_only = a.print_prompt or a.json
     out_error = None
     try:
@@ -247,7 +247,7 @@ def cmd_scan(a) -> int:
         _copy(text, a.quiet)
 
     if out_error is not None:
-        print(f"hardn: {output.clean(out_error)}", file=sys.stderr)
+        print(f"agentharden: {output.clean(out_error)}", file=sys.stderr)
         return 2
     if a.fail_on and any(f.counts and f.rank >= SEV_RANK[a.fail_on] for f in result.findings):
         return 1
@@ -272,7 +272,7 @@ def cmd_baseline(a) -> int:
                         for s in reversed(SEVERITIES) if any(f.severity == s for f in result.findings))
     print(f"\n  {output.c('✓', '32')} Baselined {len(result.findings)} finding(s) → {output.clean(output.rel(path))}"
           + (f"  ({counts})" if counts else ""))
-    print("    Commit this file. `hardn scan` now reports only new findings; use --no-baseline to see everything.")
+    print("    Commit this file. `agentharden scan` now reports only new findings; use --no-baseline to see everything.")
     for line in output.blind_spot_lines(result):
         print(f"    {line.strip()}")
     print()
@@ -281,8 +281,8 @@ def cmd_baseline(a) -> int:
 
 # Actions are pinned to full commit SHAs. The comment names the release each SHA belongs to.
 WORKFLOW = """\
-# Generated by `hardn init`: https://github.com/saideepreddy7781/hardn
-name: hardn security scan
+# Generated by `agentharden init`: https://github.com/saideepreddy7781/agentharden
+name: agentharden security scan
 
 on:
   pull_request:
@@ -294,7 +294,7 @@ permissions:
   security-events: write   # upload SARIF to the Security tab
 
 jobs:
-  hardn:
+  agentharden:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -303,35 +303,35 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
         with:
           python-version: "3.12"
-      # Installs this exact release from GitHub. The PyPI name "hardn" belongs to an unrelated project.
-      - run: pip install "git+https://github.com/saideepreddy7781/hardn@v__VERSION__"
+      # Installs this exact release from GitHub. The PyPI name "agentharden" belongs to an unrelated project.
+      - run: pip install "git+https://github.com/saideepreddy7781/agentharden@v__VERSION__"
       - id: week
         run: echo "w=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0, advisory DB refreshed weekly
         with:
-          path: ~/.hardn
-          key: hardn-db-${{ steps.week.outputs.w }}
-          restore-keys: hardn-db-
-      - run: hardn update --for . || echo "advisory update failed; scanning with cached data"
+          path: ~/.agentharden
+          key: agentharden-db-${{ steps.week.outputs.w }}
+          restore-keys: agentharden-db-
+      - run: agentharden update --for . || echo "advisory update failed; scanning with cached data"
       - name: Scan
         env:
           BASE_REF: ${{ github.base_ref }}
         run: |
           if [ -n "$BASE_REF" ]; then
-            hardn scan . --sarif --fail-on __FAIL_ON__ --diff "origin/$BASE_REF"
+            agentharden scan . --sarif --fail-on __FAIL_ON__ --diff "origin/$BASE_REF"
           else
-            hardn scan . --sarif --fail-on __FAIL_ON__
+            agentharden scan . --sarif --fail-on __FAIL_ON__
           fi
       - uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066  # v4.39.3
         if: always()
         continue-on-error: true   # code scanning must be enabled for the repo
         with:
-          sarif_file: .hardn/results.sarif
+          sarif_file: .agentharden/results.sarif
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
         if: always()
         with:
-          name: hardn-report
-          path: .hardn/
+          name: agentharden-report
+          path: .agentharden/
           include-hidden-files: true
 """
 
@@ -344,7 +344,7 @@ def cmd_init(a) -> int:
     _require_dir(a.path)
     root = os.path.abspath(a.path)
     wf_dir = os.path.join(root, ".github", "workflows")
-    wf = os.path.join(wf_dir, "hardn.yml")
+    wf = os.path.join(wf_dir, "agentharden.yml")
     wrote = False
     if os.path.lexists(wf) and not a.force:
         print(f"  {output.clean(output.rel(wf))} already exists (use --force to overwrite)")
@@ -353,7 +353,7 @@ def cmd_init(a) -> int:
             os.makedirs(wf_dir, exist_ok=True)
         except OSError as exc:
             raise output.OutputError(f"cannot create {wf_dir}: {exc.strerror or exc}") from exc
-        output.write_file(wf_dir, "hardn.yml", workflow_text(a.fail_on))
+        output.write_file(wf_dir, "agentharden.yml", workflow_text(a.fail_on))
         os.chmod(wf, 0o644)  # a workflow is meant to be committed and read by others
         wrote = True
         print(f"  {output.c('✓', '32')} wrote {output.clean(output.rel(wf))} "
@@ -364,7 +364,7 @@ def cmd_init(a) -> int:
         wrote = True
         print(f"  {output.c('✓', '32')} baselined {len(result.findings)} finding(s) → {output.clean(output.rel(path))}")
     if wrote:
-        print("\n  Commit the new file(s) and push. Each PR now gets a hardn check.\n")
+        print("\n  Commit the new file(s) and push. Each PR now gets a agentharden check.\n")
     return 0
 
 
@@ -373,16 +373,16 @@ def cmd_rules(a) -> int:
     if a.rule:
         r = output.explain_rule(a.rule, catalog)
         if not r:
-            print(f"hardn: unknown rule {output.clean(a.rule)} (see `hardn rules`)", file=sys.stderr)
+            print(f"agentharden: unknown rule {output.clean(a.rule)} (see `agentharden rules`)", file=sys.stderr)
             return 2
         print(f"\n  {output.c(r['id'], '1')} · {r['severity']} · {r['cwe'] or 'no CWE'} · {r['kind']}\n  {r['title']}\n")
         if r.get("applies"):
             print(f"  Applies to: {r['applies']}")
         print(f"  Fix: {r['fix']}\n")
         if r["kind"] in ("code", "config", "secret"):
-            print("  Suppress a verified false positive with a `hardn:ignore` comment on the line.\n")
+            print("  Suppress a verified false positive with a `agentharden:ignore` comment on the line.\n")
         elif r["kind"] in ("taint", "posture", "dependency"):
-            print("  Accept a verified false positive with `hardn baseline`, or exclude the path in .hardnignore.\n")
+            print("  Accept a verified false positive with `agentharden baseline`, or exclude the path in .agentharden-ignore.\n")
         return 0
     for rid, r in catalog.items():
         print(f"{rid:<8} {r['severity']:<9} {r['cwe'] or '-':<10} {r['title']}")
@@ -398,7 +398,7 @@ def _copy(text: str, quiet: bool) -> None:
             if not quiet:
                 print(output.c("  ✓ prompt copied to clipboard", "32"))
             return
-    print("hardn: no clipboard tool found (pbcopy / wl-copy / xclip)", file=sys.stderr)
+    print("agentharden: no clipboard tool found (pbcopy / wl-copy / xclip)", file=sys.stderr)
 
 
 def cmd_update(a) -> int:
@@ -435,7 +435,7 @@ def cmd_update(a) -> int:
 
 def cmd_doctor() -> int:
     ok, dash = output.c("✓", "32"), output.c("–", "33")
-    print(f"\nhardn {__version__} · Python {sys.version.split()[0]} · home {deps.HOME}\n")
+    print(f"\nagentharden {__version__} · Python {sys.version.split()[0]} · home {deps.HOME}\n")
     print(f"  {ok} built-in engines: {len(code_rules.RULES)} code rules, Python AST + JS taint tracking, secrets, "
           "posture checks")
     st = deps.status()
@@ -444,17 +444,17 @@ def cmd_doctor() -> int:
         ecos = ", ".join(f"{k} {v:,}" for k, v in sorted(st["ecosystems"].items()))
         print(f"  {ok} OSV advisories ({age}): {ecos}; CISA KEV {st['kev']:,} CVEs")
     else:
-        print(f"  {dash} OSV advisory DB missing: run `hardn update` once while online")
+        print(f"  {dash} OSV advisory DB missing: run `agentharden update` once while online")
     for name, path in engines.available().items():
         if path:
             extra = ""
-            if name == "semgrep" and not engines.SEMGREP_RULES.is_dir() and not os.environ.get("HARDN_SEMGREP_CONFIG"):
-                extra = output.c("  (no offline rules: `hardn update --semgrep-rules`)", "33")
+            if name == "semgrep" and not engines.SEMGREP_RULES.is_dir() and not os.environ.get("AGENTHARDEN_SEMGREP_CONFIG"):
+                extra = output.c("  (no offline rules: `agentharden update --semgrep-rules`)", "33")
             print(f"  {ok} {name:<9} {path}{extra}")
         else:
             print(f"  {dash} {name:<9} optional: {engines.INSTALL_HINTS[name]}")
     agents = [n for n in fix.AGENTS if shutil.which(n)]
-    print(f"  {ok if agents else dash} agents for `hardn fix`: {', '.join(agents) or 'none (install Claude Code, aider, or Codex)'}")
+    print(f"  {ok if agents else dash} agents for `agentharden fix`: {', '.join(agents) or 'none (install Claude Code, aider, or Codex)'}")
     print("\nLevels: " + " → ".join(f"L{i} {n}" for i, n in enumerate(LEVELS)) + "\n")
     return 0
 

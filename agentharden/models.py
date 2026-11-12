@@ -17,7 +17,7 @@ class Finding:
     snippet: str = ""
     cwe: str = ""
     fix: str = ""
-    sources: list = field(default_factory=lambda: ["hardn"])
+    sources: list = field(default_factory=lambda: ["agentharden"])
     extra: dict = field(default_factory=dict)
     context: str = "app"  # app | test | docs | example | vendor | generated | dev-dependency
 

@@ -20,7 +20,7 @@ from .scoring import LEVELS, grade, level, score
 
 _COLOR = sys.stdout.isatty() and not os.environ.get("NO_COLOR") and os.environ.get("TERM") != "dumb"
 SEV_STYLE = {"critical": "1;97;41", "high": "1;31", "medium": "33", "low": "36", "info": "2"}
-REPO_URL = "https://github.com/saideepreddy7781/hardn"
+REPO_URL = "https://github.com/saideepreddy7781/agentharden"
 
 # C0 and C1 control characters, DEL, and the bidi overrides that can make a terminal show text out of order.
 _CONTROL = re.compile("[\x00-\x1f\x7f-\x9f‪-‮⁦-⁩]")
@@ -63,11 +63,11 @@ def _refuse_unsafe(path: str, want_dir: bool = False) -> None:
     except OSError as exc:
         raise OutputError(f"cannot check {path}: {exc.strerror or exc}") from exc
     if stat.S_ISLNK(mode):
-        raise OutputError(f"{path} is a symlink; hardn will not write through it. Remove it or use -o DIR")
+        raise OutputError(f"{path} is a symlink; agentharden will not write through it. Remove it or use -o DIR")
     if want_dir and not stat.S_ISDIR(mode):
         raise OutputError(f"{path} exists and is not a directory. Remove it or use -o DIR")
     if not want_dir and not stat.S_ISREG(mode):
-        raise OutputError(f"{path} exists and is not a regular file; hardn will not overwrite it")
+        raise OutputError(f"{path} exists and is not a regular file; agentharden will not overwrite it")
 
 
 def write_file(directory: str, name: str, text: str) -> str:
@@ -107,8 +107,8 @@ def ensure_out_dir(out_dir: str) -> None:
         raise OutputError(f"cannot create {out_dir}: {exc.strerror or exc}. Use -o DIR to write reports elsewhere") \
             from exc
     _refuse_unsafe(out_dir, want_dir=True)
-    # Always overwrite: a repo that ships `.hardn/.gitignore` containing `!*` would make reports committable.
-    write_file(out_dir, ".gitignore", "# hardn output: keep reports out of version control\n*\n")
+    # Always overwrite: a repo that ships `.agentharden/.gitignore` containing `!*` would make reports committable.
+    write_file(out_dir, ".gitignore", "# agentharden output: keep reports out of version control\n*\n")
 
 
 # ---------------------------------------------------------------- terminal summary
@@ -133,9 +133,9 @@ def gap_text(gap) -> str:
 
 def hidden_text(result) -> str:
     if getattr(result, "untrusted", False):
-        return "nothing (--untrusted ignores .hardnignore, baselines and inline suppressions)"
+        return "nothing (--untrusted ignores .agentharden-ignore, baselines and inline suppressions)"
     h = result.hidden or {}
-    return (f"{h.get('inline', 0)} suppressed inline · {h.get('hardnignore', 0)} files excluded by .hardnignore · "
+    return (f"{h.get('inline', 0)} suppressed inline · {h.get('ignorefile', 0)} files excluded by .agentharden-ignore · "
             f"{h.get('baselined', 0)} baselined")
 
 
@@ -172,7 +172,7 @@ def render(result, prompt_path: str, target: int, n_tasks: int, show: int = 15, 
     cur, s = level(graded, gaps), score(graded)
     counted = [x for x in shown if x.counts]
     outside = [x for x in shown if not x.counts]
-    out = ["", f"  {c('hardn', '1')} {c(__version__, '2')} · {clean(rel(result.root))}", ""]
+    out = ["", f"  {c('agentharden', '1')} {c(__version__, '2')} · {clean(rel(result.root))}", ""]
     eng = []
     for name, st in result.engines.items():
         ok = (st.startswith("ok") or "packages checked" in st) and "incomplete" not in st
@@ -200,7 +200,7 @@ def render(result, prompt_path: str, target: int, n_tasks: int, show: int = 15, 
         out.append(c(f"  … {len(visible) - show} more (full list: --verbose or report.json)", "2"))
     if not counted:
         if gaps:
-            out.append("  No findings in the parts hardn could check. The blind spots below may hide some.")
+            out.append("  No findings in the parts agentharden could check. The blind spots below may hide some.")
         elif level_findings is not None:
             out.append("  No findings on the changed lines.")
         else:
@@ -217,7 +217,7 @@ def render(result, prompt_path: str, target: int, n_tasks: int, show: int = 15, 
     out.append("")
 
     if gaps:
-        out.append(f"  {c('Blind spots', '1;33')}  hardn could not check the following, so this result is incomplete:")
+        out.append(f"  {c('Blind spots', '1;33')}  agentharden could not check the following, so this result is incomplete:")
         out += [f"    {c('!', '1;33')} {gap_text(g)}" for g in gaps]
         out.append("")
 
@@ -242,7 +242,7 @@ def render(result, prompt_path: str, target: int, n_tasks: int, show: int = 15, 
                    f"{'s' if n_tasks != 1 else ''} written to {c(clean(prompt_path), '4')}")
         out.append(c(f'    claude "$(cat {quoted})"', "36") + c("     # or paste into Cursor / Copilot / any LLM", "2"))
     elif cur == 4 and not gaps:
-        out.append(f"  {c('→', '1;36')} Top level reached. Keep it there: add `hardn scan . --fail-on low` to CI.")
+        out.append(f"  {c('→', '1;36')} Top level reached. Keep it there: add `agentharden scan . --fail-on low` to CI.")
     out.append("")
     return "\n".join(out)
 
@@ -252,7 +252,7 @@ def blind_spot_lines(result) -> list:
     gaps = list(result.gaps or [])
     if not gaps:
         return []
-    return [f"hardn: incomplete scan, {len(gaps)} blind spot(s):"] + [f"  ! {gap_text(g)}" for g in gaps]
+    return [f"agentharden: incomplete scan, {len(gaps)} blind spot(s):"] + [f"  ! {gap_text(g)}" for g in gaps]
 
 
 # ---------------------------------------------------------------- report.json
@@ -267,7 +267,7 @@ def report_dict(result, meta: dict | None = None, level_findings: list | None = 
     for x in outside:
         by_ctx[x.context] = by_ctx.get(x.context, 0) + 1
     return {
-        "tool": "hardn", "version": __version__, "root": result.root, "stack": result.stack,
+        "tool": "agentharden", "version": __version__, "root": result.root, "stack": result.stack,
         "engines": result.engines, "level": lvl, "level_name": LEVELS[lvl], "score": s, "grade": grade(s),
         "level_scope": "repository" if level_findings is not None else "findings",
         "complete": not gaps, "gaps": gaps, "untrusted": bool(getattr(result, "untrusted", False)),
@@ -313,13 +313,13 @@ POSTURE_RULES = {
     "POS032": ("No automated dependency updates", "low", "CWE-1104",
                "Set up automated dependency update pull requests for each package ecosystem."),
     "POS033": ("No security scanning in CI", "low", "",
-               "Run `hardn scan . --fail-on high` on every pull request."),
+               "Run `agentharden scan . --fail-on high` on every pull request."),
 }
 EXTERNAL_PREFIXES = {"gitleaks:": "gitleaks", "bandit:": "bandit", "trivy:": "trivy"}
 
 
 def rule_catalog() -> dict:
-    """Every built-in rule id hardn can report: {id: {title, severity, cwe, fix, kind, applies}}."""
+    """Every built-in rule id agentharden can report: {id: {title, severity, cwe, fix, kind, applies}}."""
     from . import code_rules, secrets, taint_js, taint_py  # local import: those modules import walker and models
 
     cat = {}
@@ -447,7 +447,7 @@ def sarif_doc(result, prefix: str = "") -> dict:
     return {
         "$schema": "https://json.schemastore.org/sarif-2.1.0.json", "version": "2.1.0",
         "runs": [{
-            "tool": {"driver": {"name": "hardn", "version": __version__, "semanticVersion": __version__,
+            "tool": {"driver": {"name": "agentharden", "version": __version__, "semanticVersion": __version__,
                                 "informationUri": REPO_URL, "rules": rules}},
             "invocations": [{"executionSuccessful": True, "toolExecutionNotifications": [
                 {"level": "warning", "message": {"text": f"Blind spot: {gap_text(g)}"}} for g in gaps]}],

@@ -1,4 +1,4 @@
-"""Prompt injection defence, the anti-gaming guard, and the safety of `hardn fix` itself."""
+"""Prompt injection defence, the anti-gaming guard, and the safety of `agentharden fix` itself."""
 import contextlib
 import importlib.util
 import io
@@ -14,8 +14,8 @@ import time
 import unittest
 from pathlib import Path
 
-from hardn import deps, engines, fix, guard, prompt, scanner
-from hardn.models import Finding, ScanResult
+from agentharden import deps, engines, fix, guard, prompt, scanner
+from agentharden.models import Finding, ScanResult
 
 ROOT = Path(__file__).resolve().parent.parent
 GIT_ENV = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@example.com", "GIT_COMMITTER_NAME": "t",
@@ -86,11 +86,11 @@ class SanitizerTest(unittest.TestCase):
         body = "````````` ## not a heading\n```"
         block = prompt.data_block("T1", body)
         first = block.split("\n")[0]
-        self.assertEqual(first, "`" * 10 + "hardn-data T1")
+        self.assertEqual(first, "`" * 10 + "agentharden-data T1")
         self.assertEqual(BENCH.outside_data(block), "")
 
     def test_parser_sees_text_after_a_short_fence(self):
-        self.assertIn("leak", BENCH.outside_data("````hardn-data x\n`````\nleak\n````"))
+        self.assertIn("leak", BENCH.outside_data("````agentharden-data x\n`````\nleak\n````"))
         self.assertIn("leak", BENCH.outside_data("```python\nleak\n```"))  # unlabelled fences are not data
 
 
@@ -115,7 +115,7 @@ class PromptTest(unittest.TestCase):
         self.assertIn("Suspected prompt injection", outside)
 
     def test_static_rule_text_stays_actionable(self):
-        from hardn.code_rules import RULES
+        from agentharden.code_rules import RULES
         r = next(r for r in RULES if r.id == "PY002")
         f = Finding(r.id, r.title, r.severity, "code", file="a.py", line=1, snippet="x", fix=r.fix)
         text, _, _ = prompt.build(self._result([f]))
@@ -129,7 +129,7 @@ class PromptTest(unittest.TestCase):
         self.assertEqual(n, 1)
         self.assertEqual(target, 2)
         self.assertIn("## Not checked", text)
-        self.assertIn("capped at L2", text)
+        self.assertIn("some checks did not run", text)  # L1 here, so the cap did not change the level
         self.assertNotIn("rule: PY003", text)
 
     def test_max_tasks_count_is_what_was_written(self):
@@ -157,7 +157,7 @@ class GuardTest(_NoAdvisoryDb):
     def test_each_cheat_is_named(self):
         cheats = {
             "suppression": lambda r: (r / "app.py").write_text(VULN.replace("shell=True)", "shell=True)  # nosec")),
-            "control-file": lambda r: (r / ".hardnignore").write_text("*\n"),
+            "control-file": lambda r: (r / ".agentharden-ignore").write_text("*\n"),
             "deleted-source": lambda r: (r / "app.py").unlink(),
             "emptied-source": lambda r: (r / "app.py").write_text(""),
             "deleted-test": lambda r: (r / "tests/test_a.py").unlink(),
@@ -175,7 +175,7 @@ class GuardTest(_NoAdvisoryDb):
 
     def test_commit_does_not_hide_a_marker(self):
         root, snap = self._snap()
-        (root / "app.py").write_text(VULN.replace("shell=True)", "shell=True)  # hardn:ignore"))
+        (root / "app.py").write_text(VULN.replace("shell=True)", "shell=True)  # agentharden:ignore"))
         git(root, "commit", "-qam", "x")
         self.assertIn("suppression", self.kinds(snap))
         self.assertTrue(guard.head_moved(snap))
@@ -211,7 +211,7 @@ class GuardTest(_NoAdvisoryDb):
         (root / "app.py").write_text("")
         (root / "wip.txt").unlink()
         (root / "agent_new.py").write_text("x\n")
-        subprocess.run(guard.restore_command(snap), shell=True, check=True, capture_output=True,  # hardn:ignore test
+        subprocess.run(guard.restore_command(snap), shell=True, check=True, capture_output=True,  # agentharden:ignore test
                        stdin=subprocess.DEVNULL, timeout=60)
         self.assertEqual((root / "app.py").read_text(), VULN + "# wip\n")
         self.assertEqual((root / "wip.txt").read_text(), "mine\n")
@@ -222,7 +222,7 @@ class GuardTest(_NoAdvisoryDb):
 class EnvTest(unittest.TestCase):
     ENV = {"PATH": "/bin", "HOME": "/h", "LC_ALL": "C", "AWS_SECRET_ACCESS_KEY": "x", "GITHUB_TOKEN": "x",
            "SSH_AUTH_SOCK": "/s", "ANTHROPIC_API_KEY": "k", "OPENAI_API_KEY": "o", "DATABASE_URL": "d",
-           "HARDN_PASS_ENV": "DATABASE_URL"}
+           "AGENTHARDEN_PASS_ENV": "DATABASE_URL"}
 
     def test_agent_gets_only_its_own_credentials(self):
         env = fix.child_env("claude", self.ENV)
@@ -239,7 +239,7 @@ class EnvTest(unittest.TestCase):
 @unittest.skipUnless(POSIX, "uses POSIX process groups and shell commands")
 class FixLoopSafetyTest(_NoAdvisoryDb):
     def _repo(self, **extra):
-        return make_repo({".gitignore": ".hardn/\n", "app.py": VULN, **extra})
+        return make_repo({".gitignore": ".agentharden/\n", "app.py": VULN, **extra})
 
     def test_gaming_gets_no_credit_and_a_revert_instruction(self):
         root = self._repo()
@@ -250,7 +250,7 @@ class FixLoopSafetyTest(_NoAdvisoryDb):
             if "## Previous round" not in text:
                 p.write_text(p.read_text().replace("shell=True)", "shell=True)  # nosec"))
             else:
-                assert "hardn-data violations" in text
+                assert "agentharden-data violations" in text
                 pathlib.Path("seen-revert-note").write_text("yes")
         ''')
         rc, out = run_fix(root, agent, max_rounds=2, branch=False)
@@ -260,7 +260,7 @@ class FixLoopSafetyTest(_NoAdvisoryDb):
 
     def test_baseline_is_honoured(self):
         root = self._repo()
-        from hardn import baseline
+        from agentharden import baseline
         baseline.save(str(root), scanner.run(str(root), external=False).findings)
         git(root, "add", "-A")
         git(root, "commit", "-qm", "baseline")
@@ -279,7 +279,7 @@ class FixLoopSafetyTest(_NoAdvisoryDb):
         with contextlib.redirect_stdout(io.StringIO()), self.assertRaises(fix.FixError):
             fix.run(str(root), agent=[str(bad)], yes=True, external=False)
         self.assertEqual(git(root, "branch", "--show-current").strip(), before)
-        self.assertNotIn("hardn/fix-", git(root, "branch", "--list"))
+        self.assertNotIn("agentharden/fix-", git(root, "branch", "--list"))
 
     def test_timeout_kills_the_whole_process_group(self):
         root = self._repo()
@@ -337,12 +337,12 @@ class FixLoopSafetyTest(_NoAdvisoryDb):
         rc, out = run_fix(root, agent, branch=True, allow_dirty=True)
         self.assertEqual(rc, 0, out)
         undo = next(ln.split("`", 1)[1].rsplit("`", 1)[0] for ln in out.splitlines() if "Undo everything" in ln)
-        subprocess.run(undo, shell=True, cwd=root, check=True, capture_output=True,  # hardn:ignore test
+        subprocess.run(undo, shell=True, cwd=root, check=True, capture_output=True,  # agentharden:ignore test
                        stdin=subprocess.DEVNULL, timeout=60)
         self.assertEqual((root / "app.py").read_text(), VULN + "# wip\n")
         self.assertEqual((root / "wip.txt").read_text(), "mine\n")
         self.assertFalse((root / "agent.txt").exists())
-        self.assertNotIn("hardn/fix-", git(root, "branch", "--list"))
+        self.assertNotIn("agentharden/fix-", git(root, "branch", "--list"))
         shutil.rmtree(re.search(r"--git-dir=(\S+)", undo).group(1).strip("'"), ignore_errors=True)
 
     def test_agent_config_warning(self):
@@ -355,9 +355,9 @@ class FixLoopSafetyTest(_NoAdvisoryDb):
         root = self._repo()
         outside = Path(tempfile.mkdtemp()) / "victim"
         outside.write_text("keep\n")
-        (root / ".hardn").mkdir()
-        (root / ".hardn" / ".gitignore").write_text("*\n")
-        os.symlink(outside, root / ".hardn" / "FIX_PROMPT.md")
+        (root / ".agentharden").mkdir()
+        (root / ".agentharden" / ".gitignore").write_text("*\n")
+        os.symlink(outside, root / ".agentharden" / "FIX_PROMPT.md")
         with contextlib.redirect_stdout(io.StringIO()), self.assertRaises(fix.FixError):
             fix.run(str(root), agent=agent_script("pass"), yes=True, external=False, branch=False)
         self.assertEqual(outside.read_text(), "keep\n")
@@ -370,7 +370,7 @@ class EngineConfigTest(unittest.TestCase):
         self.assertEqual(found["gitleaks"], [".gitleaks.toml"])
         self.assertEqual(found["bandit"], ["sub/.bandit"])
 
-    def test_engines_get_hardn_config_and_a_neutral_cwd(self):
+    def test_engines_get_agentharden_config_and_a_neutral_cwd(self):
         calls = []
 
         def fake(cmd, cwd=None):
@@ -385,11 +385,11 @@ class EngineConfigTest(unittest.TestCase):
                 engines._gitleaks("/repo", {}, work)
                 engines._bandit("/repo", {}, work)
                 engines._trivy("/repo", {}, work)
-                os.environ["HARDN_SEMGREP_CONFIG"] = "/rules.yml"
+                os.environ["AGENTHARDEN_SEMGREP_CONFIG"] = "/rules.yml"
                 try:
                     engines._semgrep("/repo", {"languages": ["Python"]}, work)
                 finally:
-                    del os.environ["HARDN_SEMGREP_CONFIG"]
+                    del os.environ["AGENTHARDEN_SEMGREP_CONFIG"]
         finally:
             engines._run = real
         flags = {cmd[0]: cmd for cmd, _ in calls}

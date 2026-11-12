@@ -5,8 +5,8 @@ Every adapter runs with network/telemetry disabled. Missing tools are reported, 
 A scanned repository can ship configuration that tells these tools to skip files or findings: a
 `.gitleaks.toml` with an allowlist of `.*`, a `.bandit` that skips B602, a `.trivyignore` of `*`, a
 `.semgrepignore`. Left alone, that silently blinds the engine while it still reports "ok". So every
-adapter is started with configuration that hardn controls and runs from a neutral directory. Where a tool
-offers no switch to stop reading a repo file, the engine status says so and hardn prints a warning.
+adapter is started with configuration that agentharden controls and runs from a neutral directory. Where a tool
+offers no switch to stop reading a repo file, the engine status says so and agentharden prints a warning.
 """
 from __future__ import annotations
 
@@ -27,14 +27,14 @@ SEMGREP_LANG_DIRS = {
     "Terraform": "terraform",
 }
 INSTALL_HINTS = {
-    "semgrep": "brew install semgrep   (or: pipx install semgrep) — then `hardn update --semgrep-rules`",
+    "semgrep": "brew install semgrep   (or: pipx install semgrep) — then `agentharden update --semgrep-rules`",
     "gitleaks": "brew install gitleaks",
     "bandit": "pipx install bandit",
     "trivy": "brew install trivy — then run `trivy fs --download-db-only` once while online",
 }
 TIMEOUT = 900
 
-# Files a repository can ship to change what an engine reports. hardn replaces each one with its own
+# Files a repository can ship to change what an engine reports. agentharden replaces each one with its own
 # configuration on the command line; the ones in UNBLOCKABLE have no such switch and only get a warning.
 REPO_CONFIGS = {
     "gitleaks": (".gitleaks.toml", ".gitleaksignore"),
@@ -43,8 +43,8 @@ REPO_CONFIGS = {
     "trivy": (".trivyignore", ".trivyignore.yaml", "trivy.yaml"),
 }
 UNBLOCKABLE = {"gitleaks": (".gitleaksignore",)}
-_GITLEAKS_CONFIG = 'title = "hardn default"\n\n[extend]\nuseDefault = true\n'
-_SKIP = {".git", "node_modules", ".venv", "venv", ".hardn", "__pycache__"}
+_GITLEAKS_CONFIG = 'title = "agentharden default"\n\n[extend]\nuseDefault = true\n'
+_SKIP = {".git", "node_modules", ".venv", "venv", ".agentharden", "__pycache__"}
 
 
 def available() -> dict:
@@ -79,7 +79,7 @@ def run_all(root: str, stack: dict, log=lambda *_: None) -> tuple:
     findings, statuses = [], {}
     tools = available()
     shipped = repo_configs(root)
-    with tempfile.TemporaryDirectory(prefix="hardn-engines-") as work:
+    with tempfile.TemporaryDirectory(prefix="agentharden-engines-") as work:
         for name, fn in (("semgrep", _semgrep), ("gitleaks", _gitleaks), ("bandit", _bandit), ("trivy", _trivy)):
             if not tools[name]:
                 statuses[name] = "not installed"
@@ -98,8 +98,8 @@ def run_all(root: str, stack: dict, log=lambda *_: None) -> tuple:
             honoured = [p for p in shipped.get(name, []) if p.rsplit("/", 1)[-1] in still_read]
             if honoured:
                 statuses[name] += "; may be filtered by the repo's " + ", ".join(sorted(honoured)[:3])
-                print(f"hardn: warning: {name} reads {', '.join(sorted(honoured)[:3])} from the scanned repository "
-                      "and hardn cannot switch that off, so some of its results may be hidden.", file=sys.stderr)
+                print(f"agentharden: warning: {name} reads {', '.join(sorted(honoured)[:3])} from the scanned repository "
+                      "and agentharden cannot switch that off, so some of its results may be hidden.", file=sys.stderr)
             elif shipped.get(name):
                 statuses[name] += "; repo config ignored"
     return findings, statuses
@@ -111,13 +111,13 @@ def _unknown_option(proc: subprocess.CompletedProcess, flag: str) -> bool:
 
 
 def _semgrep(root: str, stack: dict, work: str):
-    custom = os.environ.get("HARDN_SEMGREP_CONFIG")
+    custom = os.environ.get("AGENTHARDEN_SEMGREP_CONFIG")
     configs = [custom] if custom else [
         str(SEMGREP_RULES / d) for lang, d in SEMGREP_LANG_DIRS.items()
         if lang in stack.get("languages", []) and (SEMGREP_RULES / d).is_dir()
     ]
     if not configs:
-        return [], "no offline rules — run `hardn update --semgrep-rules`", ()
+        return [], "no offline rules — run `agentharden update --semgrep-rules`", ()
     cmd = ["semgrep", "scan", "--json", "--quiet", "--metrics=off", "--disable-version-check", "--no-git-ignore"]
     for c in configs:
         cmd += ["--config", c]

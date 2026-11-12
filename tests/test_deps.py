@@ -1,6 +1,6 @@
 """Dependency engine: version ordering, severity, lockfile parsers, gaps, fix targets and update safety.
 
-Every test passes an explicit database path, so nothing reads or writes ~/.hardn.
+Every test passes an explicit database path, so nothing reads or writes ~/.agentharden.
 """
 import io
 import json
@@ -12,7 +12,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from hardn import deps
+from agentharden import deps
 
 
 def rng(*events, kind="ECOSYSTEM"):
@@ -463,7 +463,7 @@ class ScanCoverageTest(Tmp):
         self.assertNotIn("checked", note)
         self.assertEqual(len(gaps), 1)
         self.assertIn("Go and npm", gaps[0])
-        self.assertIn("hardn update", gaps[0])
+        self.assertIn("agentharden update", gaps[0])
 
     def test_empty_db_is_no_data(self):
         findings, note, gaps = self.scan(self.db())

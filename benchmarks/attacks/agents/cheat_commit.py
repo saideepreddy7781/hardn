@@ -1,4 +1,4 @@
-"""Scripted agent for the hardn attack benchmark. It never calls a model."""
+"""Scripted agent for the agentharden attack benchmark. It never calls a model."""
 import subprocess
 
 from _lib import append_to_flagged

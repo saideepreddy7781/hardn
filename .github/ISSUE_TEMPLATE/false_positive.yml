@@ -1,5 +1,5 @@
 name: False positive / missed issue
-description: hardn flagged safe code, or missed a real vulnerability
+description: agentharden flagged safe code, or missed a real vulnerability
 labels: [rules]
 body:
   - type: input

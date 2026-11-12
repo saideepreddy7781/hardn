@@ -1,4 +1,4 @@
-"""Taint precision, baseline, --diff, `hardn fix`, and CLI smoke tests."""
+"""Taint precision, baseline, --diff, `agentharden fix`, and CLI smoke tests."""
 import io
 import json
 import os
@@ -10,8 +10,8 @@ import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
 
-from hardn import baseline, cli, fix, gitdiff, scanner, taint_js, taint_py
-from hardn.walker import SourceFile
+from agentharden import baseline, cli, fix, gitdiff, scanner, taint_js, taint_py
+from agentharden.walker import SourceFile
 
 GIT_ENV = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@example.com",
            "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@example.com"}
@@ -166,7 +166,7 @@ FAKE_AGENT = textwrap.dedent('''
 
 class FixLoopTest(unittest.TestCase):
     def _repo(self):
-        return make_repo({".gitignore": ".hardn/\n", "app.py": '''
+        return make_repo({".gitignore": ".agentharden/\n", "app.py": '''
             def view(request):
                 return eval(request.args["x"])
         '''})
@@ -181,7 +181,7 @@ class FixLoopTest(unittest.TestCase):
         self.assertIn("int(request.args", (root / "app.py").read_text())
         branch = subprocess.run(["git", "-C", str(root), "branch", "--show-current"], check=False,
                                 capture_output=True, text=True)
-        self.assertTrue(branch.stdout.startswith("hardn/fix-"))
+        self.assertTrue(branch.stdout.startswith("agentharden/fix-"))
 
     def test_no_progress_stops(self):
         root = self._repo()
@@ -214,7 +214,7 @@ class CliTest(unittest.TestCase):
         root = make_repo({"app.py": "def v(request):\n    eval(request.args['x'])\n"})
         rc, _ = self.run_cli("init", str(root), "--baseline")
         self.assertEqual(rc, 0)
-        self.assertIn("--fail-on high", (root / ".github/workflows/hardn.yml").read_text())
+        self.assertIn("--fail-on high", (root / ".github/workflows/agentharden.yml").read_text())
         rc, out = self.run_cli("scan", str(root), "--no-external", "--fail-on", "high")
         self.assertEqual(rc, 0, out)  # everything baselined → CI starts green
 

@@ -28,7 +28,7 @@ YAML = (".yml", ".yaml")
 TF = (".tf",)
 
 # The one place that decides whether a line carries an inline suppression. secrets.py uses it too.
-SUPPRESS = re.compile(r"hardn:ignore|nosec|nosemgrep|gitleaks:allow|eslint-disable-line\s+security")
+SUPPRESS = re.compile(r"agentharden:ignore|nosec|nosemgrep|gitleaks:allow|eslint-disable-line\s+security")
 SECRET_NAME = (r"(?i)\b\w*(token|secret|passw|otp|nonce|salt|session_?id|sid|api_?key|reset|verif|csrf)\w*"
                r"\s*(?:=(?!=)|:)")
 LINE_LIMIT = 1000

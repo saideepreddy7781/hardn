@@ -1,10 +1,10 @@
-"""Anti-gaming check for `hardn fix`: did the agent fix the findings, or hide them?
+"""Anti-gaming check for `agentharden fix`: did the agent fix the findings, or hide them?
 
 An agent can make a re-scan come back clean without fixing anything: add `# nosec`, write `*` to
-.hardnignore, delete the vulnerable file, empty the tests, or point the test command at `exit 0`. Every one
-of those lowers the finding count. So before the first agent round hardn takes a snapshot of the working
+.agentharden-ignore, delete the vulnerable file, empty the tests, or point the test command at `exit 0`. Every one
+of those lowers the finding count. So before the first agent round agentharden takes a snapshot of the working
 tree, and after each round it reads the diff against that snapshot. A violation means the round earns no
-level credit; `hardn fix` reports it, tells the next round to revert it, and exits non-zero if it remains.
+level credit; `agentharden fix` reports it, tells the next round to revert it, and exits non-zero if it remains.
 
 The snapshot lives in a separate git directory outside the repository, with its own index, so it covers
 uncommitted and untracked files (`--allow-dirty`), survives the agent committing or editing .gitignore, and
@@ -30,13 +30,13 @@ from .context import classify
 
 # Files whose only job is to make a scanner report less. Any change to one is a violation.
 CONTROL_FILES = {
-    ".hardnignore", ".hardn-baseline.json", ".gitleaks.toml", ".gitleaksignore", ".semgrepignore",
+    ".agentharden-ignore", ".agentharden-baseline.json", ".gitleaks.toml", ".gitleaksignore", ".semgrepignore",
     ".semgrep.yml", ".semgrep.yaml", ".bandit", "bandit.yaml", "bandit.yml", ".trivyignore", ".trivyignore.yaml",
     "trivy.yaml", ".snyk", ".checkov.yml", ".checkov.yaml", ".tfsec.yml", ".kics.yml", "sonar-project.properties",
 }
 # Scanner suppression markers: adding one anywhere is a violation.
 SCANNER_MARKERS = re.compile(
-    r"hardn:ignore|\bnosec\b|\bnosemgrep\b|\bnosem\b|gitleaks:allow|trivy:ignore|tfsec:ignore|checkov:skip"
+    r"agentharden:ignore|\bnosec\b|\bnosemgrep\b|\bnosem\b|gitleaks:allow|trivy:ignore|tfsec:ignore|checkov:skip"
     r"|kics-scan\s+ignore|\bNOSONAR\b|lgtm\s*\[|codeql\s*\[|snyk:ignore|bandit:\s*skip|noqa:\s*S\d", re.IGNORECASE)
 # General linter suppressions: a violation when added near a finding, or file-wide in a file that had one.
 NEAR_MARKERS = re.compile(
@@ -45,7 +45,7 @@ NEAR_MARKERS = re.compile(
 FILE_WIDE = re.compile(r"eslint-disable(?!-)|@ts-nocheck|(flake8|ruff):\s*noqa|pylint:\s*(disable-all|skip-file)"
                        r"|rubocop:disable\s+all", re.IGNORECASE)
 NEAR = 3
-_WALK_SKIP = {".git", ".hardn", "node_modules", ".venv", "venv", "__pycache__"}
+_WALK_SKIP = {".git", ".agentharden", "node_modules", ".venv", "venv", "__pycache__"}
 # Files that define how tests run. Any change is a violation.
 TEST_CONFIG = re.compile(
     r"(^|/)(pytest\.ini|tox\.ini|noxfile\.py|\.rspec|phpunit\.xml(\.dist)?|karma\.conf\.[cm]?js"
@@ -58,7 +58,7 @@ MAKEFILES = ("Makefile", "makefile", "GNUmakefile")
 ASSERTS = re.compile(r"\bassert|\bexpect\s*\(|\.should\b|\bt\.(Error|Fatal|Fail)|\brequire\.|\bverify\s*\(", re.IGNORECASE)
 COMMENT = re.compile(r"^\s*(#|//|/\*|\*|--|<!--|;|%|')\s?")
 
-KINDS = {  # kind -> what it means, in hardn's words (the path is shown separately, as data)
+KINDS = {  # kind -> what it means, in agentharden's words (the path is shown separately, as data)
     "suppression": "a suppression comment was added",
     "control-file": "a scanner ignore, baseline or config file was changed",
     "deleted-source": "a source file that had findings was deleted, moved or replaced",
@@ -148,7 +148,7 @@ def take(root: str, findings: list, test_cmd: str | None = None) -> Snapshot:
     if not common:
         raise GuardError("snapshot: not a git repository")
     objects = os.path.join(common if os.path.isabs(common) else os.path.join(root, common), "objects")
-    git_dir = tempfile.mkdtemp(prefix="hardn-snapshot-")
+    git_dir = tempfile.mkdtemp(prefix="agentharden-snapshot-")
     try:
         proc = gitsafe.run(root, "init", "-q", "--bare", git_dir)
         if proc.returncode != 0:

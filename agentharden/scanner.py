@@ -10,8 +10,8 @@ from .models import SEV_RANK, ScanResult
 
 # Comments that switch a finding off. code_rules owns the list for code; secrets also honours gitleaks:allow.
 _SUPPRESS = re.compile("|".join(p for p in (
-    getattr(getattr(code_rules, "SUPPRESS", None), "pattern", ""), r"hardn:ignore", r"gitleaks:allow") if p))
-# Config files a repo can ship to quieten an external engine. hardn cannot override them yet.
+    getattr(getattr(code_rules, "SUPPRESS", None), "pattern", ""), r"agentharden:ignore", r"gitleaks:allow") if p))
+# Config files a repo can ship to quieten an external engine. agentharden cannot override them yet.
 ENGINE_CONFIGS = {".gitleaks.toml": "gitleaks", ".gitleaksignore": "gitleaks", ".bandit": "bandit",
                   ".semgrepignore": "semgrep", ".trivyignore": "trivy", "trivy.yaml": "trivy"}
 
@@ -55,7 +55,7 @@ def _inline_hidden(files: list, root: str) -> int:
 
 
 def run(root: str, external: bool = True, log=lambda *_: None, untrusted: bool = False) -> ScanResult:
-    """Scan root. untrusted=True ignores .hardnignore and inline suppressions and counts every finding."""
+    """Scan root. untrusted=True ignores .agentharden-ignore and inline suppressions and counts every finding."""
     t0 = time.time()
     root = os.path.abspath(root)
     walk = walker.WalkReport()
@@ -92,7 +92,7 @@ def run(root: str, external: bool = True, log=lambda *_: None, untrusted: bool =
             shipped = sorted({tool for name, tool in ENGINE_CONFIGS.items() if name in all_paths})
             if shipped:
                 gaps.append(f"the repo ships config for {', '.join(shipped)}, which can switch off that engine's "
-                            "checks; hardn cannot override it")
+                            "checks; agentharden cannot override it")
             if marked:
                 gaps.append(f"external engines still honour inline suppression comments ({marked} files have them)")
     if walk.count("unreadable"):
@@ -114,8 +114,8 @@ def run(root: str, external: bool = True, log=lambda *_: None, untrusted: bool =
             path = f.file if f.category not in ("dependency", "posture") else os.path.dirname(f.file) + "/_"
             f.context = context.classify(path.lstrip("/"))
     findings.sort(key=lambda f: (not f.counts, -f.rank, f.category != "secret", f.file, f.line, f.rule_id))
-    hidden = {"inline": 0, "hardnignore": 0} if untrusted else {
-        "inline": _inline_hidden(files, root), "hardnignore": walk.ignored}
+    hidden = {"inline": 0, "ignorefile": 0} if untrusted else {
+        "inline": _inline_hidden(files, root), "ignorefile": walk.ignored}
     result = ScanResult(root=root, stack=stack, findings=findings, engines=statuses, files_scanned=len(files),
                         duration=time.time() - t0, gaps=gaps, hidden=hidden)
     result.skipped = walk.to_dict()
@@ -142,7 +142,7 @@ def dedupe(findings: list) -> list:
             merged[key] = f
             continue
         new_has_flow, keep_has_flow = "flow" in f.extra, "flow" in keep.extra
-        if (new_has_flow and not keep_has_flow) or ("hardn" in f.sources and "hardn" not in keep.sources):
+        if (new_has_flow and not keep_has_flow) or ("agentharden" in f.sources and "agentharden" not in keep.sources):
             # Prefer built-in guidance (and redaction), and a taint trace over a bare pattern match.
             keep.rule_id, keep.title, keep.cwe, keep.snippet = f.rule_id, f.title, f.cwe or keep.cwe, f.snippet
             keep.fix = f.fix or keep.fix

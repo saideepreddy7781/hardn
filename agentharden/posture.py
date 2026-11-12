@@ -288,9 +288,9 @@ def _repo(root: str, files: list, all_paths: list) -> list:
                       "Add .github/dependabot.yml (or Renovate) covering each package ecosystem and GitHub Actions.",
                       cwe="CWE-1104"))
     workflows = [f for f in files if f.path.startswith((".github/workflows/", ".gitlab-ci", ".circleci/"))]
-    if not any(re.search(r"(?i)codeql|semgrep|gitleaks|trivy|osv-scanner|snyk|hardn|bandit|npm audit|pip-audit|"
+    if not any(re.search(r"(?i)codeql|semgrep|gitleaks|trivy|osv-scanner|snyk|agentharden|bandit|npm audit|pip-audit|"
                          r"zizmor|grype|dependency-review", views(f.text, "hash")[0]) for f in workflows):
         out.append(_f("POS033", "No security scanning in CI", "low",
-                      "Add a CI job that runs `hardn scan . --fail-on high` (plus gitleaks/semgrep if available) on "
+                      "Add a CI job that runs `agentharden scan . --fail-on high` (plus gitleaks/semgrep if available) on "
                       "every pull request so regressions are caught before merge."))
     return out

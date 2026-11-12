@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Run the hardn attack corpus: `python benchmarks/attacks/run.py [--json] [--suite injection|gaming] [-k ID]`.
+"""Run the agentharden attack corpus: `python benchmarks/attacks/run.py [--json] [--suite injection|gaming] [-k ID]`.
 
 Offline, standard library only. Builds each hostile repository from cases/*.json in a temp directory, runs
-hardn on it with a scripted agent from agents/, and checks the verdict. No model is ever called. Exit status
+agentharden on it with a scripted agent from agents/, and checks the verdict. No model is ever called. Exit status
 is 1 if any case fails.
 """
 from __future__ import annotations
@@ -23,8 +23,8 @@ HERE = Path(__file__).resolve().parent
 SRC = HERE.parent.parent
 sys.path.insert(0, str(SRC))
 
-from hardn import deps, fix, prompt, scanner  # noqa: E402
-from hardn.scoring import counted, min_rank_for  # noqa: E402
+from agentharden import deps, fix, prompt, scanner  # noqa: E402
+from agentharden.scoring import counted, min_rank_for  # noqa: E402
 
 AGENTS = HERE / "agents"
 GIT_ENV = {**os.environ, "GIT_AUTHOR_NAME": "bench", "GIT_AUTHOR_EMAIL": "bench@example.invalid",
@@ -39,7 +39,7 @@ _CLOSE = re.compile(r"^ {0,3}(`{3,}|~{3,})[ \t]*$")
 
 
 def outside_data(markdown: str) -> str:
-    """Every line a CommonMark reader would see outside a fenced block labelled `hardn-data`.
+    """Every line a CommonMark reader would see outside a fenced block labelled `agentharden-data`.
 
     Follows the CommonMark rules for fenced code: a fence opens with 3+ backticks or tildes (a backtick
     fence's info string cannot contain a backtick) and closes on a line holding only the same character, at
@@ -51,7 +51,7 @@ def outside_data(markdown: str) -> str:
             m = _OPEN.match(line)
             if m and not (m.group(1)[0] == "`" and "`" in m.group(2)):
                 info = m.group(2).strip()
-                fence = (m.group(1)[0], len(m.group(1)), info.split(" ")[0] == "hardn-data")
+                fence = (m.group(1)[0], len(m.group(1)), info.split(" ")[0] == "agentharden-data")
                 if not fence[2]:
                     out.append(line)
                 continue
@@ -167,7 +167,7 @@ def gaming_case(case: dict, base: dict, tmp: Path) -> dict:
                       allow_dirty=case.get("allow_dirty", False))
     credited = rc == 0
     kept = re.search(r"--git-dir=(\S+)", out)  # --allow-dirty keeps its snapshot for the printed undo command
-    if kept and Path(kept.group(1).strip("'")).name.startswith("hardn-snapshot-"):
+    if kept and Path(kept.group(1).strip("'")).name.startswith("agentharden-snapshot-"):
         shutil.rmtree(kept.group(1).strip("'"), ignore_errors=True)
     no_credit_line = "no credit:" in out
     named = [k for k, text in KIND_TEXT.items() if text in out]
@@ -195,10 +195,10 @@ def main(argv=None) -> int:
     ap.add_argument("-k", dest="only", help="run only cases whose id contains this text")
     a = ap.parse_args(argv)
 
-    from hardn import guard
+    from agentharden import guard
     KIND_TEXT.update({k: guard.KINDS[k] for k in guard.KINDS})
     rows = []
-    with tempfile.TemporaryDirectory(prefix="hardn-attacks-") as tmpdir:
+    with tempfile.TemporaryDirectory(prefix="agentharden-attacks-") as tmpdir:
         tmp = Path(tmpdir)
         home = deps.HOME
         deps.HOME = tmp / "no-advisory-db"  # hermetic: no advisory data, no network

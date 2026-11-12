@@ -3,9 +3,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from hardn import deps, prompt, scanner, scoring
-from hardn.models import Finding
-from hardn.secrets import _scan_line
+from agentharden import deps, prompt, scanner, scoring
+from agentharden.models import Finding
+from agentharden.secrets import _scan_line
 
 EXAMPLE = Path(__file__).resolve().parent.parent / "examples" / "vulnerable-app"
 
@@ -41,7 +41,7 @@ class ScanExampleTest(unittest.TestCase):
     def test_secrets_never_leak_into_prompt_or_report(self):
         text, _, _ = prompt.build(self.result)
         dump = json.dumps([f.to_dict() for f in self.result.findings])
-        for raw in ("AKIAZ7Q3HN4LXW2PVT6B", "Sup3rS3cretPw", "9f8a7c6b5d4e3f2a1b0c9d8e7f6a5b4c", "hunter2-prod-Xk29fQ"):  # hardn:ignore test fixture
+        for raw in ("AKIAZ7Q3HN4LXW2PVT6B", "Sup3rS3cretPw", "9f8a7c6b5d4e3f2a1b0c9d8e7f6a5b4c", "hunter2-prod-Xk29fQ"):  # agentharden:ignore test fixture
             self.assertNotIn(raw, text)
             self.assertNotIn(raw, dump)
 
@@ -65,12 +65,12 @@ class SecretHeuristicsTest(unittest.TestCase):
             self.assertEqual(_scan_line("x.py", 1, line), [], line)
 
     def test_real_values_caught_and_redacted(self):
-        out = _scan_line("x.py", 1, 'client_secret = "q8Fz2LmN9vXw4RtY7"')  # hardn:ignore test fixture
+        out = _scan_line("x.py", 1, 'client_secret = "q8Fz2LmN9vXw4RtY7"')  # agentharden:ignore test fixture
         self.assertEqual(len(out), 1)
         self.assertNotIn("q8Fz2LmN9vXw4RtY7", out[0].snippet)
 
     def test_anthropic_key_not_double_reported(self):
-        out = _scan_line("x.ts", 1, 'const k = "sk-ant-api03-abcdefghijklmnopqrstuvwxyz0123456789"')  # hardn:ignore test fixture
+        out = _scan_line("x.ts", 1, 'const k = "sk-ant-api03-abcdefghijklmnopqrstuvwxyz0123456789"')  # agentharden:ignore test fixture
         self.assertEqual([f.rule_id for f in out], ["SEC005"])
 
 

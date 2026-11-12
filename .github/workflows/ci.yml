@@ -30,9 +30,9 @@ jobs:
       - name: CLI smoke test
         shell: bash
         run: |
-          python -m hardn --version
-          python -m hardn rules PY004
-          python -m hardn examples/vulnerable-app --no-external --no-baseline -q --fail-on critical && exit 1 || echo "demo app correctly fails"
+          python -m agentharden --version
+          python -m agentharden rules PY004
+          python -m agentharden examples/vulnerable-app --no-external --no-baseline -q --fail-on critical && exit 1 || echo "demo app correctly fails"
 
   lint:
     runs-on: ubuntu-latest
@@ -45,17 +45,17 @@ jobs:
       - run: ruff check .
 
   dogfood:
-    name: hardn scans itself
+    name: agentharden scans itself
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
         with:
           python-version: "3.12"
-      - run: python -m hardn . --no-external --fail-on low --sarif
+      - run: python -m agentharden . --no-external --fail-on low --sarif
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
         if: always()
         with:
-          name: hardn-self-report
-          path: .hardn/
+          name: agentharden-self-report
+          path: .agentharden/
           include-hidden-files: true

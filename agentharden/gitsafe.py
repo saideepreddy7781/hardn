@@ -3,7 +3,7 @@
 A cloned repo cannot ship its own .git/config, but a repo handed to you as a directory (a zip, a shared
 folder, a container volume) can, and git runs programs named in that file: core.fsmonitor on `git status`,
 filter.*.clean on `git diff`, hooks on `git switch`. A scanner must not execute the code it is scanning, so
-every git call in hardn goes through run(), which blanks those settings on the command line. Command-line
+every git call in agentharden goes through run(), which blanks those settings on the command line. Command-line
 config outranks every config file, and git treats an empty value as "no program".
 """
 from __future__ import annotations

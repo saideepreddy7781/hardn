@@ -2,7 +2,7 @@
 examples/
 tests/
 # Rule definitions contain the very patterns they detect
-hardn/code_rules.py
-hardn/secrets.py
-hardn/taint_py.py
-hardn/taint_js.py
+agentharden/code_rules.py
+agentharden/secrets.py
+agentharden/taint_py.py
+agentharden/taint_js.py
