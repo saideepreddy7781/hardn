@@ -107,7 +107,7 @@ class OfflineDbTest(unittest.TestCase):
         con.close()
         (tmp / "package-lock.json").write_text(json.dumps(
             {"lockfileVersion": 3, "packages": {"": {}, "node_modules/lodash": {"version": "4.17.15"}}}))
-        findings, _ = deps.scan(str(tmp), ["package-lock.json"], db=db)
+        findings, _, _ = deps.scan(str(tmp), ["package-lock.json"], db=db)
         self.assertEqual(len(findings), 1)
         f = findings[0]
         self.assertEqual(f.severity, "critical")  # escalated: actively exploited

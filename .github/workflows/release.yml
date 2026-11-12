@@ -2,7 +2,8 @@ name: release
 
 on:
   push:
-    tags: ["v*"]
+    # Version tags only (v0.1.0, v0.2.0rc1). Moving major tags for Action users (v0, v1) must not release.
+    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
 
 permissions:
   contents: read
@@ -15,8 +16,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
         with:
           python-version: "3.12"
       - name: Tag must match hardn.__version__
@@ -25,7 +26,7 @@ jobs:
           [ "v$v" = "$GITHUB_REF_NAME" ] || { echo "::error::tag $GITHUB_REF_NAME != version v$v"; exit 1; }
       - run: pip install build && python -m build
       - run: python scripts/build_pyz.py
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
         with:
           name: dist
           path: dist/
@@ -40,8 +41,8 @@ jobs:
           - { os: windows-latest, asset: hardn-windows-x86_64.exe }
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
         with:
           python-version: "3.12"
       - run: pip install pyinstaller
@@ -52,9 +53,9 @@ jobs:
           bin=dist/hardn; [ -f dist/hardn.exe ] && bin=dist/hardn.exe
           "$bin" --version
           mkdir -p out && mv "$bin" "out/${{ matrix.asset }}"
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
         with:
-          name: ${{ matrix.asset }}
+          name: bin-${{ matrix.asset }}
           path: out/
 
   publish-pypi:
@@ -66,12 +67,12 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8.0.2
         with:
           name: dist
           path: dist
       - run: rm -f dist/hardn.pyz   # PyPI accepts only wheels and sdists
-      - uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086  # v1.14.3
 
   github-release:
     needs: [build, binaries]
@@ -79,8 +80,14 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v8
+      # Only release artifacts; other jobs (e.g. CI's self-scan report) upload artifacts too.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8.0.2
         with:
+          name: dist
+          path: assets
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8.0.2
+        with:
+          pattern: bin-*
           path: assets
           merge-multiple: true
       - run: cd assets && sha256sum * > SHA256SUMS && cat SHA256SUMS

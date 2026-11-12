@@ -111,6 +111,10 @@ class ScoringTests(unittest.TestCase):
     def test_secret_in_tests_still_counts(self):
         self.assertEqual(scoring.level([self._f("critical", "secret", "test")]), 0)
 
+    def test_sample_key_in_docs_does_not_count_but_provider_key_does(self):
+        self.assertEqual(scoring.level([Finding("SEC100", "t", "high", "secret", context="docs")]), 4)
+        self.assertEqual(scoring.level([Finding("SEC001", "t", "critical", "secret", context="example")]), 0)
+
     def test_dev_dependency_does_not_set_the_level(self):
         self.assertEqual(scoring.level([self._f("critical", "dependency", "dev-dependency")]), 4)
 

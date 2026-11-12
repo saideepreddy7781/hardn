@@ -15,13 +15,22 @@ inputs:
     description: "'auto' = only changed lines on pull requests; a git ref; or '' for a full scan"
     default: auto
   sarif:
-    description: Write .hardn/results.sarif for GitHub code scanning
+    description: Write results.sarif and upload it to GitHub code scanning (needs `security-events write`)
     default: "true"
+  strict:
+    description: "'true' fails the job (exit 3) when the scan has blind spots, checks that could not run"
+    default: "false"
 
+outputs:
+  sarif-file:
+    description: Path of the SARIF file, when one was written
+    value: ${{ steps.scan.outputs.sarif-file }}
+
+# Actions are pinned to full commit SHAs; the comment names the release.
 runs:
   using: composite
   steps:
-    - uses: actions/setup-python@v7
+    - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
       with:
         python-version: "3.12"
     - shell: bash
@@ -29,7 +38,7 @@ runs:
     - id: week
       shell: bash
       run: echo "w=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
-    - uses: actions/cache@v6
+    - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
       with:
         path: ~/.hardn
         key: hardn-db-${{ steps.week.outputs.w }}
@@ -38,18 +47,40 @@ runs:
       env:
         INPUT_PATH: ${{ inputs.path }}
       run: hardn update --for "$INPUT_PATH" || echo "advisory update failed; scanning with cached data"
-    - shell: bash
+    - id: scan
+      shell: bash
       env:
         INPUT_PATH: ${{ inputs.path }}
         INPUT_FAIL_ON: ${{ inputs.fail-on }}
         INPUT_DIFF: ${{ inputs.diff }}
         INPUT_SARIF: ${{ inputs.sarif }}
+        INPUT_STRICT: ${{ inputs.strict }}
       run: |
         args=(scan "$INPUT_PATH" --fail-on "$INPUT_FAIL_ON")
-        [ "$INPUT_SARIF" = "true" ] && args+=(--sarif)
+        if [ "$INPUT_SARIF" = "true" ]; then
+          args+=(--sarif)
+          echo "sarif-file=$INPUT_PATH/.hardn/results.sarif" >> "$GITHUB_OUTPUT"
+        fi
+        if [ "$INPUT_STRICT" = "true" ]; then
+          args+=(--strict)
+        fi
         if [ "$INPUT_DIFF" = "auto" ]; then
           [ -n "$GITHUB_BASE_REF" ] && args+=(--diff "origin/$GITHUB_BASE_REF")
         elif [ -n "$INPUT_DIFF" ]; then
           args+=(--diff "$INPUT_DIFF")
         fi
         hardn "${args[@]}"
+    # Runs even when the scan failed the job, so the findings still reach the Security tab.
+    - id: upload
+      if: always() && steps.scan.outputs.sarif-file != ''
+      uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066  # v4.39.3
+      continue-on-error: true
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif-file }}
+        category: hardn
+    - if: always() && steps.upload.outcome == 'failure'
+      shell: bash
+      env:
+        SARIF_FILE: ${{ steps.scan.outputs.sarif-file }}
+      run: |
+        echo "::notice title=hardn::SARIF upload skipped. Code scanning may be off for this repository, or the job lacks 'security-events: write' (pull requests from forks never have it). The scan result still applies; the SARIF file is $SARIF_FILE."

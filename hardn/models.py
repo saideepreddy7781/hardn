@@ -28,7 +28,13 @@ class Finding:
     @property
     def counts(self) -> bool:
         """Does this finding affect the level, score, --fail-on and the fix prompt?"""
-        return self.context == "app" or self.category == "secret"
+        if self.context == "app":
+            return True
+        if self.category != "secret":
+            return False
+        # A leaked key is leaked from tests too. Sample keys in docs and examples count only when they have a real
+        # provider format, which is what the critical secret rules match.
+        return self.context not in ("docs", "example") or self.severity == "critical"
 
     def location(self) -> str:
         if not self.file:

@@ -1,4 +1,5 @@
 [build-system]
+# Editable installs (`pip install -e .`) need pip 21.3 or newer (PEP 660). `pip install .` works on any pip.
 requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
