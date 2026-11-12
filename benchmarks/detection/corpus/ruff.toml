@@ -1,0 +1,2 @@
+# Deliberately vulnerable samples, kept byte-for-byte. Not project code.
+exclude = ["*"]

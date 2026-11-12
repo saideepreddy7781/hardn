@@ -6,6 +6,8 @@ import os
 import re
 from collections import Counter
 
+from . import walker
+
 LANG_BY_EXT = {
     ".py": "Python", ".js": "JavaScript", ".jsx": "JavaScript", ".mjs": "JavaScript",
     ".cjs": "JavaScript", ".ts": "TypeScript", ".tsx": "TypeScript", ".go": "Go",
@@ -32,9 +34,8 @@ OTHER_MARKERS = [
 
 def _read(root: str, rel: str) -> str:
     try:
-        with open(os.path.join(root, rel), encoding="utf-8", errors="replace") as fh:
-            return fh.read()
-    except OSError:
+        return walker.read_regular(os.path.join(root, rel)).decode("utf-8", errors="replace")
+    except OSError:  # includes walker.NotReadable: FIFOs, devices, symlinks, oversize files
         return ""
 
 
@@ -55,15 +56,91 @@ def node_deps(root: str, rel: str) -> dict:
     return deps
 
 
+def _norm(name: str) -> str:
+    return re.sub(r"[-_.]+", "-", name.lower())
+
+
+def _quoted_requirements(text: str) -> set:
+    """Package names from quoted requirement strings: `["flask>=3", "gunicorn"]`, inline or spread over lines."""
+    return {_norm(m.group(1)) for m in re.finditer(r"[\"']([A-Za-z0-9][A-Za-z0-9_.\-]*)\s*(?:\[[^\]]*\])?\s*"
+                                                    r"(?:[=<>!~;@ ][^\"']*)?[\"']", text)}
+
+
+def _list_after(text: str, key: str) -> str:
+    """The bracketed list assigned to `key` (`dependencies = [...]`, `install_requires=[...]`)."""
+    m = re.search(r"(?m)^\s*" + key + r"\s*=\s*\[", text) or re.search(r"\b" + key + r"\s*=\s*\[", text)
+    if not m:
+        return ""
+    depth, i = 1, m.end()
+    while i < len(text) and depth:
+        depth += {"[": 1, "]": -1}.get(text[i], 0)
+        i += 1
+    return text[m.end():i]
+
+
+def _toml_section(text: str, name: str) -> str:
+    m = re.search(r"(?m)^\[" + re.escape(name) + r"\]\s*$", text)
+    if not m:
+        return ""
+    end = re.search(r"(?m)^\[", text[m.end():])
+    return text[m.end(): m.end() + end.start()] if end else text[m.end():]
+
+
 def python_deps(root: str, all_paths: list) -> set:
+    """Every Python dependency named anywhere in the manifests, dev and optional groups included."""
     names = set()
     for rel in all_paths:
         base = rel.rsplit("/", 1)[-1]
         if not (re.match(r"requirements.*\.txt$", base) or base in ("pyproject.toml", "Pipfile", "setup.py", "setup.cfg")):
             continue
-        for m in re.finditer(r"(?im)^[\s\"']*([A-Za-z0-9][A-Za-z0-9_.\-]*)\s*(?:\[[^\]]*\])?\s*(?:[=<>!~;\"',]|$)", _read(root, rel)):
-            names.add(re.sub(r"[-_.]+", "-", m.group(1).lower()))
+        text = _read(root, rel)
+        for m in re.finditer(r"(?im)^[\s\"']*([A-Za-z0-9][A-Za-z0-9_.\-]*)\s*(?:\[[^\]]*\])?\s*(?:[=<>!~;\"',]|$)", text):
+            names.add(_norm(m.group(1)))
+        if base in ("pyproject.toml", "setup.py", "setup.cfg"):
+            names |= _quoted_requirements(_list_after(text, "dependencies") + _list_after(text, "install_requires"))
     return names
+
+
+def python_project(root: str, all_paths: list) -> dict:
+    """{'names': project names, 'runtime': dependencies the installed project needs, without dev/test/docs groups}."""
+    names, runtime = set(), set()
+    for rel in all_paths:
+        if rel.count("/") > 2 or re.search(r"(^|/)(tests?|docs?|examples?|samples?)/", rel):
+            continue
+        base = rel.rsplit("/", 1)[-1]
+        if re.match(r"requirements.*\.txt$", base):
+            if re.search(r"(?i)dev|test|doc|lint|ci|typing|build|bench|example|tox", base):
+                continue
+            text = _read(root, rel)
+            runtime |= {_norm(m.group(1)) for m in re.finditer(
+                r"(?m)^\s*([A-Za-z0-9][A-Za-z0-9_.\-]*)\s*(?:\[[^\]]*\])?\s*(?:[=<>!~;]|$)", text)}
+        elif base == "pyproject.toml":
+            text = _read(root, rel)
+            project = _toml_section(text, "project")
+            m = re.search(r"(?m)^\s*name\s*=\s*[\"']([^\"']+)", project or _toml_section(text, "tool.poetry"))
+            if m:
+                names.add(_norm(m.group(1)))
+            runtime |= _quoted_requirements(_list_after(project, "dependencies"))
+            poetry = _toml_section(text, "tool.poetry.dependencies")
+            runtime |= {_norm(m.group(1)) for m in re.finditer(r"(?m)^\s*([A-Za-z0-9][\w.\-]*)\s*=", poetry)} - {"python"}
+        elif base == "setup.py":
+            text = _read(root, rel)
+            m = re.search(r"\bname\s*=\s*[\"']([^\"']+)", text)
+            if m:
+                names.add(_norm(m.group(1)))
+            runtime |= _quoted_requirements(_list_after(text, "install_requires"))
+        elif base == "Pipfile":
+            runtime |= {_norm(m.group(1)) for m in re.finditer(r"(?m)^\s*([A-Za-z0-9][\w.\-]*)\s*=",
+                                                                 _toml_section(_read(root, rel), "packages"))}
+    return {"names": names, "runtime": runtime}
+
+
+def node_manifest(root: str, rel: str) -> dict:
+    try:
+        pkg = json.loads(_read(root, rel) or "{}")
+    except json.JSONDecodeError:
+        return {}
+    return pkg if isinstance(pkg, dict) else {}
 
 
 def detect(root: str, files: list, all_paths: list) -> dict:

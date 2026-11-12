@@ -289,5 +289,6 @@ def is_test_path(rel: str) -> bool:
         name.startswith("test_")
         or ".test." in name
         or ".spec." in name
+        or "-spec." in name  # Angular/Nest e2e: app.e2e-spec.ts
         or name.endswith(("_test.go", "_test.py", "_spec.rb"))
     )

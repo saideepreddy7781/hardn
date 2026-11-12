@@ -1,0 +1,1 @@
+fetch(req.query.u);

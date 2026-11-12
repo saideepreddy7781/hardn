@@ -1,0 +1,1 @@
+spawn(x, { shell: false });

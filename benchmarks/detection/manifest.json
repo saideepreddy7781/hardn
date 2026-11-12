@@ -1,0 +1,5925 @@
+{
+ "cases": {
+  "CI001_base_ref": {
+   "engine": "rules",
+   "expect": "CI001",
+   "lang": "actions",
+   "note": "safe twin: base ref is set by maintainers",
+   "split": "tuning",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "CI001_body": {
+   "engine": "rules",
+   "expect": "CI001",
+   "lang": "actions",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "CI001_commits": {
+   "engine": "rules",
+   "expect": "CI001",
+   "lang": "actions",
+   "note": "commits[0] array form",
+   "split": "tuning",
+   "tags": []
+  },
+  "CI001_env_fix": {
+   "engine": "rules",
+   "expect": "CI001",
+   "lang": "actions",
+   "note": "safe twin is the rule's own fix",
+   "split": "tuning",
+   "tags": []
+  },
+  "CI001_head_ref": {
+   "engine": "rules",
+   "expect": "CI001",
+   "lang": "actions",
+   "note": "github.head_ref is attacker-controlled",
+   "split": "tuning",
+   "tags": []
+  },
+  "CI001_multiline_run": {
+   "engine": "rules",
+   "expect": "CI001",
+   "lang": "actions",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "CI001_run": {
+   "engine": "rules",
+   "expect": "CI001",
+   "lang": "actions",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "CI001_with_input": {
+   "engine": "rules",
+   "expect": "CI001",
+   "lang": "actions",
+   "split": "holdout",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "CI001_workflow_run": {
+   "engine": "rules",
+   "expect": "CI001",
+   "lang": "actions",
+   "note": "workflow_run",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK001_arg": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK001_as": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK001_latest": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK001_nontag": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK001_platform": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "DK001_registry_port": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "note": "registry port, no tag",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK001_scratch": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK001_stage_ref": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "DK002_arg": {
+   "engine": "rules",
+   "expect": "DK002",
+   "lang": "docker",
+   "note": "safe twin: ARG with no default",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK002_empty_quotes": {
+   "engine": "rules",
+   "expect": "DK002",
+   "lang": "docker",
+   "split": "holdout",
+   "tags": []
+  },
+  "DK002_env": {
+   "engine": "rules",
+   "expect": "DK002",
+   "lang": "docker",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK002_path": {
+   "engine": "rules",
+   "expect": "DK002",
+   "lang": "docker",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "DK002_ttl": {
+   "engine": "rules",
+   "expect": "DK002",
+   "lang": "docker",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "DK003_bash": {
+   "engine": "rules",
+   "expect": "DK003",
+   "lang": "docker",
+   "split": "holdout",
+   "tags": []
+  },
+  "DK003_continuation": {
+   "engine": "rules",
+   "expect": "DK003",
+   "lang": "docker",
+   "note": "pipe on continuation line",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK003_pipe": {
+   "engine": "rules",
+   "expect": "DK003",
+   "lang": "docker",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK003_python": {
+   "engine": "rules",
+   "expect": "DK003",
+   "lang": "docker",
+   "note": "pipe to python",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK_containerfile": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "note": "Podman Containerfile",
+   "split": "tuning",
+   "tags": []
+  },
+  "DK_name_variant": {
+   "engine": "rules",
+   "expect": "DK001",
+   "lang": "docker",
+   "note": "file named api.Dockerfile",
+   "split": "tuning",
+   "tags": []
+  },
+  "GO001_tls": {
+   "engine": "rules",
+   "expect": "GO001",
+   "lang": "go",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "GO002_concat": {
+   "engine": "rules",
+   "expect": "GO002",
+   "lang": "go",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "GO002_ctx": {
+   "engine": "rules",
+   "expect": "GO002",
+   "lang": "go",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "GO002_gorm_raw": {
+   "engine": "rules",
+   "expect": "CWE-89",
+   "lang": "go",
+   "note": "GORM Raw",
+   "split": "tuning",
+   "tags": []
+  },
+  "GO002_sprintf": {
+   "engine": "rules",
+   "expect": "GO002",
+   "lang": "go",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "GO002_two_lines": {
+   "engine": "rules",
+   "expect": "CWE-89",
+   "lang": "go",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "GO003_shell": {
+   "engine": "rules",
+   "expect": "GO003",
+   "lang": "go",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS001_eval": {
+   "engine": "rules",
+   "expect": "JS001",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS001_new_function": {
+   "engine": "rules",
+   "expect": "JS001",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS001_string": {
+   "engine": "rules",
+   "expect": "JS001",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS001_trailing_comment": {
+   "engine": "rules",
+   "expect": "JS001",
+   "lang": "js-rules",
+   "note": "safe twin: trailing comment",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS002_concat": {
+   "engine": "rules",
+   "expect": "JS002",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS002_exec": {
+   "engine": "rules",
+   "expect": "JS002",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS002_regex_exec": {
+   "engine": "rules",
+   "expect": "JS002",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS002_spawn_shell": {
+   "engine": "rules",
+   "expect": "JS002",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS003_concat": {
+   "engine": "rules",
+   "expect": "JS003",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS003_static_concat": {
+   "engine": "rules",
+   "expect": "JS003",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS003_static_template_var": {
+   "engine": "rules",
+   "expect": "JS003",
+   "lang": "js-rules",
+   "note": "safe twin: constant identifier",
+   "split": "tuning",
+   "tags": [
+    "lint"
+   ]
+  },
+  "JS003_template": {
+   "engine": "rules",
+   "expect": "JS003",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS004_clear": {
+   "engine": "rules",
+   "expect": "JS004",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS004_innerhtml": {
+   "engine": "rules",
+   "expect": "JS004",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS004_sanitized": {
+   "engine": "rules",
+   "expect": "JS004",
+   "lang": "js-rules",
+   "note": "safe twin is the rule's own fix",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS004_sanitized_jsx": {
+   "engine": "rules",
+   "expect": "JS004",
+   "lang": "tsx-rules",
+   "note": "safe twin is the rule's own fix",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS004_static": {
+   "engine": "rules",
+   "expect": "JS004",
+   "lang": "js-rules",
+   "note": "safe twin: constant HTML",
+   "split": "tuning",
+   "tags": [
+    "lint"
+   ]
+  },
+  "JS004_vhtml": {
+   "engine": "rules",
+   "expect": "JS004",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS005_env": {
+   "engine": "rules",
+   "expect": "JS005",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS005_tls": {
+   "engine": "rules",
+   "expect": "JS005",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS006_animation": {
+   "engine": "rules",
+   "expect": "JS006",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS006_token": {
+   "engine": "rules",
+   "expect": "JS006",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS006_unrelated": {
+   "engine": "rules",
+   "expect": "JS006",
+   "lang": "js-rules",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "JS007_none": {
+   "engine": "rules",
+   "expect": "JS007",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS008_after_verify": {
+   "engine": "rules",
+   "expect": "JS008",
+   "lang": "js-rules",
+   "note": "safe twin: decode only after verify",
+   "split": "tuning",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "JS008_decode": {
+   "engine": "rules",
+   "expect": "JS008",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS009_cors": {
+   "engine": "rules",
+   "expect": "JS009",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS009_origin_true_unrelated": {
+   "engine": "rules",
+   "expect": "JS009",
+   "lang": "js-rules",
+   "note": "safe twin: unrelated object literal",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS009_star": {
+   "engine": "rules",
+   "expect": "JS009",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS010_md5": {
+   "engine": "rules",
+   "expect": "JS010",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS011_redirect": {
+   "engine": "rules",
+   "expect": "JS011",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS012_path": {
+   "engine": "rules",
+   "expect": "JS012",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS013_ssrf": {
+   "engine": "rules",
+   "expect": "JS013",
+   "lang": "js-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "JS014_cookie": {
+   "engine": "rules",
+   "expect": "JS014",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JS014_nodemailer": {
+   "engine": "rules",
+   "expect": "JS014",
+   "lang": "js-rules",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "JS015_nosql": {
+   "engine": "rules",
+   "expect": "JS015",
+   "lang": "js-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JV001_concat": {
+   "engine": "rules",
+   "expect": "JV001",
+   "lang": "java",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JV001_static_concat": {
+   "engine": "rules",
+   "expect": "JV001",
+   "lang": "java",
+   "note": "safe twin: literal + literal",
+   "split": "tuning",
+   "tags": []
+  },
+  "JV001_string_format": {
+   "engine": "rules",
+   "expect": "CWE-89",
+   "lang": "java",
+   "note": "String.format",
+   "split": "tuning",
+   "tags": []
+  },
+  "JV001_two_lines": {
+   "engine": "rules",
+   "expect": "CWE-89",
+   "lang": "java",
+   "note": "query built on the previous line",
+   "split": "tuning",
+   "tags": []
+  },
+  "JV002_ois": {
+   "engine": "rules",
+   "expect": "JV002",
+   "lang": "java",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JV003_checkservertrusted": {
+   "engine": "rules",
+   "expect": "JV003",
+   "lang": "java",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JV003_noop_verifier": {
+   "engine": "rules",
+   "expect": "JV003",
+   "lang": "java",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "JV003_throws": {
+   "engine": "rules",
+   "expect": "JV003",
+   "lang": "java",
+   "split": "holdout",
+   "tags": []
+  },
+  "JV_runtime_exec": {
+   "engine": "rules",
+   "expect": "CWE-78",
+   "lang": "java",
+   "note": "command exec has no JVM rule; README claims ~50 rules, not this one",
+   "split": "tuning",
+   "tags": [
+    "out-of-claim"
+   ]
+  },
+  "K8S001_list_item": {
+   "engine": "rules",
+   "expect": "K8S001",
+   "lang": "k8s",
+   "note": "key directly after the list dash; not a real k8s shape",
+   "split": "tuning",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "K8S001_priv": {
+   "engine": "rules",
+   "expect": "K8S001",
+   "lang": "k8s",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "K8S_compose": {
+   "engine": "rules",
+   "expect": "K8S001",
+   "lang": "k8s",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "K8S_host_network": {
+   "engine": "rules",
+   "expect": "CWE-250",
+   "lang": "k8s",
+   "split": "holdout",
+   "tags": [
+    "out-of-claim"
+   ]
+  },
+  "PHP001_escapeshellarg": {
+   "engine": "rules",
+   "expect": "PHP001",
+   "lang": "php",
+   "note": "safe twin is the rule's own fix",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP001_eval": {
+   "engine": "rules",
+   "expect": "PHP001",
+   "lang": "php",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP001_file_get_contents": {
+   "engine": "rules",
+   "expect": "CWE-918",
+   "lang": "php",
+   "note": "SSRF/LFI sink not in rule",
+   "split": "tuning",
+   "tags": [
+    "out-of-claim"
+   ]
+  },
+  "PHP001_include_noparen": {
+   "engine": "rules",
+   "expect": "PHP001",
+   "lang": "php",
+   "note": "include is normally written without parentheses",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP001_intval": {
+   "engine": "rules",
+   "expect": "PHP001",
+   "lang": "php",
+   "note": "safe twin: intval",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP001_query": {
+   "engine": "rules",
+   "expect": "PHP001",
+   "lang": "php",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP001_real_escape": {
+   "engine": "rules",
+   "expect": "PHP001",
+   "lang": "php",
+   "split": "holdout",
+   "tags": []
+  },
+  "PHP001_require_noparen": {
+   "engine": "rules",
+   "expect": "PHP001",
+   "lang": "php",
+   "note": "require is normally written without parentheses",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP001_system": {
+   "engine": "rules",
+   "expect": "PHP001",
+   "lang": "php",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP001_var_flow": {
+   "engine": "rules",
+   "expect": "CWE-89",
+   "lang": "php",
+   "note": "input assigned on the previous line",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP002_echo": {
+   "engine": "rules",
+   "expect": "PHP002",
+   "lang": "php",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP002_htmlspecialchars": {
+   "engine": "rules",
+   "expect": "PHP002",
+   "lang": "php",
+   "note": "safe twin is the rule's own fix",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP002_intval": {
+   "engine": "rules",
+   "expect": "PHP002",
+   "lang": "php",
+   "note": "safe twin: intval",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP002_short_echo": {
+   "engine": "rules",
+   "expect": "PHP002",
+   "lang": "php",
+   "note": "short echo tag",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP003_allowed_classes": {
+   "engine": "rules",
+   "expect": "PHP003",
+   "lang": "php",
+   "note": "safe twin is the rule's own fix",
+   "split": "tuning",
+   "tags": []
+  },
+  "PHP003_unserialize": {
+   "engine": "rules",
+   "expect": "PHP003",
+   "lang": "php",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS001_lockfile_lock_suffix": {
+   "engine": "posture",
+   "expect": "POS001",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS001_nodeps": {
+   "engine": "posture",
+   "expect": "POS001",
+   "lang": "posture",
+   "note": "safe twin: no dependencies",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS001_nolock": {
+   "engine": "posture",
+   "expect": "POS001",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS001_pnpm": {
+   "engine": "posture",
+   "expect": "POS001",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS002_bounded_range": {
+   "engine": "posture",
+   "expect": "POS002",
+   "lang": "posture",
+   "note": "safe twin: range has an upper bound",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS002_gte": {
+   "engine": "posture",
+   "expect": "POS002",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS002_latest": {
+   "engine": "posture",
+   "expect": "POS002",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS002_star": {
+   "engine": "posture",
+   "expect": "POS002",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS003_dep_unused": {
+   "engine": "posture",
+   "expect": "POS003",
+   "lang": "posture",
+   "note": "helmet installed, never registered",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS003_dev_only_express": {
+   "engine": "posture",
+   "expect": "POS003",
+   "lang": "posture",
+   "note": "safe twin: express only as a devDependency (test mock server)",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS003_fastify": {
+   "engine": "posture",
+   "expect": "POS003",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS003_koa": {
+   "engine": "posture",
+   "expect": "POS003",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS003_manual_headers": {
+   "engine": "posture",
+   "expect": "POS003",
+   "lang": "posture",
+   "note": "safe twin: headers set by hand",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS003_nohelmet": {
+   "engine": "posture",
+   "expect": "POS003",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS004_fastapi": {
+   "engine": "posture",
+   "expect": "POS004",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS004_flask": {
+   "engine": "posture",
+   "expect": "POS004",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS004_nest": {
+   "engine": "posture",
+   "expect": "POS004",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS004_norl": {
+   "engine": "posture",
+   "expect": "POS004",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS005_fastapi_claim": {
+   "engine": "posture",
+   "expect": "POS005",
+   "lang": "posture",
+   "note": "README: input validation; check only exists for Node",
+   "split": "tuning",
+   "tags": [
+    "out-of-claim"
+   ]
+  },
+  "POS005_novalidator": {
+   "engine": "posture",
+   "expect": "POS005",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS006_comment_only": {
+   "engine": "posture",
+   "expect": "POS006",
+   "lang": "posture",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "POS006_imported_header": {
+   "engine": "posture",
+   "expect": "POS006",
+   "lang": "posture",
+   "note": "CSP defined in an imported module",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS006_lowercase_header": {
+   "engine": "posture",
+   "expect": "POS006",
+   "lang": "posture",
+   "note": "HTTP headers are case-insensitive",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS006_middleware": {
+   "engine": "posture",
+   "expect": "POS006",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS006_no_csp": {
+   "engine": "posture",
+   "expect": "POS006",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS006_src_middleware": {
+   "engine": "posture",
+   "expect": "POS006",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS010_bare": {
+   "engine": "posture",
+   "expect": "POS010",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS010_loose": {
+   "engine": "posture",
+   "expect": "POS010",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS010_url_pin": {
+   "engine": "posture",
+   "expect": "POS010",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS011_manual_headers": {
+   "engine": "posture",
+   "expect": "POS011",
+   "lang": "posture",
+   "note": "safe twin: headers set by hand",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS011_noheaders": {
+   "engine": "posture",
+   "expect": "POS011",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS011_pyproject_inline": {
+   "engine": "posture",
+   "expect": "POS011",
+   "lang": "posture",
+   "note": "single-line dependencies array",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS011_pyproject_multiline": {
+   "engine": "posture",
+   "expect": "POS011",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS011_setup_inline": {
+   "engine": "posture",
+   "expect": "POS011",
+   "lang": "posture",
+   "note": "single-line install_requires",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS012_commented": {
+   "engine": "posture",
+   "expect": "POS012",
+   "lang": "posture",
+   "note": "all four commented out",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS012_dev_settings": {
+   "engine": "posture",
+   "expect": "POS012",
+   "lang": "posture",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "POS012_env_driven": {
+   "engine": "posture",
+   "expect": "POS012",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS012_missing": {
+   "engine": "posture",
+   "expect": "POS012",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS012_root_settings_pkg": {
+   "engine": "posture",
+   "expect": "POS012",
+   "lang": "posture",
+   "note": "settings package at repo root",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS012_set_false": {
+   "engine": "posture",
+   "expect": "POS012",
+   "lang": "posture",
+   "note": "all four explicitly disabled",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS012_settings_pkg": {
+   "engine": "posture",
+   "expect": "POS012",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS020_builder_only": {
+   "engine": "posture",
+   "expect": "POS020",
+   "lang": "posture",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "POS020_distroless_nonroot": {
+   "engine": "posture",
+   "expect": "POS020",
+   "lang": "posture",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "POS020_filename_variant": {
+   "engine": "posture",
+   "expect": "POS020",
+   "lang": "posture",
+   "note": "file named api.Dockerfile",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS020_noUSER": {
+   "engine": "posture",
+   "expect": "POS020",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS020_root": {
+   "engine": "posture",
+   "expect": "POS020",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS030_gitignore": {
+   "engine": "posture",
+   "expect": "POS030",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS031_github": {
+   "engine": "posture",
+   "expect": "POS031",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS031_security": {
+   "engine": "posture",
+   "expect": "POS031",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS032_dependabot": {
+   "engine": "posture",
+   "expect": "POS032",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS032_renovate": {
+   "engine": "posture",
+   "expect": "POS032",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS032_renovate_github": {
+   "engine": "posture",
+   "expect": "POS032",
+   "lang": "posture",
+   "note": "renovate.json5 is a standard location",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS033_ci": {
+   "engine": "posture",
+   "expect": "POS033",
+   "lang": "posture",
+   "split": "holdout",
+   "tags": []
+  },
+  "POS033_comment_only": {
+   "engine": "posture",
+   "expect": "POS033",
+   "lang": "posture",
+   "note": "tool mentioned only in a comment",
+   "split": "tuning",
+   "tags": []
+  },
+  "POS033_gitlab": {
+   "engine": "posture",
+   "expect": "POS033",
+   "lang": "posture",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY001_constant": {
+   "engine": "rules",
+   "expect": "PY001",
+   "lang": "py-rules",
+   "note": "safe twin: constant, not attacker-reachable",
+   "split": "tuning",
+   "tags": [
+    "lint"
+   ]
+  },
+  "PY001_docstring": {
+   "engine": "rules",
+   "expect": "PY001",
+   "lang": "py-rules",
+   "note": "safe twin: docstring mention",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY001_eval": {
+   "engine": "rules",
+   "expect": "PY001",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY001_method": {
+   "engine": "rules",
+   "expect": "PY001",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY001_string": {
+   "engine": "rules",
+   "expect": "PY001",
+   "lang": "py-rules",
+   "note": "safe twin: string literal",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY001_trailing_comment": {
+   "engine": "rules",
+   "expect": "PY001",
+   "lang": "py-rules",
+   "note": "safe twin: trailing comment",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY002_comment": {
+   "engine": "rules",
+   "expect": "PY002",
+   "lang": "py-rules",
+   "note": "safe twin: trailing comment",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY002_constant": {
+   "engine": "rules",
+   "expect": "PY002",
+   "lang": "py-rules",
+   "note": "safe twin: fixed string",
+   "split": "tuning",
+   "tags": [
+    "lint"
+   ]
+  },
+  "PY002_multiline": {
+   "engine": "rules",
+   "expect": "CWE-78",
+   "lang": "py-rules",
+   "note": "shell=True on a different line",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY002_shell": {
+   "engine": "rules",
+   "expect": "PY002",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY003_constant": {
+   "engine": "rules",
+   "expect": "PY003",
+   "lang": "py-rules",
+   "note": "safe twin: fixed string",
+   "split": "tuning",
+   "tags": [
+    "lint"
+   ]
+  },
+  "PY003_system": {
+   "engine": "rules",
+   "expect": "PY003",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY004_concat": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY004_const_concat": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "note": "safe twin: literal + literal, parameterised",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY004_format": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY004_fstring": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY004_percent": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY004_rf_prefix": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "note": "rf prefix",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY004_static_fstring": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "note": "safe twin: f-string with no interpolation",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY004_task_execute": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "PY004_text": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY004_triple": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "PY004_upper_F": {
+   "engine": "rules",
+   "expect": "PY004",
+   "lang": "py-rules",
+   "note": "F prefix",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY005_dumps": {
+   "engine": "rules",
+   "expect": "PY005",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY005_pickle": {
+   "engine": "rules",
+   "expect": "PY005",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY006_csafe": {
+   "engine": "rules",
+   "expect": "PY006",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY006_loader_kw": {
+   "engine": "rules",
+   "expect": "PY006",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY006_loader_pos": {
+   "engine": "rules",
+   "expect": "PY006",
+   "lang": "py-rules",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "PY006_multiline": {
+   "engine": "rules",
+   "expect": "PY006",
+   "lang": "py-rules",
+   "note": "safe twin: Loader on next line",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY006_yaml": {
+   "engine": "rules",
+   "expect": "PY006",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY007_unrelated": {
+   "engine": "rules",
+   "expect": "PY007",
+   "lang": "py-rules",
+   "note": "safe twin: unrelated keyword",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY007_verify": {
+   "engine": "rules",
+   "expect": "PY007",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY008_app_run": {
+   "engine": "rules",
+   "expect": "PY008",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY008_debug_setting": {
+   "engine": "rules",
+   "expect": "PY008",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY009_hosts": {
+   "engine": "rules",
+   "expect": "PY009",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY010_md5": {
+   "engine": "rules",
+   "expect": "PY010",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY010_nonsecurity": {
+   "engine": "rules",
+   "expect": "PY010",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY011_token": {
+   "engine": "rules",
+   "expect": "PY011",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY011_unrelated_name": {
+   "engine": "rules",
+   "expect": "PY011",
+   "lang": "py-rules",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "PY011_verify_sample": {
+   "engine": "rules",
+   "expect": "PY011",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY012_ssrf": {
+   "engine": "rules",
+   "expect": "PY012",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY013_path": {
+   "engine": "rules",
+   "expect": "PY013",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY014_redirect": {
+   "engine": "rules",
+   "expect": "PY014",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY015_bitwise_or": {
+   "engine": "rules",
+   "expect": "PY015",
+   "lang": "py-rules",
+   "note": "safe twin: bitwise OR of a variable named safe",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY015_markup": {
+   "engine": "rules",
+   "expect": "PY015",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY015_static_markup": {
+   "engine": "rules",
+   "expect": "PY015",
+   "lang": "py-rules",
+   "note": "safe twin: constant HTML",
+   "split": "tuning",
+   "tags": [
+    "lint"
+   ]
+  },
+  "PY015_template_safe": {
+   "engine": "rules",
+   "expect": "PY015",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY016_multiline": {
+   "engine": "rules",
+   "expect": "PY016",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY016_options": {
+   "engine": "rules",
+   "expect": "PY016",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY016_verify_false": {
+   "engine": "rules",
+   "expect": "PY016",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY017_exempt": {
+   "engine": "rules",
+   "expect": "PY017",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "PY018_mktemp": {
+   "engine": "rules",
+   "expect": "PY018",
+   "lang": "py-rules",
+   "split": "holdout",
+   "tags": []
+  },
+  "PY019_bind": {
+   "engine": "rules",
+   "expect": "PY019",
+   "lang": "py-rules",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB001_concat": {
+   "engine": "rules",
+   "expect": "CWE-89",
+   "lang": "ruby",
+   "note": "plus-concat",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB001_find_by_sql": {
+   "engine": "rules",
+   "expect": "RB001",
+   "lang": "ruby",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB001_order": {
+   "engine": "rules",
+   "expect": "RB001",
+   "lang": "ruby",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB001_paren_less": {
+   "engine": "rules",
+   "expect": "CWE-89",
+   "lang": "ruby",
+   "note": "paren-less call",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB001_where": {
+   "engine": "rules",
+   "expect": "RB001",
+   "lang": "ruby",
+   "split": "holdout",
+   "tags": []
+  },
+  "RB002_backticks": {
+   "engine": "rules",
+   "expect": "RB002",
+   "lang": "ruby",
+   "note": "backticks are the commonest Ruby shell form",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB002_eval_var": {
+   "engine": "rules",
+   "expect": "RB002",
+   "lang": "ruby",
+   "note": "eval of a variable, no interpolation",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB002_exec_noparen": {
+   "engine": "rules",
+   "expect": "RB002",
+   "lang": "ruby",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB002_percent_x": {
+   "engine": "rules",
+   "expect": "RB002",
+   "lang": "ruby",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB002_system": {
+   "engine": "rules",
+   "expect": "RB002",
+   "lang": "ruby",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB003_double_eq": {
+   "engine": "rules",
+   "expect": "RB003",
+   "lang": "ruby",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB003_html_safe": {
+   "engine": "rules",
+   "expect": "RB003",
+   "lang": "ruby",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB003_method_raw": {
+   "engine": "rules",
+   "expect": "RB003",
+   "lang": "ruby",
+   "note": "safe twin: .raw on a non-view object",
+   "split": "tuning",
+   "tags": []
+  },
+  "RB003_raw_erb": {
+   "engine": "rules",
+   "expect": "RB003",
+   "lang": "ruby",
+   "split": "holdout",
+   "tags": []
+  },
+  "TF001_443_public": {
+   "engine": "rules",
+   "expect": "TF001",
+   "lang": "terraform",
+   "note": "safe twin: public HTTPS; rule's own fix says expose 443",
+   "split": "tuning",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "TF001_egress": {
+   "engine": "rules",
+   "expect": "TF001",
+   "lang": "terraform",
+   "note": "safe twin: egress; rule title says ingress",
+   "split": "tuning",
+   "tags": []
+  },
+  "TF001_ingress": {
+   "engine": "rules",
+   "expect": "TF001",
+   "lang": "terraform",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "TF001_ipv6": {
+   "engine": "rules",
+   "expect": "TF001",
+   "lang": "terraform",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "TF001_second_cidr": {
+   "engine": "rules",
+   "expect": "TF001",
+   "lang": "terraform",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "TF002_public": {
+   "engine": "rules",
+   "expect": "TF002",
+   "lang": "terraform",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "TF002_write": {
+   "engine": "rules",
+   "expect": "TF002",
+   "lang": "terraform",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "anthropic": {
+   "engine": "secrets",
+   "expect": "SEC005",
+   "lang": "providers",
+   "split": "holdout",
+   "tags": []
+  },
+  "anthropic_your": {
+   "engine": "secrets",
+   "expect": "SEC005",
+   "lang": "providers",
+   "split": "holdout",
+   "tags": []
+  },
+  "aws_akia": {
+   "engine": "secrets",
+   "expect": "SEC001",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "aws_asia": {
+   "engine": "secrets",
+   "expect": "SEC001",
+   "lang": "providers",
+   "split": "holdout",
+   "tags": []
+  },
+  "aws_xxxx": {
+   "engine": "secrets",
+   "expect": "SEC001",
+   "lang": "providers",
+   "note": "safe twin: X-filled placeholder",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_dangerously_prop": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "tsx-browser",
+   "note": "safe twin is JS004's recommended fix",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_docwrite": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-browser",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_eval_hash": {
+   "engine": "taint-js",
+   "expect": "CWE-95",
+   "lang": "js-browser",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_fp_fetch_same_origin": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-browser",
+   "note": "safe twin: same-origin relative fetch from the browser",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_fp_usesearchparams": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "tsx-browser",
+   "split": "holdout",
+   "tags": []
+  },
+  "br_innerhtml": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-browser",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_innerhtml_escaped": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-browser",
+   "note": "safe twin: entity escaping",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_innerhtml_hash": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-browser",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_insertadjacent": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-browser",
+   "split": "holdout",
+   "tags": []
+  },
+  "br_jquery_html": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-browser",
+   "note": "jQuery .html()",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_location_href": {
+   "engine": "taint-js",
+   "expect": "CWE-601",
+   "lang": "js-browser",
+   "note": "client-side redirect",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_outerhtml_window": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-browser",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_postmessage": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-browser",
+   "note": "postMessage source",
+   "split": "tuning",
+   "tags": []
+  },
+  "br_settimeout_string": {
+   "engine": "taint-js",
+   "expect": "CWE-95",
+   "lang": "js-browser",
+   "note": "string setTimeout, browser only (Node throws on a string)",
+   "split": "tuning",
+   "tags": []
+  },
+  "cs_amqp": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "split": "holdout",
+   "tags": []
+  },
+  "cs_https_basic": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "note": "HTTP basic-auth URL",
+   "split": "tuning",
+   "tags": []
+  },
+  "cs_jdbc": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "split": "holdout",
+   "tags": []
+  },
+  "cs_localhost": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "note": "safe twin: local dev default",
+   "split": "tuning",
+   "tags": []
+  },
+  "cs_mongo_srv": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "cs_mysql": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "cs_nopass": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "cs_postgres": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "split": "holdout",
+   "tags": []
+  },
+  "cs_postgresql": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "cs_redis_nouser": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "note": "Redis URLs usually omit the user",
+   "split": "tuning",
+   "tags": []
+  },
+  "cs_redis_user": {
+   "engine": "secrets",
+   "expect": "SEC010",
+   "lang": "connstr",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_cbv_kwargs": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "CBV url kwarg",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_cbv_self_request": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_extra": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": ".extra()",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_httpresponse_xss": {
+   "engine": "taint-py",
+   "expect": "CWE-79",
+   "lang": "py-django",
+   "note": "reflected XSS",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_mark_safe": {
+   "engine": "taint-py",
+   "expect": "CWE-79",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_orm_filter_safe": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "split": "holdout",
+   "tags": []
+  },
+  "dj_orm_raw": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_rawsql": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "RawSQL()",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_redirect": {
+   "engine": "taint-py",
+   "expect": "CWE-601",
+   "lang": "py-django",
+   "split": "holdout",
+   "tags": []
+  },
+  "dj_src_META": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_src_body": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_src_build_uri": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_src_cookies": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_src_data": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_src_files": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "split": "holdout",
+   "tags": []
+  },
+  "dj_src_get": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "split": "holdout",
+   "tags": []
+  },
+  "dj_src_get_full_path": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_src_getidx": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_src_headers": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "split": "holdout",
+   "tags": []
+  },
+  "dj_src_path": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "split": "holdout",
+   "tags": []
+  },
+  "dj_src_post": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "split": "holdout",
+   "tags": []
+  },
+  "dj_src_query_params": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "dj_url_kwarg": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-django",
+   "note": "URLconf kwarg, no decorator",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_bool_flag": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "safe twin: feature flag",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_empty": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "split": "holdout",
+   "tags": []
+  },
+  "env_example": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "split": "holdout",
+   "tags": []
+  },
+  "env_local_glob": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_minlen": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "safe twin: config number",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_not_ignored": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "safe twin: git-ignored local env",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_placeholder": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_private_flag": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "safe twin: feature flag",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_production": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_real_format_example": {
+   "engine": "secrets",
+   "expect": "SEC004",
+   "lang": "envfiles",
+   "note": "real key leaked into the example file",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_subdir": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "root .gitignore covers subdir",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_subdir_gitignore": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "ignored via nested .gitignore, only meaningful outside a git repo",
+   "split": "tuning",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "env_ttl": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "safe twin: duration",
+   "split": "tuning",
+   "tags": []
+  },
+  "env_url_no_password": {
+   "engine": "secrets",
+   "expect": "SEC200",
+   "lang": "envfiles",
+   "note": "safe twin: URL has no credential",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_class_controller": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_cmd_0": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_cmd_1": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_cmd_2": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_cmd_3": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_cmd_4": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "note": "require().exec",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_cmd_5": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_cmd_6": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_cmd_7": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "note": "multi-line spawn shell:true",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_cmd_8": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_eval": {
+   "engine": "taint-js",
+   "expect": "CWE-95",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_fp_array_find": {
+   "engine": "taint-js",
+   "expect": "CWE-943",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "ex_fp_block_comment": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "safe twin: commented out inside a block comment",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_fp_bus_execute": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "safe twin: .execute on a non-SQL object",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_fp_regex_exec": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "note": "safe twin: RegExp.exec",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_fp_string_literal": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "safe twin: the text appears inside a SQL string",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_fp_trailing_comment": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_guard_includes": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "safe: allowlist guard",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_guard_regex": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "safe: digits only",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_helper_sink": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "same-file helper with sink",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_helper_source": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "same-file helper returns source",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_knex_raw": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_mixed_sanitised": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "one sanitized operand, one raw",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_mysql_execute": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_new_function": {
+   "engine": "taint-js",
+   "expect": "CWE-95",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_noop_sanitize": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "js-express",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_nosql_body": {
+   "engine": "taint-js",
+   "expect": "CWE-943",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_nosql_field_inline": {
+   "engine": "taint-js",
+   "expect": "CWE-943",
+   "lang": "js-express",
+   "note": "classic {$ne: null} login bypass",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_nosql_string_filter": {
+   "engine": "taint-js",
+   "expect": "CWE-943",
+   "lang": "js-express",
+   "note": "safe twin is JS015's recommended fix",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_nosql_var": {
+   "engine": "taint-js",
+   "expect": "CWE-943",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_nosql_where": {
+   "engine": "taint-js",
+   "expect": "CWE-943",
+   "lang": "js-express",
+   "note": "$where",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_number_inline": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_parseint_inline": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_parseint_reassign": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "safe: reassignment to int",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_path_00": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_path_01": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_path_02": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_path_03": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_path_04": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_path_05": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_path_06": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_path_07": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "note": "createWriteStream",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_path_08": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_path_09": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "note": "readdirSync",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_path_10": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_path_basename_inline": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_path_resolve_check": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "js-express",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_prisma_unsafe": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "safe twin: tagged template is parameterised",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_proto_bare_merge": {
+   "engine": "taint-js",
+   "expect": "CWE-1321",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_proto_deepmerge": {
+   "engine": "taint-js",
+   "expect": "CWE-1321",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_proto_defaults": {
+   "engine": "taint-js",
+   "expect": "CWE-1321",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_proto_lodash_name": {
+   "engine": "taint-js",
+   "expect": "CWE-1321",
+   "lang": "js-express",
+   "note": "lodash.merge spelled out",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_proto_merge": {
+   "engine": "taint-js",
+   "expect": "CWE-1321",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_proto_var": {
+   "engine": "taint-js",
+   "expect": "CWE-1321",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_reassign_literal": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "safe: overwritten with literal",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_redirect": {
+   "engine": "taint-js",
+   "expect": "CWE-601",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_redirect_prefix": {
+   "engine": "taint-js",
+   "expect": "CWE-601",
+   "lang": "js-express",
+   "note": "safe twin: fixed same-site prefix",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_redirect_status": {
+   "engine": "taint-js",
+   "expect": "CWE-601",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_redirect_var": {
+   "engine": "taint-js",
+   "expect": "CWE-601",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sequelize": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_shared_var_scope": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "safe twin: second handler's id is a local literal",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_alias_query": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_alias_req": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "alias of req",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_array_destructure": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_await": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_callback": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_concat": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_destructure": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_destructure_default": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_sql_destructure_multiline": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "multi-line destructure",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_destructure_nested": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_sql_destructure_rename": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_for_of": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "for..of binding",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_foreach": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_sql_inline_source": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_multiline_call": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "multi-line call",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_multiline_concat": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "multi-line concatenation",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_multiline_template": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "multi-line template literal",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_nested_block": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "assignment not at line start",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_object_prop": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "member assignment",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_oneliner": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "handler on one line",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_plus_equals": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "+= concatenation",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_renamed_param": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "handler params renamed",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_tagged_in_query": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_sql_template": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_template_var": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_sql_then": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_src_body": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_src_cookies": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_src_headers": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_src_params": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_src_query": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_src_req_file": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "multer upload name",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_src_req_get": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_src_req_header": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_src_req_hostname": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "Host header",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_src_req_originalUrl": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "attacker-controlled",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_src_req_path": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "attacker-controlled",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_src_req_url": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "attacker-controlled",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_src_signed_cookies": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_ssrf_0": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_ssrf_1": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_ssrf_2": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_ssrf_3": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_ssrf_4": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_ssrf_5": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-express",
+   "note": "config-object axios",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_ssrf_6": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_ssrf_fetch_body": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-express",
+   "note": "safe twin: fixed URL",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_ssrf_proxy_body": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "js-express",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "ex_vm": {
+   "engine": "taint-js",
+   "expect": "CWE-95",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_where_raw": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_wrong_sanitizer_sql": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-express",
+   "note": "URI encoding leaves 1 OR 1=1 mostly usable (spaces encoded but /**/ and parens survive)",
+   "split": "tuning",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "ex_xss_send": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-express",
+   "note": "reflected XSS",
+   "split": "tuning",
+   "tags": []
+  },
+  "ex_xss_write": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-express",
+   "note": "reflected XSS",
+   "split": "tuning",
+   "tags": []
+  },
+  "ext_azure_storage": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_digitalocean": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_discord_webhook": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_gitlab": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_huggingface": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "split": "holdout",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_linear": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_mailgun": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_npm": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_pypi": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_shopify": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_square": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_telegram": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_twilio": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "note": "",
+   "split": "tuning",
+   "tags": [
+    "extended"
+   ]
+  },
+  "ext_vercel": {
+   "engine": "secrets",
+   "expect": "CWE-798",
+   "lang": "extended",
+   "split": "holdout",
+   "tags": [
+    "extended"
+   ]
+  },
+  "fa_aiohttp_session": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-fastapi",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "fa_annotated_depends_user": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "safe twin: server-side dependency object",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_annotated_int": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "FastAPI validates int",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_asyncpg_fetch": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "asyncpg .fetch",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_database_query_kw": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "query= keyword",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_depends_settings_ssrf": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-fastapi",
+   "note": "safe twin: unannotated Depends is server config",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_dict_body": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "dict body",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_fileresponse": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-fastapi",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_html_response_xss": {
+   "engine": "taint-py",
+   "expect": "CWE-79",
+   "lang": "py-fastapi",
+   "note": "reflected XSS",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_http_request_renamed": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "split": "holdout",
+   "tags": []
+  },
+  "fa_httpx_client": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-fastapi",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "fa_int_annotation": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "FastAPI validates int",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_list_query": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "List[str] query",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_literal": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "FastAPI validates enum",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_orm_select": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "SQLAlchemy select() is parameterised",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_pandas_read_sql": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "pandas read_sql",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_param_annotated_path": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "Annotated",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_param_annotated_query": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "Annotated",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_param_optional": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "Optional[str]",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_param_pep604": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "str | None",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_param_str": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_param_str_depends": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "Depends() returning str",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_param_str_query": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_param_unannotated": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_pydantic_body": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "fa_redirect": {
+   "engine": "taint-py",
+   "expect": "CWE-601",
+   "lang": "py-fastapi",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_request_await_json": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_request_query_params": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_request_renamed": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "Request param not called request",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_session_depends": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_shell": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-fastapi",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_text_bindparams": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "bindparams is parameterised",
+   "split": "tuning",
+   "tags": []
+  },
+  "fa_uuid_annotation": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-fastapi",
+   "note": "FastAPI validates UUID",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_alias_args": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_alias_import": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_alias_local": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_alias_method": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_alias_var": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_allowlist_guard": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_async_quart": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_class_method": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_00": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_cmd_01": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "subprocess.call",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_02": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "subprocess.Popen",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_03": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "subprocess.check_output",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_04": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "multi-line",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_05": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "args= keyword",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_06": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "sh -c list form",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_07": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "os.system",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_08": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_cmd_09": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "subprocess.getoutput",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_10": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "subprocess.getstatusoutput",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_11": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "asyncio shell",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_12": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "exec family",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_13": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "spawn family",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_basename": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "basename leaves ;id intact",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_from_os_system": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_cmd_from_run": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_cmd_html_escape": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "html.escape leaves ;id intact",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_cmd_import_as": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "module alias",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_compile": {
+   "engine": "taint-py",
+   "expect": "CWE-95",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_des_from_import": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "note": "from-import alias",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_des_marshal": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_des_pickle": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_des_pickle_b64": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_des_pickle_load_bytesio": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": [
+    "lint"
+   ]
+  },
+  "fl_des_unpickler": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "note": "Unpickler class",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_des_yaml": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_des_yaml_loader_kw": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_des_yaml_loader_pos": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "note": "SafeLoader passed positionally",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_des_yaml_unsafe": {
+   "engine": "taint-py",
+   "expect": "CWE-502",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_eval": {
+   "engine": "taint-py",
+   "expect": "CWE-95",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_exec": {
+   "engine": "taint-py",
+   "expect": "CWE-95",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_fp_local_request_obj": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "safe twin: request is a local job object in a worker, body is trusted",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_fp_method_named_execute": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_fp_mock_patch_param": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_helper_passthrough": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "safe twin: helper ignores its argument",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_helper_sink": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_helper_source": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_instance_attr": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_int_inline": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_int_reassign": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "safe: reassignment to int clears taint",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_isdigit_guard": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "safe: digits only past the guard",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_lambda_sink": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_nested_closure": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_noop_sanitize": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-flask",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_path_00": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_01": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_path_02": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_03": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_04": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "pathlib / operator",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_05": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_06": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "module-qualified",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_07": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_08": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_09": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_10": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_11": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "destination is tainted",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_12": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_path_13": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "rename",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_14": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "listdir",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_15": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": [
+    "debatable"
+   ]
+  },
+  "fl_path_basename_inline": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "safe twin sanitised inline on one line",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_realpath_check": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "safe twin is PY013's recommended fix",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_path_safe_join": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_path_secure_inline": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_reassign_literal": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "safe: overwritten with literal before the sink",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_redirect_inline": {
+   "engine": "taint-py",
+   "expect": "CWE-601",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_redirect_prefix": {
+   "engine": "taint-py",
+   "expect": "CWE-601",
+   "lang": "py-flask",
+   "note": "safe twin: fixed same-site path prefix",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_redirect_url_for_param": {
+   "engine": "taint-py",
+   "expect": "CWE-601",
+   "lang": "py-flask",
+   "note": "safe twin: taint is only a query param of an internal URL",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_redirect_var": {
+   "engine": "taint-py",
+   "expect": "CWE-601",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_route_kwargs": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_route_param": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "int: converter makes uid an int",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_route_param_named_user": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_sql_callproc_safe": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_sql_concat_lines": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_dict": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_for_getlist": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_sql_format": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_fstring": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_in_list": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "safe twin is the standard IN-list parameterisation",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_join": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_keyword_query": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_sql_multiline_call": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_percent": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_str_method": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_tuple_unpack": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "safe twin: b is a literal, only a is tainted",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sql_walrus": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_sqli_basename": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "basename leaves 1 OR 1=1 intact",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_sqli_html_escape": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "html.escape leaves 1 OR 1=1 intact in numeric context",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_args_get": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_args_idx": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_cookies": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_src_data": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_environ": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "attacker-controlled header",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_files_name": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_form": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_full_path": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "attacker-controlled",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_get_data": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_get_json": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_headers": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_src_host": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_src_json": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_path": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "attacker-controlled",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_query_string": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_src_referrer": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "attacker-controlled header",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_stream": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "attacker-controlled body",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_url": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "attacker-controlled",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_user_agent": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "attacker-controlled header",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_values": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_src_view_args": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_ssrf_0": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_ssrf_1": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "url= keyword",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssrf_2": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_ssrf_3": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssrf_4": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "url is 2nd positional",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssrf_5": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssrf_6": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "Session object",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssrf_7": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "Client object",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssrf_8": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "context-manager session",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssrf_exception_ctor": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "safe twin builds an exception object, no I/O",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssrf_params_arg": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "safe twin: fixed URL, request data as querystring",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssrf_proxy_body": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-flask",
+   "note": "safe twin: fixed URL, request is the body",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssti_direct": {
+   "engine": "taint-py",
+   "expect": "CWE-1336",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssti_env": {
+   "engine": "taint-py",
+   "expect": "CWE-1336",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_ssti_fstring": {
+   "engine": "taint-py",
+   "expect": "CWE-1336",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_ssti_template": {
+   "engine": "taint-py",
+   "expect": "CWE-1336",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_str_int_chain": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_type_int_arg": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "Flask type=int coerces or returns None",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_use_before_taint": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-flask",
+   "note": "safe: sink runs before uid becomes tainted",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_with_file": {
+   "engine": "taint-py",
+   "expect": "CWE-22",
+   "lang": "py-flask",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_xss_fstring_return": {
+   "engine": "taint-py",
+   "expect": "CWE-79",
+   "lang": "py-flask",
+   "note": "reflected XSS via returned HTML",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_xss_make_response": {
+   "engine": "taint-py",
+   "expect": "CWE-79",
+   "lang": "py-flask",
+   "note": "reflected XSS",
+   "split": "tuning",
+   "tags": []
+  },
+  "fl_xss_markup": {
+   "engine": "taint-py",
+   "expect": "CWE-79",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fl_xss_response": {
+   "engine": "taint-py",
+   "expect": "CWE-79",
+   "lang": "py-flask",
+   "split": "holdout",
+   "tags": []
+  },
+  "fx_fixture_json": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "split": "holdout",
+   "tags": []
+  },
+  "fx_spec": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "test fixture",
+   "split": "tuning",
+   "tags": []
+  },
+  "fx_tests_dir": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "test fixture",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_all_digits": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "split": "holdout",
+   "tags": []
+  },
+  "gen_angle": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "real password containing <",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_aws_secret_quoted": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "split": "holdout",
+   "tags": []
+  },
+  "gen_bearer": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "split": "holdout",
+   "tags": []
+  },
+  "gen_compose_unquoted": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "unquoted compose env",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_example_substr": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "real password containing the word example",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_go": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_ini": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": ".aws/credentials",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_js": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "split": "holdout",
+   "tags": []
+  },
+  "gen_json": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_npmrc": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": ".npmrc",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_properties": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "Java .properties",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_py": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "split": "holdout",
+   "tags": []
+  },
+  "gen_ruby": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_shell_export": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "unquoted shell export",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_short_weak": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "low-entropy real password",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_slash_prefix": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "gen_toml": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_upper_hex": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "uppercase hex looks like an env var name; safe twin really is one",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_xml": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "XML element",
+   "split": "tuning",
+   "tags": []
+  },
+  "gen_yaml_quoted": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "split": "holdout",
+   "tags": []
+  },
+  "gen_yaml_unquoted": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "generic",
+   "note": "unquoted YAML value",
+   "split": "tuning",
+   "tags": []
+  },
+  "github_gho": {
+   "engine": "secrets",
+   "expect": "SEC002",
+   "lang": "providers",
+   "note": "safe twin: zero-filled placeholder",
+   "split": "tuning",
+   "tags": []
+  },
+  "github_ghp": {
+   "engine": "secrets",
+   "expect": "SEC002",
+   "lang": "providers",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "github_ghr": {
+   "engine": "secrets",
+   "expect": "SEC002",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "github_ghs": {
+   "engine": "secrets",
+   "expect": "SEC002",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "github_ghu": {
+   "engine": "secrets",
+   "expect": "SEC002",
+   "lang": "providers",
+   "split": "holdout",
+   "tags": []
+  },
+  "github_pat": {
+   "engine": "secrets",
+   "expect": "SEC002",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "google_aiza": {
+   "engine": "secrets",
+   "expect": "SEC008",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "google_aiza_your": {
+   "engine": "secrets",
+   "expect": "SEC008",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "google_oauth_secret": {
+   "engine": "secrets",
+   "expect": "SEC008",
+   "lang": "providers",
+   "split": "holdout",
+   "tags": []
+  },
+  "google_oauth_token": {
+   "engine": "secrets",
+   "expect": "SEC008",
+   "lang": "providers",
+   "note": "Google OAuth access token",
+   "split": "tuning",
+   "tags": []
+  },
+  "img_data_uri_css": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "img_data_uri_html": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "split": "holdout",
+   "tags": []
+  },
+  "img_data_uri_js": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "img_token_key": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "split": "holdout",
+   "tags": []
+  },
+  "jwt": {
+   "engine": "secrets",
+   "expect": "SEC011",
+   "lang": "jwt",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "key_cert": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "key_dsa": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "key_ec": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "split": "holdout",
+   "tags": []
+  },
+  "key_encrypted": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "key_header_check": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "note": "safe twin: parser comparing the header, no key material",
+   "split": "tuning",
+   "tags": []
+  },
+  "key_openssh": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "key_pgp": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "key_pkcs8": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "key_placeholder": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "note": "safe twin: placeholder body",
+   "split": "tuning",
+   "tags": []
+  },
+  "key_rsa": {
+   "engine": "secrets",
+   "expect": "SEC003",
+   "lang": "keys",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "koa_cookies": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-koa",
+   "note": "ctx.cookies.get()",
+   "split": "tuning",
+   "tags": []
+  },
+  "koa_get": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-koa",
+   "note": "ctx.get()",
+   "split": "tuning",
+   "tags": []
+  },
+  "koa_headers": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-koa",
+   "note": "ctx.headers",
+   "split": "tuning",
+   "tags": []
+  },
+  "koa_params": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-koa",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "koa_query": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-koa",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "koa_querystring": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-koa",
+   "split": "holdout",
+   "tags": []
+  },
+  "koa_redirect": {
+   "engine": "taint-js",
+   "expect": "CWE-601",
+   "lang": "js-koa",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "koa_request_body": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-koa",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "koa_request_query": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "js-koa",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "koa_xss_body": {
+   "engine": "taint-js",
+   "expect": "CWE-79",
+   "lang": "js-koa",
+   "note": "reflected XSS",
+   "split": "tuning",
+   "tags": []
+  },
+  "lock_cargo": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "lock_gosum": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "lock_gradle": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "lock_package": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "lock_pnpm": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "split": "holdout",
+   "tags": []
+  },
+  "lock_poetry": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "lock_req_hashes": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "lock_shrinkwrap": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "lock_uv": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "lock_yarn": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "min_bundle_kebab": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "SpinKit-style CSS class beginning sk-",
+   "split": "tuning",
+   "tags": []
+  },
+  "min_bundle_kebab_html": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "split": "holdout",
+   "tags": []
+  },
+  "min_bundle_small": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "min_real_key_long_line": {
+   "engine": "secrets",
+   "expect": "SEC004",
+   "lang": "placeholders",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "next_api_as_string": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-api",
+   "split": "holdout",
+   "tags": []
+  },
+  "next_api_body": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-api",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "next_api_path": {
+   "engine": "taint-js",
+   "expect": "CWE-22",
+   "lang": "next-api",
+   "split": "holdout",
+   "tags": []
+  },
+  "next_api_query": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-api",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "next_api_redirect": {
+   "engine": "taint-js",
+   "expect": "CWE-601",
+   "lang": "next-api",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "next_api_ssrf": {
+   "engine": "taint-js",
+   "expect": "CWE-918",
+   "lang": "next-api",
+   "split": "holdout",
+   "tags": []
+  },
+  "next_route_await_params": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-route",
+   "split": "holdout",
+   "tags": []
+  },
+  "next_route_cookies_headers": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-route",
+   "note": "Headers.get",
+   "split": "tuning",
+   "tags": []
+  },
+  "next_route_formdata": {
+   "engine": "taint-js",
+   "expect": "CWE-78",
+   "lang": "next-route",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "next_route_json": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-route",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "next_route_nav_redirect": {
+   "engine": "taint-js",
+   "expect": "CWE-601",
+   "lang": "next-route",
+   "split": "holdout",
+   "tags": []
+  },
+  "next_route_nexturl": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-route",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "next_route_params_prop": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-route",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "next_route_redirect": {
+   "engine": "taint-js",
+   "expect": "CWE-601",
+   "lang": "next-route",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "next_route_req_json": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-route",
+   "note": "param named req",
+   "split": "tuning",
+   "tags": []
+  },
+  "next_route_searchparams": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "next-route",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "openai_proj": {
+   "engine": "secrets",
+   "expect": "SEC006",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "openai_short": {
+   "engine": "secrets",
+   "expect": "SEC006",
+   "lang": "providers",
+   "note": "safe twin: sequential placeholder from docs",
+   "split": "tuning",
+   "tags": []
+  },
+  "openai_sk": {
+   "engine": "secrets",
+   "expect": "SEC006",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "openai_svc": {
+   "engine": "secrets",
+   "expect": "SEC006",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "openai_your_key": {
+   "engine": "secrets",
+   "expect": "SEC006",
+   "lang": "providers",
+   "split": "holdout",
+   "tags": []
+  },
+  "quiet_access_token_key": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "name of a storage key",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_angle": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_change_me_upper": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "split": "holdout",
+   "tags": []
+  },
+  "quiet_changeme": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_env_js": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_env_py": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "split": "holdout",
+   "tags": []
+  },
+  "quiet_git_sha": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "split": "holdout",
+   "tags": []
+  },
+  "quiet_jinja": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_localstorage_key": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "name of a storage key",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_password_label": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "split": "holdout",
+   "tags": []
+  },
+  "quiet_prose": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_pw_algo": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "algorithm name",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_pw_hasher": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "algorithm name",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_pw_strength": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "enum",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_secret_arn": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "quiet_secret_manager": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "backend selector",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_secretary": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "named_in_audit": true,
+   "split": "holdout",
+   "tags": []
+  },
+  "quiet_sha256_var": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_templated": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_test_mention": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_token_budget": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "enum",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_token_type": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_tokenizer": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "NLP tokenizer model name",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_tokenizer2": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "NLP tokenizer model name",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_uuid_id": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_uuid_plain": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_xxxx": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "quiet_your_key_here": {
+   "engine": "secrets",
+   "expect": "SEC100",
+   "lang": "placeholders",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "sendgrid": {
+   "engine": "secrets",
+   "expect": "SEC009",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "slack_webhook": {
+   "engine": "secrets",
+   "expect": "SEC007",
+   "lang": "providers",
+   "note": "incoming webhook URL",
+   "split": "tuning",
+   "tags": []
+  },
+  "slack_xapp": {
+   "engine": "secrets",
+   "expect": "SEC007",
+   "lang": "providers",
+   "split": "holdout",
+   "tags": []
+  },
+  "slack_xoxa": {
+   "engine": "secrets",
+   "expect": "SEC007",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "slack_xoxb": {
+   "engine": "secrets",
+   "expect": "SEC007",
+   "lang": "providers",
+   "split": "holdout",
+   "tags": []
+  },
+  "slack_xoxe_rotated": {
+   "engine": "secrets",
+   "expect": "SEC007",
+   "lang": "providers",
+   "split": "holdout",
+   "tags": []
+  },
+  "slack_xoxp": {
+   "engine": "secrets",
+   "expect": "SEC007",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "slack_xoxs": {
+   "engine": "secrets",
+   "expect": "SEC007",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "st_body": {
+   "engine": "taint-py",
+   "expect": "CWE-918",
+   "lang": "py-starlette",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "st_form": {
+   "engine": "taint-py",
+   "expect": "CWE-78",
+   "lang": "py-starlette",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "st_headers": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-starlette",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "st_html_xss": {
+   "engine": "taint-py",
+   "expect": "CWE-79",
+   "lang": "py-starlette",
+   "note": "reflected XSS",
+   "split": "tuning",
+   "tags": []
+  },
+  "st_json": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-starlette",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "st_path": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-starlette",
+   "split": "holdout",
+   "tags": []
+  },
+  "st_query": {
+   "engine": "taint-py",
+   "expect": "CWE-89",
+   "lang": "py-starlette",
+   "split": "holdout",
+   "tags": []
+  },
+  "st_redirect": {
+   "engine": "taint-py",
+   "expect": "CWE-601",
+   "lang": "py-starlette",
+   "split": "holdout",
+   "tags": []
+  },
+  "stripe_pk": {
+   "engine": "secrets",
+   "expect": "SEC004",
+   "lang": "providers",
+   "note": "safe twin: publishable key",
+   "split": "tuning",
+   "tags": []
+  },
+  "stripe_rk": {
+   "engine": "secrets",
+   "expect": "SEC004",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "stripe_sk": {
+   "engine": "secrets",
+   "expect": "SEC004",
+   "lang": "providers",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "stripe_test_key": {
+   "engine": "secrets",
+   "expect": "SEC004",
+   "lang": "providers",
+   "note": "safe twin: Stripe test-mode key",
+   "split": "tuning",
+   "tags": []
+  },
+  "ts_annot_angle_cast": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "ts-express",
+   "split": "holdout",
+   "tags": []
+  },
+  "ts_annot_class_field": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "ts-express",
+   "note": "this.x",
+   "split": "tuning",
+   "tags": []
+  },
+  "ts_annot_destructure": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "ts-express",
+   "note": "annotated destructure",
+   "split": "tuning",
+   "tags": []
+  },
+  "ts_annot_generic": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "ts-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ts_annot_object": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "ts-express",
+   "note": "object-literal type annotation",
+   "split": "tuning",
+   "tags": []
+  },
+  "ts_annot_simple": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "ts-express",
+   "note": "",
+   "split": "tuning",
+   "tags": []
+  },
+  "ts_arrow_oneline": {
+   "engine": "taint-js",
+   "expect": "CWE-89",
+   "lang": "ts-express",
+   "note": "expression-bodied arrow",
+   "split": "tuning",
+   "tags": []
+  },
+  "two_on_a_line": {
+   "engine": "secrets",
+   "expect": "SEC004",
+   "lang": "generic",
+   "split": "holdout",
+   "tags": []
+  }
+ },
+ "holdout_fraction": 0.25,
+ "seed": 20261110
+}

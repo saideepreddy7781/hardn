@@ -1,0 +1,3 @@
+FROM node:22
+ARG API_KEY=abc123def456
+USER node

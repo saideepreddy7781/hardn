@@ -1,0 +1,3 @@
+FROM node:22
+ENV AUTH_TOKEN=abc123def456
+USER node

@@ -1,0 +1,1 @@
+const verifyOffset = Math.random();

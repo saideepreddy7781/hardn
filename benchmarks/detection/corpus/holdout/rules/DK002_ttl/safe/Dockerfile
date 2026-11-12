@@ -1,0 +1,3 @@
+FROM node:22
+ENV TOKEN_TTL=3600
+USER node

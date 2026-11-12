@@ -1,0 +1,6 @@
+[project]
+name = "a"
+dependencies = [
+  "flask>=3",
+  "flask-talisman",
+]

@@ -1,0 +1,9 @@
+name: ci
+on: issues
+jobs:
+  a:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: some/action@v1
+        with:
+          text: ${{ github.event.comment.body }}

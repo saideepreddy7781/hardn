@@ -1,0 +1,3 @@
+stages: [a]
+scan:
+  script: trivy fs .

@@ -1,0 +1,9 @@
+name: ci
+on: issues
+jobs:
+  a:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo start
+          echo "${{ github.event.issue.body }}"

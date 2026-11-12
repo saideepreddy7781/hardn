@@ -1,0 +1,3 @@
+FROM node:22
+ENV PORT=3000
+USER node

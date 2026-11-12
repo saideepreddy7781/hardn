@@ -1,0 +1,1527 @@
+{
+ "seed": 20261110,
+ "tables": {
+  "tuning": {
+   "taint-py (engine alone)": {
+    "overall": {
+     "vuln": 144,
+     "safe": 149,
+     "tp": 143,
+     "fn": 1,
+     "fp": 1,
+     "tn": 148,
+     "recall": 99.3,
+     "precision": 99.3,
+     "fpr": 0.7
+    },
+    "py-django": {
+     "vuln": 16,
+     "safe": 16,
+     "tp": 16,
+     "fn": 0,
+     "fp": 0,
+     "tn": 16,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-fastapi": {
+     "vuln": 23,
+     "safe": 29,
+     "tp": 22,
+     "fn": 1,
+     "fp": 0,
+     "tn": 29,
+     "recall": 95.7,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-flask": {
+     "vuln": 100,
+     "safe": 99,
+     "tp": 100,
+     "fn": 0,
+     "fp": 1,
+     "tn": 98,
+     "recall": 100.0,
+     "precision": 99.0,
+     "fpr": 1.0
+    },
+    "py-starlette": {
+     "vuln": 5,
+     "safe": 5,
+     "tp": 5,
+     "fn": 0,
+     "fp": 0,
+     "tn": 5,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "taint-py (+ line rules)": {
+    "overall": {
+     "vuln": 144,
+     "safe": 149,
+     "tp": 144,
+     "fn": 0,
+     "fp": 16,
+     "tn": 133,
+     "recall": 100.0,
+     "precision": 90.0,
+     "fpr": 10.7
+    },
+    "py-django": {
+     "vuln": 16,
+     "safe": 16,
+     "tp": 16,
+     "fn": 0,
+     "fp": 0,
+     "tn": 16,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-fastapi": {
+     "vuln": 23,
+     "safe": 29,
+     "tp": 23,
+     "fn": 0,
+     "fp": 5,
+     "tn": 24,
+     "recall": 100.0,
+     "precision": 82.1,
+     "fpr": 17.2
+    },
+    "py-flask": {
+     "vuln": 100,
+     "safe": 99,
+     "tp": 100,
+     "fn": 0,
+     "fp": 11,
+     "tn": 88,
+     "recall": 100.0,
+     "precision": 90.1,
+     "fpr": 11.1
+    },
+    "py-starlette": {
+     "vuln": 5,
+     "safe": 5,
+     "tp": 5,
+     "fn": 0,
+     "fp": 0,
+     "tn": 5,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "taint-js (engine alone)": {
+    "overall": {
+     "vuln": 114,
+     "safe": 116,
+     "tp": 113,
+     "fn": 1,
+     "fp": 0,
+     "tn": 116,
+     "recall": 99.1,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "js-browser": {
+     "vuln": 10,
+     "safe": 11,
+     "tp": 10,
+     "fn": 0,
+     "fp": 0,
+     "tn": 11,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "js-express": {
+     "vuln": 78,
+     "safe": 79,
+     "tp": 78,
+     "fn": 0,
+     "fp": 0,
+     "tn": 79,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "js-koa": {
+     "vuln": 9,
+     "safe": 9,
+     "tp": 9,
+     "fn": 0,
+     "fp": 0,
+     "tn": 9,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-api": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-route": {
+     "vuln": 7,
+     "safe": 7,
+     "tp": 7,
+     "fn": 0,
+     "fp": 0,
+     "tn": 7,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "ts-express": {
+     "vuln": 6,
+     "safe": 6,
+     "tp": 6,
+     "fn": 0,
+     "fp": 0,
+     "tn": 6,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "tsx-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 0,
+     "fn": 1,
+     "fp": 0,
+     "tn": 1,
+     "recall": 0.0,
+     "precision": null,
+     "fpr": 0.0
+    }
+   },
+   "taint-js (+ line rules)": {
+    "overall": {
+     "vuln": 114,
+     "safe": 116,
+     "tp": 114,
+     "fn": 0,
+     "fp": 7,
+     "tn": 109,
+     "recall": 100.0,
+     "precision": 94.2,
+     "fpr": 6.0
+    },
+    "js-browser": {
+     "vuln": 10,
+     "safe": 11,
+     "tp": 10,
+     "fn": 0,
+     "fp": 1,
+     "tn": 10,
+     "recall": 100.0,
+     "precision": 90.9,
+     "fpr": 9.1
+    },
+    "js-express": {
+     "vuln": 78,
+     "safe": 79,
+     "tp": 78,
+     "fn": 0,
+     "fp": 6,
+     "tn": 73,
+     "recall": 100.0,
+     "precision": 92.9,
+     "fpr": 7.6
+    },
+    "js-koa": {
+     "vuln": 9,
+     "safe": 9,
+     "tp": 9,
+     "fn": 0,
+     "fp": 0,
+     "tn": 9,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-api": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-route": {
+     "vuln": 7,
+     "safe": 7,
+     "tp": 7,
+     "fn": 0,
+     "fp": 0,
+     "tn": 7,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "ts-express": {
+     "vuln": 6,
+     "safe": 6,
+     "tp": 6,
+     "fn": 0,
+     "fp": 0,
+     "tn": 6,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "tsx-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "rules": {
+    "overall": {
+     "vuln": 100,
+     "safe": 110,
+     "tp": 99,
+     "fn": 1,
+     "fp": 0,
+     "tn": 110,
+     "recall": 99.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "actions": {
+     "vuln": 6,
+     "safe": 6,
+     "tp": 6,
+     "fn": 0,
+     "fp": 0,
+     "tn": 6,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "docker": {
+     "vuln": 11,
+     "safe": 12,
+     "tp": 11,
+     "fn": 0,
+     "fp": 0,
+     "tn": 12,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "go": {
+     "vuln": 6,
+     "safe": 6,
+     "tp": 6,
+     "fn": 0,
+     "fp": 0,
+     "tn": 6,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "java": {
+     "vuln": 6,
+     "safe": 7,
+     "tp": 5,
+     "fn": 1,
+     "fp": 0,
+     "tn": 7,
+     "recall": 83.3,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "js-rules": {
+     "vuln": 17,
+     "safe": 18,
+     "tp": 17,
+     "fn": 0,
+     "fp": 0,
+     "tn": 18,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "k8s": {
+     "vuln": 2,
+     "safe": 2,
+     "tp": 2,
+     "fn": 0,
+     "fp": 0,
+     "tn": 2,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "php": {
+     "vuln": 9,
+     "safe": 13,
+     "tp": 9,
+     "fn": 0,
+     "fp": 0,
+     "tn": 13,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-rules": {
+     "vuln": 28,
+     "safe": 32,
+     "tp": 28,
+     "fn": 0,
+     "fp": 0,
+     "tn": 32,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "ruby": {
+     "vuln": 11,
+     "safe": 10,
+     "tp": 11,
+     "fn": 0,
+     "fp": 0,
+     "tn": 10,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "terraform": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "tsx-rules": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "secrets": {
+    "overall": {
+     "vuln": 61,
+     "safe": 97,
+     "tp": 61,
+     "fn": 0,
+     "fp": 2,
+     "tn": 95,
+     "recall": 100.0,
+     "precision": 96.8,
+     "fpr": 2.1
+    },
+    "connstr": {
+     "vuln": 7,
+     "safe": 7,
+     "tp": 7,
+     "fn": 0,
+     "fp": 0,
+     "tn": 7,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "envfiles": {
+     "vuln": 8,
+     "safe": 11,
+     "tp": 8,
+     "fn": 0,
+     "fp": 0,
+     "tn": 11,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "generic": {
+     "vuln": 15,
+     "safe": 15,
+     "tp": 15,
+     "fn": 0,
+     "fp": 0,
+     "tn": 15,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "jwt": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "keys": {
+     "vuln": 7,
+     "safe": 4,
+     "tp": 7,
+     "fn": 0,
+     "fp": 0,
+     "tn": 4,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "placeholders": {
+     "vuln": 1,
+     "safe": 37,
+     "tp": 1,
+     "fn": 0,
+     "fp": 2,
+     "tn": 35,
+     "recall": 100.0,
+     "precision": 33.3,
+     "fpr": 5.4
+    },
+    "providers": {
+     "vuln": 22,
+     "safe": 22,
+     "tp": 22,
+     "fn": 0,
+     "fp": 0,
+     "tn": 22,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "posture": {
+    "overall": {
+     "vuln": 28,
+     "safe": 38,
+     "tp": 28,
+     "fn": 0,
+     "fp": 0,
+     "tn": 38,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "posture": {
+     "vuln": 28,
+     "safe": 38,
+     "tp": 28,
+     "fn": 0,
+     "fp": 0,
+     "tn": 38,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   }
+  },
+  "holdout": {
+   "taint-py (engine alone)": {
+    "overall": {
+     "vuln": 49,
+     "safe": 49,
+     "tp": 46,
+     "fn": 3,
+     "fp": 1,
+     "tn": 48,
+     "recall": 93.9,
+     "precision": 97.9,
+     "fpr": 2.0
+    },
+    "py-django": {
+     "vuln": 7,
+     "safe": 7,
+     "tp": 7,
+     "fn": 0,
+     "fp": 0,
+     "tn": 7,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-fastapi": {
+     "vuln": 4,
+     "safe": 4,
+     "tp": 4,
+     "fn": 0,
+     "fp": 0,
+     "tn": 4,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-flask": {
+     "vuln": 35,
+     "safe": 35,
+     "tp": 32,
+     "fn": 3,
+     "fp": 1,
+     "tn": 34,
+     "recall": 91.4,
+     "precision": 97.0,
+     "fpr": 2.9
+    },
+    "py-starlette": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "taint-py (+ line rules)": {
+    "overall": {
+     "vuln": 49,
+     "safe": 49,
+     "tp": 49,
+     "fn": 0,
+     "fp": 3,
+     "tn": 46,
+     "recall": 100.0,
+     "precision": 94.2,
+     "fpr": 6.1
+    },
+    "py-django": {
+     "vuln": 7,
+     "safe": 7,
+     "tp": 7,
+     "fn": 0,
+     "fp": 0,
+     "tn": 7,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-fastapi": {
+     "vuln": 4,
+     "safe": 4,
+     "tp": 4,
+     "fn": 0,
+     "fp": 0,
+     "tn": 4,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-flask": {
+     "vuln": 35,
+     "safe": 35,
+     "tp": 35,
+     "fn": 0,
+     "fp": 3,
+     "tn": 32,
+     "recall": 100.0,
+     "precision": 92.1,
+     "fpr": 8.6
+    },
+    "py-starlette": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "taint-js (engine alone)": {
+    "overall": {
+     "vuln": 38,
+     "safe": 39,
+     "tp": 31,
+     "fn": 7,
+     "fp": 3,
+     "tn": 36,
+     "recall": 81.6,
+     "precision": 91.2,
+     "fpr": 7.7
+    },
+    "js-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 1,
+     "tn": 0,
+     "recall": 100.0,
+     "precision": 50.0,
+     "fpr": 100.0
+    },
+    "js-express": {
+     "vuln": 28,
+     "safe": 29,
+     "tp": 24,
+     "fn": 4,
+     "fp": 1,
+     "tn": 28,
+     "recall": 85.7,
+     "precision": 96.0,
+     "fpr": 3.4
+    },
+    "js-koa": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-api": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-route": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 0,
+     "fn": 3,
+     "fp": 0,
+     "tn": 3,
+     "recall": 0.0,
+     "precision": null,
+     "fpr": 0.0
+    },
+    "ts-express": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "tsx-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 1,
+     "tn": 0,
+     "recall": 100.0,
+     "precision": 50.0,
+     "fpr": 100.0
+    }
+   },
+   "taint-js (+ line rules)": {
+    "overall": {
+     "vuln": 38,
+     "safe": 39,
+     "tp": 36,
+     "fn": 2,
+     "fp": 4,
+     "tn": 35,
+     "recall": 94.7,
+     "precision": 90.0,
+     "fpr": 10.3
+    },
+    "js-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 1,
+     "tn": 0,
+     "recall": 100.0,
+     "precision": 50.0,
+     "fpr": 100.0
+    },
+    "js-express": {
+     "vuln": 28,
+     "safe": 29,
+     "tp": 27,
+     "fn": 1,
+     "fp": 2,
+     "tn": 27,
+     "recall": 96.4,
+     "precision": 93.1,
+     "fpr": 6.9
+    },
+    "js-koa": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-api": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-route": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 2,
+     "fn": 1,
+     "fp": 0,
+     "tn": 3,
+     "recall": 66.7,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "ts-express": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "tsx-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 1,
+     "tn": 0,
+     "recall": 100.0,
+     "precision": 50.0,
+     "fpr": 100.0
+    }
+   },
+   "rules": {
+    "overall": {
+     "vuln": 39,
+     "safe": 41,
+     "tp": 38,
+     "fn": 1,
+     "fp": 5,
+     "tn": 36,
+     "recall": 97.4,
+     "precision": 88.4,
+     "fpr": 12.2
+    },
+    "docker": {
+     "vuln": 5,
+     "safe": 6,
+     "tp": 5,
+     "fn": 0,
+     "fp": 1,
+     "tn": 5,
+     "recall": 100.0,
+     "precision": 83.3,
+     "fpr": 16.7
+    },
+    "go": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 0,
+     "fn": 1,
+     "fp": 0,
+     "tn": 1,
+     "recall": 0.0,
+     "precision": null,
+     "fpr": 0.0
+    },
+    "java": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "js-rules": {
+     "vuln": 13,
+     "safe": 14,
+     "tp": 13,
+     "fn": 0,
+     "fp": 2,
+     "tn": 12,
+     "recall": 100.0,
+     "precision": 86.7,
+     "fpr": 14.3
+    },
+    "php": {
+     "vuln": 2,
+     "safe": 2,
+     "tp": 2,
+     "fn": 0,
+     "fp": 1,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 66.7,
+     "fpr": 50.0
+    },
+    "py-rules": {
+     "vuln": 13,
+     "safe": 13,
+     "tp": 13,
+     "fn": 0,
+     "fp": 1,
+     "tn": 12,
+     "recall": 100.0,
+     "precision": 92.9,
+     "fpr": 7.7
+    },
+    "ruby": {
+     "vuln": 2,
+     "safe": 2,
+     "tp": 2,
+     "fn": 0,
+     "fp": 0,
+     "tn": 2,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "terraform": {
+     "vuln": 2,
+     "safe": 2,
+     "tp": 2,
+     "fn": 0,
+     "fp": 0,
+     "tn": 2,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "secrets": {
+    "overall": {
+     "vuln": 24,
+     "safe": 36,
+     "tp": 21,
+     "fn": 3,
+     "fp": 3,
+     "tn": 33,
+     "recall": 87.5,
+     "precision": 87.5,
+     "fpr": 8.3
+    },
+    "connstr": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "envfiles": {
+     "vuln": 1,
+     "safe": 2,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 2,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "generic": {
+     "vuln": 8,
+     "safe": 8,
+     "tp": 5,
+     "fn": 3,
+     "fp": 1,
+     "tn": 7,
+     "recall": 62.5,
+     "precision": 83.3,
+     "fpr": 12.5
+    },
+    "keys": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "placeholders": {
+     "vuln": 2,
+     "safe": 12,
+     "tp": 2,
+     "fn": 0,
+     "fp": 2,
+     "tn": 10,
+     "recall": 100.0,
+     "precision": 50.0,
+     "fpr": 16.7
+    },
+    "providers": {
+     "vuln": 10,
+     "safe": 10,
+     "tp": 10,
+     "fn": 0,
+     "fp": 0,
+     "tn": 10,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "posture": {
+    "overall": {
+     "vuln": 12,
+     "safe": 14,
+     "tp": 12,
+     "fn": 0,
+     "fp": 0,
+     "tn": 14,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "posture": {
+     "vuln": 12,
+     "safe": 14,
+     "tp": 12,
+     "fn": 0,
+     "fp": 0,
+     "tn": 14,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   }
+  },
+  "holdout, excluding cases named in the audit report": {
+   "taint-py (engine alone)": {
+    "overall": {
+     "vuln": 40,
+     "safe": 40,
+     "tp": 37,
+     "fn": 3,
+     "fp": 1,
+     "tn": 39,
+     "recall": 92.5,
+     "precision": 97.4,
+     "fpr": 2.5
+    },
+    "py-django": {
+     "vuln": 7,
+     "safe": 7,
+     "tp": 7,
+     "fn": 0,
+     "fp": 0,
+     "tn": 7,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-fastapi": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-flask": {
+     "vuln": 29,
+     "safe": 29,
+     "tp": 26,
+     "fn": 3,
+     "fp": 1,
+     "tn": 28,
+     "recall": 89.7,
+     "precision": 96.3,
+     "fpr": 3.4
+    },
+    "py-starlette": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "taint-py (+ line rules)": {
+    "overall": {
+     "vuln": 40,
+     "safe": 40,
+     "tp": 40,
+     "fn": 0,
+     "fp": 1,
+     "tn": 39,
+     "recall": 100.0,
+     "precision": 97.6,
+     "fpr": 2.5
+    },
+    "py-django": {
+     "vuln": 7,
+     "safe": 7,
+     "tp": 7,
+     "fn": 0,
+     "fp": 0,
+     "tn": 7,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-fastapi": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "py-flask": {
+     "vuln": 29,
+     "safe": 29,
+     "tp": 29,
+     "fn": 0,
+     "fp": 1,
+     "tn": 28,
+     "recall": 100.0,
+     "precision": 96.7,
+     "fpr": 3.4
+    },
+    "py-starlette": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "taint-js (engine alone)": {
+    "overall": {
+     "vuln": 31,
+     "safe": 32,
+     "tp": 26,
+     "fn": 5,
+     "fp": 3,
+     "tn": 29,
+     "recall": 83.9,
+     "precision": 89.7,
+     "fpr": 9.4
+    },
+    "js-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 1,
+     "tn": 0,
+     "recall": 100.0,
+     "precision": 50.0,
+     "fpr": 100.0
+    },
+    "js-express": {
+     "vuln": 22,
+     "safe": 23,
+     "tp": 19,
+     "fn": 3,
+     "fp": 1,
+     "tn": 22,
+     "recall": 86.4,
+     "precision": 95.0,
+     "fpr": 4.3
+    },
+    "js-koa": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-api": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-route": {
+     "vuln": 2,
+     "safe": 2,
+     "tp": 0,
+     "fn": 2,
+     "fp": 0,
+     "tn": 2,
+     "recall": 0.0,
+     "precision": null,
+     "fpr": 0.0
+    },
+    "ts-express": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "tsx-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 1,
+     "tn": 0,
+     "recall": 100.0,
+     "precision": 50.0,
+     "fpr": 100.0
+    }
+   },
+   "taint-js (+ line rules)": {
+    "overall": {
+     "vuln": 31,
+     "safe": 32,
+     "tp": 29,
+     "fn": 2,
+     "fp": 4,
+     "tn": 28,
+     "recall": 93.5,
+     "precision": 87.9,
+     "fpr": 12.5
+    },
+    "js-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 1,
+     "tn": 0,
+     "recall": 100.0,
+     "precision": 50.0,
+     "fpr": 100.0
+    },
+    "js-express": {
+     "vuln": 22,
+     "safe": 23,
+     "tp": 21,
+     "fn": 1,
+     "fp": 2,
+     "tn": 21,
+     "recall": 95.5,
+     "precision": 91.3,
+     "fpr": 8.7
+    },
+    "js-koa": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-api": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "next-route": {
+     "vuln": 2,
+     "safe": 2,
+     "tp": 1,
+     "fn": 1,
+     "fp": 0,
+     "tn": 2,
+     "recall": 50.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "ts-express": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "tsx-browser": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 1,
+     "tn": 0,
+     "recall": 100.0,
+     "precision": 50.0,
+     "fpr": 100.0
+    }
+   },
+   "rules": {
+    "overall": {
+     "vuln": 28,
+     "safe": 29,
+     "tp": 28,
+     "fn": 0,
+     "fp": 5,
+     "tn": 24,
+     "recall": 100.0,
+     "precision": 84.8,
+     "fpr": 17.2
+    },
+    "docker": {
+     "vuln": 2,
+     "safe": 2,
+     "tp": 2,
+     "fn": 0,
+     "fp": 1,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 66.7,
+     "fpr": 50.0
+    },
+    "java": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "js-rules": {
+     "vuln": 11,
+     "safe": 12,
+     "tp": 11,
+     "fn": 0,
+     "fp": 2,
+     "tn": 10,
+     "recall": 100.0,
+     "precision": 84.6,
+     "fpr": 16.7
+    },
+    "php": {
+     "vuln": 2,
+     "safe": 2,
+     "tp": 2,
+     "fn": 0,
+     "fp": 1,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 66.7,
+     "fpr": 50.0
+    },
+    "py-rules": {
+     "vuln": 10,
+     "safe": 10,
+     "tp": 10,
+     "fn": 0,
+     "fp": 1,
+     "tn": 9,
+     "recall": 100.0,
+     "precision": 90.9,
+     "fpr": 10.0
+    },
+    "ruby": {
+     "vuln": 2,
+     "safe": 2,
+     "tp": 2,
+     "fn": 0,
+     "fp": 0,
+     "tn": 2,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "secrets": {
+    "overall": {
+     "vuln": 21,
+     "safe": 31,
+     "tp": 19,
+     "fn": 2,
+     "fp": 3,
+     "tn": 28,
+     "recall": 90.5,
+     "precision": 86.4,
+     "fpr": 9.7
+    },
+    "connstr": {
+     "vuln": 3,
+     "safe": 3,
+     "tp": 3,
+     "fn": 0,
+     "fp": 0,
+     "tn": 3,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "envfiles": {
+     "vuln": 1,
+     "safe": 2,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 2,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "generic": {
+     "vuln": 7,
+     "safe": 7,
+     "tp": 5,
+     "fn": 2,
+     "fp": 1,
+     "tn": 6,
+     "recall": 71.4,
+     "precision": 83.3,
+     "fpr": 14.3
+    },
+    "keys": {
+     "vuln": 1,
+     "safe": 1,
+     "tp": 1,
+     "fn": 0,
+     "fp": 0,
+     "tn": 1,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "placeholders": {
+     "vuln": 1,
+     "safe": 9,
+     "tp": 1,
+     "fn": 0,
+     "fp": 2,
+     "tn": 7,
+     "recall": 100.0,
+     "precision": 33.3,
+     "fpr": 22.2
+    },
+    "providers": {
+     "vuln": 9,
+     "safe": 9,
+     "tp": 9,
+     "fn": 0,
+     "fp": 0,
+     "tn": 9,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   },
+   "posture": {
+    "overall": {
+     "vuln": 10,
+     "safe": 10,
+     "tp": 10,
+     "fn": 0,
+     "fp": 0,
+     "tn": 10,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    },
+    "posture": {
+     "vuln": 10,
+     "safe": 10,
+     "tp": 10,
+     "fn": 0,
+     "fp": 0,
+     "tn": 10,
+     "recall": 100.0,
+     "precision": 100.0,
+     "fpr": 0.0
+    }
+   }
+  }
+ }
+}

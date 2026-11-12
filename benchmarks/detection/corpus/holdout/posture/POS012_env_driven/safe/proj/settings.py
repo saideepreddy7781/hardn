@@ -1,0 +1,4 @@
+SECURE_HSTS_SECONDS = int(os.environ['HSTS'])
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = os.environ['S'] == '1'

@@ -1,0 +1,1 @@
+crypto.createHash('md5');

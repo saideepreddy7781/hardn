@@ -1,0 +1,3 @@
+FROM node:22
+ARG DB_PASSWORD
+USER node

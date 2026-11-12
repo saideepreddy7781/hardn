@@ -1,0 +1,7 @@
+name: ci
+on: issues
+jobs:
+  a:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.event.pull_request.base.ref }}"

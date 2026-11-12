@@ -1,0 +1,1 @@
+const token = crypto.randomUUID();

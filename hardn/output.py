@@ -340,14 +340,12 @@ def rule_catalog() -> dict:
     add("SEC200", "Secret in an env file that is committed or not git-ignored", "high", "CWE-798",
         "Git-ignore the env file, remove it from the index, and commit a .env.example with placeholders. "
         + getattr(secrets, "COMPROMISED", ""), "secret", ".env files")
-    for row in getattr(taint_py, "SINKS", []):
-        fix_rule = row[5] if len(row) > 5 else None
-        add(row[0], row[1], row[2], row[3], fixes.get(fix_rule) or getattr(taint_py, "SSTI_FIX", ""), "taint",
-            "Python request handlers")
-    for row in getattr(taint_js, "SINKS", []):
-        fix_rule = row[5] if len(row) > 5 else None
-        add(row[0], row[1], row[2], row[3], fixes.get(fix_rule) or getattr(taint_js, "PROTO_FIX", ""), "taint",
-            "JavaScript and TypeScript")
+    taint_tables = ((getattr(taint_py, "SINK_INFO", {}), getattr(taint_py, "SSTI_FIX", ""), "Python request handlers"),
+                    (getattr(taint_js, "INFO", {}), getattr(taint_js, "PROTO_FIX", ""), "JavaScript and TypeScript"))
+    for table, default_fix, applies in taint_tables:
+        for rid, title, sev, cwe, *rest in table.values():  # (rule id, title, severity, CWE, line rule with the fix)
+            fix_rule = rest[0] if rest else None
+            add(rid, title, sev, cwe, fixes.get(fix_rule) or default_fix, "taint", applies)
     add("JST009", "XSS: request data written into HTML", "high", "CWE-79", fixes.get("JS004", ""), "taint",
         "JavaScript and TypeScript")
     for rid, (title, sev, cwe, fix) in POSTURE_RULES.items():

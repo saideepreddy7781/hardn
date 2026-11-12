@@ -1,0 +1,1 @@
+fs.readFile('/a', cb);

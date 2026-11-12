@@ -1,0 +1,9 @@
+name: ci
+on: issues
+jobs:
+  a:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          R: ${{ github.head_ref }}
+        run: git fetch origin "$R"
