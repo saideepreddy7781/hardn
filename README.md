@@ -1,5 +1,9 @@
 # hardn
 
+> **This project is now [agentharden](https://github.com/saideepreddy7781/agentharden).** This repository is
+> archived and gets no more updates. The PyPI package named `hardn` belongs to an unrelated company, so
+> install agentharden instead: `pipx install git+https://github.com/saideepreddy7781/agentharden`
+
 **Find security holes offline. Get a prompt your AI agent can actually fix them with.**
 
 [![ci](https://github.com/saideepreddy7781/hardn/actions/workflows/ci.yml/badge.svg)](https://github.com/saideepreddy7781/hardn/actions/workflows/ci.yml)
